@@ -15,24 +15,24 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 )
 
-// GetHobby return lists of hobbies
-func GetHobby(w http.ResponseWriter, r *http.Request) {
+// GetHobbyHandler return lists of hobbies
+func GetHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetHobby method")
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
-// GetHobbyByGroupNo return lists of hobbies filtered by groupNo
-func GetHobbyByGroupNo(w http.ResponseWriter, r *http.Request) {
+// GetHobbyByGroupNoHandler return lists of hobbies filtered by groupNo
+func GetHobbyByGroupNoHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetHobby method")
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
-// GetHobbyByID return the hobby determined by ID
-func GetHobbyByID(w http.ResponseWriter, r *http.Request) {
+// GetHobbyByIDHandler return the hobby determined by ID
+func GetHobbyByIDHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetHobby method")
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
