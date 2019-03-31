@@ -13,6 +13,8 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/v1/hobby", hobby.GetHobbyHandler).Methods("GET")
+	r.HandleFunc("/api/v1/hobby/group/{groupNo}", hobby.GetHobbyByGroupNoHandler).Methods("GET")
+	r.HandleFunc("/api/v1/hobby/id/{id}", hobby.GetHobbyByIDHandler).Methods("GET")
 
 	logger.Info("start server")
 	if err := http.ListenAndServe(":8080", r); err != nil {

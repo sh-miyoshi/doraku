@@ -11,30 +11,53 @@ package hobby
 
 import (
 	"net/http"
+	"strconv"
 
+	"github.com/gorilla/mux"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 )
 
 // GetHobbyHandler return lists of hobbies
 func GetHobbyHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call GetHobby method")
+	logger.Info("call GetHobbyHandler method")
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Not implemented yet"))
 }
 
 // GetHobbyByGroupNoHandler return lists of hobbies filtered by groupNo
 func GetHobbyByGroupNoHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call GetHobby method")
+	vars := mux.Vars(r)
+	groupNo, err := strconv.Atoi(vars["groupNo"])
+	if err != nil {
+		logger.Info("invalid groupNo: %d is supplied", groupNo)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("invalid groupNo is supplied"))
+		return
+	}
+
+	logger.Info("call GetHobbyByGroupNoHandler method by groupNo: %d", groupNo)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Not implemented yet"))
 }
 
 // GetHobbyByIDHandler return the hobby determined by ID
 func GetHobbyByIDHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call GetHobby method")
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		logger.Info("invalid ID: %d is supplied", id)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("invalid ID is supplied"))
+		return
+	}
+
+	logger.Info("call GetHobbyByIDHandler method by id: %d", id)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Not implemented yet"))
 }
