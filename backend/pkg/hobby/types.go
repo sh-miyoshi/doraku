@@ -9,16 +9,12 @@
 
 package hobby
 
+// Hobby struct defines info of hobby
 type Hobby struct {
-	Id int64 `json:"id,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	NameEN string `json:"name_EN,omitempty"`
-
-	Description string `json:"description,omitempty"`
-
-	Image string `json:"image,omitempty"`
-
-	Group int32 `json:"group,omitempty"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	NameEN      string `json:"name_EN"`
+	Description string `json:"description"`
+	Image       string `json:"image"`
+	Group       int32  `json:"group"`
 }
