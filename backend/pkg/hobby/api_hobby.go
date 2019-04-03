@@ -10,11 +10,15 @@
 package hobby
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // GetHobbyHandler return lists of hobbies
@@ -49,15 +53,42 @@ func GetHobbyByIDHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		logger.Info("invalid ID: %d is supplied", id)
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("invalid ID is supplied"))
+		logger.Info("Invalid ID: %d is supplied", id)
+		http.Error(w, "Invalid ID is supplied", http.StatusBadRequest)
 		return
 	}
 
 	logger.Info("call GetHobbyByIDHandler method by id: %d", id)
 
+	handler := hobbydb.GetInst()
+	hobby, err := handler.GetHobbyByID(id)
+	if err != nil {
+		logger.Info("Failed to get hobby: %v", err)
+		if err == mongo.ErrNoDocuments {
+			msg := fmt.Sprintf("No such Hobby ID: %d", id)
+			http.Error(w, msg, http.StatusNotFound)
+		} else {
+			msg := fmt.Sprintf("Internal Server Error %v", err)
+			http.Error(w, msg, http.StatusInternalServerError)
+		}
+		return
+	}
+
+	result := Hobby{
+		ID:          id,
+		Name:        hobby.Name,
+		NameEN:      hobby.NameEN,
+		Description: "TODO: insert hobby description",
+		Image:       "TODO: insert hobby image",
+		Group:       hobby.GroupNo,
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Not implemented yet"))
+	raw, err := json.Marshal(result)
+	if err != nil {
+		logger.Error("Failed to marshal response: %v", err)
+		http.Error(w, "Internal Server Error: failed to marshal response", http.StatusInternalServerError)
+	}
+	w.Write(raw)
 }
