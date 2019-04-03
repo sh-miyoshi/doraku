@@ -30,6 +30,7 @@ func GetInst() DBHandler {
 
 func (h *dbHandler) Initialize(mongoURL string) error {
 	var err error
+	// mongo.NewClient(url)
 	h.client, err = mongo.NewClient(options.Client().ApplyURI(mongoURL))
 	if err != nil {
 		return err
@@ -41,7 +42,7 @@ func (h *dbHandler) Initialize(mongoURL string) error {
 		return err
 	}
 
-	logger.Info("Successto connect Mong DB %s", mongoURL)
+	logger.Info("Success to connect Mongo DB %s", mongoURL)
 	return nil
 }
 
