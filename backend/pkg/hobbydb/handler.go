@@ -43,10 +43,9 @@ func (h *dbHandler) Initialize(mongoURL string) error {
 	}
 
 	err = h.client.Ping(ctx, nil)
-    if err != nil {
-        return err
-    }
-
+	if err != nil {
+		return err
+	}
 
 	logger.Info("Success to connect Mongo DB %s", mongoURL)
 	return nil
