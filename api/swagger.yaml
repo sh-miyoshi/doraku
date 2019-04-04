@@ -10,55 +10,85 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /hobby:
+  /hobby/all:
     get:
       tags:
         - hobby
-      summary: get all hobby
-      description: get list of all hobby
+      summary: get all hobby names
+      description: get list of all hobby name
       produces:
         - application/json
       responses:
         '200':
           description: ok
-  '/hobby/id/{id}':
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+  /hobby/today:
     get:
       tags:
         - hobby
-      summary: get detail of hobby by ID
-      description: Returns a hobby detail
+      summary: get today's hobby
+      description: get today's hobby
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            type: string
+  /hobby/recommended:
+    get:
+      tags:
+        - hobby
+      summary: get recommended hobby
+      description: get recommended hobby
+      parameters:
+        - name: selects
+          in: body
+          required: true
+          schema:
+            properties:
+              outdoor:
+                type: boolean
+              alone:
+                type: boolean
+              active:
+                type: boolean
+              money:
+                type: boolean
+      responses:
+        '200':
+          description: ok
+          schema:
+            type: string
+  '/hobby/details/{name}':
+    get:
+      tags:
+        - hobby
+      summary: get details of the hobby
+      description: get details of the hobby
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: name
+          type: string
           in: path
-          description: ID of hobby to return
+          description: name of the hobby
           required: true
-          type: integer
-          format: int64
       responses:
         '200':
           description: ok
           schema:
             $ref: '#/definitions/Hobby'
-        '400':
-          description: invalid ID supplied
         '404':
-          description: hobby not found
-  '/hobby/group/{groupNo}':
-    get:
-      tags:
-        - hobby
-      summary: get hobby list by same group
-      description: Returns list of hobby
-      parameters:
-        - name: groupNo
-          in: path
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: ok
+          description: No such hobby
 definitions:
   Hobby:
     type: object
