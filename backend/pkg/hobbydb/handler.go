@@ -35,12 +35,18 @@ func (h *dbHandler) Initialize(mongoURL string) error {
 	if err != nil {
 		return err
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	err = h.client.Connect(ctx)
 	if err != nil {
 		return err
 	}
+
+	err = h.client.Ping(ctx, nil)
+    if err != nil {
+        return err
+    }
+
 
 	logger.Info("Success to connect Mongo DB %s", mongoURL)
 	return nil

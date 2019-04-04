@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/sh-miyoshi/doraku/pkg/hobby"
+	"github.com/sh-miyoshi/doraku/pkg/hobbyapi"
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 )
@@ -13,11 +13,14 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/hobby", hobby.GetHobbyHandler).Methods("GET")
-	r.HandleFunc("/api/v1/hobby/group/{groupNo}", hobby.GetHobbyByGroupNoHandler).Methods("GET")
-	r.HandleFunc("/api/v1/hobby/id/{id}", hobby.GetHobbyByIDHandler).Methods("GET")
+	r.HandleFunc("/api/v1/hobby", hobbyapi.GetHobbyHandler).Methods("GET")
+	r.HandleFunc("/api/v1/hobby/group/{groupNo}", hobbyapi.GetHobbyByGroupNoHandler).Methods("GET")
+	r.HandleFunc("/api/v1/hobby/id/{id}", hobbyapi.GetHobbyByIDHandler).Methods("GET")
 
-	hobbydb.GetInst().Initialize("mongodb://localhost/")
+	if err := hobbydb.GetInst().Initialize("mongodb://localhost/"); err != nil {
+		logger.Error("Failed to connect Mongo DB: %v", err)
+        os.Exit(1)
+	}
 
 	logger.Info("start server")
 	if err := http.ListenAndServe(":8080", r); err != nil {
