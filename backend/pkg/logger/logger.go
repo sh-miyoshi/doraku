@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+var (
+	logEnvDebug = false
+)
+
 func writeLog(level string, format string, a ...interface{}) {
 	msg := fmt.Sprintf(format, a...)
 	now := time.Now()
@@ -17,9 +21,17 @@ func writeLog(level string, format string, a ...interface{}) {
 	fmt.Printf("%s %s:%d [%s] %s\n", now.Format(layout), fname, line, level, msg)
 }
 
+// InitLogger initialize variables for logger
+func InitLogger(debugMode bool) {
+	logEnvDebug = true
+	// TODO: output to log file
+}
+
 // Debug method outputs log as DEBUG Level
 func Debug(format string, a ...interface{}) {
-	writeLog("DEBUG", format, a...)
+	if logEnvDebug {
+		writeLog("DEBUG", format, a...)
+	}
 }
 
 // Info method outputs log as INFO Level
