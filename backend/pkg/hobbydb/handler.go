@@ -13,6 +13,7 @@ import (
 // DBHandler is interface of dbHandler
 type DBHandler interface {
 	Initialize() error
+	GetAllHobby() []HobbyDB
 	GetHobbyByID(id int) (HobbyDB, error)
 }
 
@@ -70,6 +71,10 @@ func (h *dbHandler) Initialize() error {
 
 	logger.Info("Successfully initialize DB")
 	return nil
+}
+
+func (h *dbHandler) GetAllHobby() []HobbyDB {
+	return h.data
 }
 
 func (h *dbHandler) GetHobbyByID(id int) (HobbyDB, error) {

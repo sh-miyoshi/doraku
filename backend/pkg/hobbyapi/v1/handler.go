@@ -1,9 +1,11 @@
 package hobbyapi
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 )
 
@@ -11,9 +13,26 @@ import (
 func GetAllHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetAllHobbyHandler method")
 
+	var res []HobbyKey
+
+	for _, h := range hobbydb.GetInst().GetAllHobby() {
+		tmp := HobbyKey{
+			ID:   h.ID,
+			Name: h.Name,
+		}
+		res = append(res, tmp)
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby lists %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Not implemented yet"))
+	w.Write(resRaw)
 	logger.Info("Successfully finished GetAllHobbyHandler")
 }
 
