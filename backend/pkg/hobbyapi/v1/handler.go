@@ -1,15 +1,10 @@
 package hobbyapi
 
 import (
-	//	"encoding/json"
-	//	"fmt"
 	"net/http"
-	//	"strconv"
 
 	"github.com/gorilla/mux"
-	//	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
-	//	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // GetAllHobbyHandler return lists of hobbies

@@ -1,9 +1,9 @@
 package hobbydb
 
-// HobbyDB is structure of Hobby in Mongo DB
+// HobbyDB is structure of Hobby
 type HobbyDB struct {
-	ID      int    `bson:"id"`
-	Name    string `bson:"name"`
-	NameEN  string `bson:"nameEN"`
-	GroupNo int    `bson:"groupNo"`
+	ID      int
+	Name    string
+	NameEN  string
+	GroupNo int
 }
