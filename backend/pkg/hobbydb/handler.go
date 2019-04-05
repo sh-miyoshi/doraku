@@ -84,11 +84,8 @@ func (h *dbHandler) GetHobbyByID(id int) (HobbyDB, error) {
 			return hobby, nil
 		}
 	}
-	return HobbyDB{}, fmt.Errorf("No such hobby ID: %d", id)
+	return HobbyDB{}, fmt.Errorf("No such hobby, ID: %d", id)
 }
-
-// TODO: GetAllHobby
-// TODO: GetHobbyByGroupNo
 
 func (h *dbHandler) GetHobbyNum() int {
 	return len(h.data)

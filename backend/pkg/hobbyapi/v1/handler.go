@@ -3,6 +3,7 @@ package hobbyapi
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -83,11 +84,36 @@ func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 // GetHobbyDetailsHandler return the details of input hobby
 func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	name := vars["name"]
-	logger.Info("call GetHobbyDetailsHandler method by name: %s", name)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		logger.Info("Failed to get hobby %v", err)
+		http.Error(w, "No such hobby", http.StatusNotFound)
+		return
+	}
+
+	logger.Info("call GetHobbyDetailsHandler method by id: %d", id)
+
+	hobby, err := hobbydb.GetInst().GetHobbyByID(id)
+	if err != nil {
+		logger.Info("Failed to get hobby %v", err)
+		http.Error(w, "No such hobby", http.StatusNotFound)
+		return
+	}
+
+	res := HobbyKey{
+		ID:   hobby.ID,
+		Name: hobby.Name,
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Not implemented yet"))
+	w.Write(resRaw)
 	logger.Info("Successfully finished GetHobbyDetailsHandler")
 }

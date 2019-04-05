@@ -20,7 +20,7 @@ func main() {
 	r.HandleFunc(basePath+"/hobby/all", apiv1.GetAllHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/today", apiv1.GetTodayHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/recommended", apiv1.GetRecommendedHobbyHandler).Methods("GET")
-	r.HandleFunc(basePath+"/hobby/details/{name}", apiv1.GetHobbyDetailsHandler).Methods("GET")
+	r.HandleFunc(basePath+"/hobby/details/{id}", apiv1.GetHobbyDetailsHandler).Methods("GET")
 
 	if err := hobbydb.GetInst().Initialize(); err != nil {
 		logger.Error("Failed to initialize DB: %v", err)

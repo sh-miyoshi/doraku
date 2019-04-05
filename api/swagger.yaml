@@ -68,7 +68,7 @@ paths:
           description: ok
           schema:
             type: string
-  '/hobby/details/{name}':
+  '/hobby/details/{id}':
     get:
       tags:
         - hobby
@@ -77,10 +77,10 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: integer
           in: path
-          description: name of the hobby
+          description: id of the hobby
           required: true
       responses:
         '200':
