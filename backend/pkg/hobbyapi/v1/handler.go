@@ -3,6 +3,7 @@ package hobbyapi
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
@@ -40,9 +41,31 @@ func GetAllHobbyHandler(w http.ResponseWriter, r *http.Request) {
 func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetTodayHobbyHandler method")
 
+	_, month, day := time.Now().Date()
+	todayInt := (int(month)*12 + day) % hobbydb.GetInst().GetHobbyNum()
+
+	hobby, err := hobbydb.GetInst().GetHobbyByID(todayInt)
+	if err != nil {
+		logger.Error("Failed to get hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	res := HobbyKey{
+		ID:   hobby.ID,
+		Name: hobby.Name,
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Not implemented yet"))
+	w.Write(resRaw)
 	logger.Info("Successfully finished GetTodayHobbyHandler")
 }
 

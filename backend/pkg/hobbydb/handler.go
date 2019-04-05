@@ -15,6 +15,7 @@ type DBHandler interface {
 	Initialize() error
 	GetAllHobby() []HobbyDB
 	GetHobbyByID(id int) (HobbyDB, error)
+	GetHobbyNum() int
 }
 
 // dbHandler implements DBHandler
@@ -88,3 +89,7 @@ func (h *dbHandler) GetHobbyByID(id int) (HobbyDB, error) {
 
 // TODO: GetAllHobby
 // TODO: GetHobbyByGroupNo
+
+func (h *dbHandler) GetHobbyNum() int {
+	return len(h.data)
+}
