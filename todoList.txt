@@ -5,8 +5,11 @@ frontend
     webページの実装
 
 backend
-    APIの修正
-    databaseの取り込み
+    unit testの用意
+    description, image and groupInfoのセット(HobbyDetailsHandler)
+    logのファイル書き出しオプションの実装(logger)
+    backend serverのオプションの実装
+    Dockerfileの準備
 
 mobile
     frontend完成後に用意
