@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"math/rand"
 	"os"
 	"strconv"
 
@@ -15,6 +16,7 @@ type DBHandler interface {
 	Initialize() error
 	GetAllHobby() []HobbyDB
 	GetHobbyByID(id int) (HobbyDB, error)
+	GetRecommendedHobby(input InputValue) (HobbyDB, error)
 	GetHobbyNum() int
 }
 
@@ -30,6 +32,13 @@ var inst = &dbHandler{}
 // GetInst return instance of Database Handler
 func GetInst() DBHandler {
 	return inst
+}
+
+func b2i(v bool) int {
+	if v {
+		return 1
+	}
+	return 0
 }
 
 func (h *dbHandler) Initialize() error {
@@ -62,7 +71,7 @@ func (h *dbHandler) Initialize() error {
 		}
 		tmp.Name = data[1]
 		tmp.NameEN = data[2]
-		tmp.GroupNo, err = strconv.Atoi(data[3])
+		tmp.GroupNo, err = strconv.ParseInt(data[3], 2, 4)
 		if err != nil {
 			return err
 		}
@@ -85,6 +94,26 @@ func (h *dbHandler) GetHobbyByID(id int) (HobbyDB, error) {
 		}
 	}
 	return HobbyDB{}, fmt.Errorf("No such hobby, ID: %d", id)
+}
+
+func (h *dbHandler) GetRecommendedHobby(input InputValue) (HobbyDB, error) {
+	var candidates []HobbyDB
+	no := (b2i(input.Outdoor) << 2) + (b2i(input.Alone) << 1) + b2i(input.Active)
+	logger.Info("Input GroupNo: %d", no)
+
+	for _, hobby := range h.data {
+		if hobby.GroupNo == int64(no) {
+			candidates = append(candidates, hobby)
+		}
+	}
+
+	logger.Debug("Candidates of recommended: %v", candidates)
+
+	if len(candidates) == 0 {
+		return HobbyDB{}, fmt.Errorf("No recomended hobby")
+	}
+
+	return candidates[rand.Intn(len(candidates)-1)], nil
 }
 
 func (h *dbHandler) GetHobbyNum() int {

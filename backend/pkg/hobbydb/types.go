@@ -5,5 +5,12 @@ type HobbyDB struct {
 	ID      int
 	Name    string
 	NameEN  string
-	GroupNo int
+	GroupNo int64
+}
+
+// InputValue strruct defines input value for recommendation
+type InputValue struct {
+	Outdoor bool
+	Alone   bool
+	Active  bool
 }
