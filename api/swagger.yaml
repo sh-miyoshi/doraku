@@ -61,8 +61,6 @@ paths:
                 type: boolean
               active:
                 type: boolean
-              money:
-                type: boolean
       responses:
         '200':
           description: ok
@@ -98,11 +96,11 @@ definitions:
         format: int64
       name:
         type: string
-      name_EN:
+      nameEN:
         type: string
       description:
         type: string
       image:
         type: string
-      group:
-        type: integer
+      groupInfo:
+        type: string

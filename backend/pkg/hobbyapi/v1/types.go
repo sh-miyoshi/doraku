@@ -1,5 +1,20 @@
 package hobbyapi
 
+//----------------------------
+// Request Data
+//----------------------------
+
+// SelectValue strruct defines user input value for recommendation
+type SelectValue struct {
+	Outdoor bool `json:"outdoor"`
+	Alone   bool `json:"alone"`
+	Active  bool `json:"active"`
+}
+
+//----------------------------
+// Response Data
+//----------------------------
+
 // Hobby struct defines info of hobby details
 type Hobby struct {
 	ID          int    `json:"id"`
@@ -7,7 +22,7 @@ type Hobby struct {
 	NameEN      string `json:"nameEN"`
 	Description string `json:"description"`
 	Image       string `json:"image"`
-	Group       int    `json:"group"`
+	GroupInfo   string `json:"groupInfo"`
 }
 
 // HobbyKey struct only includes id and name for vitualization
