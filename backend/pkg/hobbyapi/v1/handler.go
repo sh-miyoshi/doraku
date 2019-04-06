@@ -2,6 +2,8 @@ package hobbyapi
 
 import (
 	"encoding/json"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -73,11 +75,47 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 // GetRecommendedHobbyHandler return a hobby determined by input value
 func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendedHobbyHandler method")
-	// TODO: parse r.Body
+
+	var userInput SelectValue
+	if err := json.NewDecoder(r.Body).Decode(&userInput); err != nil {
+		logger.Info("Failed to decode user request Body: %v", err)
+		http.Error(w, "Request Body maybe broken", http.StatusBadRequest)
+		return
+	}
+	defer func() {
+		// Drain and close the body to let the Transport reuse the connection
+		io.Copy(ioutil.Discard, r.Body)
+		r.Body.Close()
+	}()
+
+	// GetRecommended Hobby
+	input := hobbydb.InputValue{
+		Outdoor: userInput.Outdoor,
+		Alone:   userInput.Alone,
+		Active:  userInput.Active,
+	}
+	hobby, err := hobbydb.GetInst().GetRecommendedHobby(input)
+	if err != nil {
+		logger.Error("Failed to get recommended hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	res := HobbyKey{
+		ID:   hobby.ID,
+		Name: hobby.Name,
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Not implemented yet"))
+	w.Write(resRaw)
 	logger.Info("Successfully finished GetRecommendedHobbyHandler")
 }
 
@@ -100,10 +138,13 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := HobbyKey{
-		ID:   hobby.ID,
-		Name: hobby.Name,
+	res := Hobby{
+		ID:     hobby.ID,
+		Name:   hobby.Name,
+		NameEN: hobby.NameEN,
 	}
+
+	// TODO: set description, image and groupInfo
 
 	resRaw, err := json.Marshal(res)
 	if err != nil {
