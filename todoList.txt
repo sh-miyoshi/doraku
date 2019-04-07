@@ -10,6 +10,7 @@ backend
     logのファイル書き出しオプションの実装(logger)
     backend serverのオプションの実装
     Dockerfileの準備
+    user処理
 
 mobile
     frontend完成後に用意
