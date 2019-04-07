@@ -22,7 +22,9 @@ func main() {
 	r.HandleFunc(basePath+"/hobby/recommended", apiv1.GetRecommendedHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/details/{id}", apiv1.GetHobbyDetailsHandler).Methods("GET")
 
-	if err := hobbydb.GetInst().Initialize(); err != nil {
+	const filePath = "database/hobby.csv"
+
+	if err := hobbydb.GetInst().Initialize(filePath); err != nil {
 		logger.Error("Failed to initialize DB: %v", err)
 		os.Exit(1)
 	}

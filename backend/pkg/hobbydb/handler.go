@@ -13,7 +13,7 @@ import (
 
 // DBHandler is interface of dbHandler
 type DBHandler interface {
-	Initialize() error
+	Initialize(filePath string) error
 	GetAllHobby() []HobbyDB
 	GetHobbyByID(id int) (HobbyDB, error)
 	GetRecommendedHobby(input InputValue) (HobbyDB, error)
@@ -41,9 +41,7 @@ func b2i(v bool) int {
 	return 0
 }
 
-func (h *dbHandler) Initialize() error {
-	const filePath = "hobby.csv"
-
+func (h *dbHandler) Initialize(filePath string) error {
 	fp, err := os.Open(filePath)
 	if err != nil {
 		return err
