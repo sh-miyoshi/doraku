@@ -45,7 +45,13 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetTodayHobbyHandler method")
 
 	_, month, day := time.Now().Date()
-	todayInt := (int(month)*12 + day) % hobbydb.GetInst().GetHobbyNum()
+	num := hobbydb.GetInst().GetHobbyNum()
+	if num == 0 {
+		logger.Error("Please Initalize DB before call API")
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	todayInt := (int(month)*12 + day) % num
 
 	hobby, err := hobbydb.GetInst().GetHobbyByID(todayInt)
 	if err != nil {
