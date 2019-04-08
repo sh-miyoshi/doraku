@@ -82,6 +82,12 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendedHobbyHandler method")
 
+	if r.Body == nil {
+		logger.Info("Request Body is nil")
+        http.Error(w, "This APi requests Body parameters", http.StatusBadRequest)
+        return
+	}
+
 	var userInput SelectValue
 	if err := json.NewDecoder(r.Body).Decode(&userInput); err != nil {
 		logger.Info("Failed to decode user request Body: %v", err)
