@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -11,6 +13,16 @@ import (
 )
 
 func main() {
+	const DEFAULT_PORT = 8080
+	const DEFAULT_BIND_ADDR = "0.0.0.0"
+
+	var port int
+	var bindAddr string
+
+	flag.IntVar(&port, "port", DEFAULT_PORT, "set port number for server")
+	flag.StringVar(&bindAddr, "bind", DEFAULT_BIND_ADDR, "set bind address for server")
+	flag.Parse()
+
 	// If you run doraku-server as debug mode, uncommentout following line
 	//logger.InitLogger(true)
 
@@ -29,8 +41,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	logger.Info("start server")
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	addr := fmt.Sprintf("%s:%d", bindAddr, port)
+	logger.Info("start server with %s", addr)
+	if err := http.ListenAndServe(addr, r); err != nil {
 		logger.Error("http ListenAndServe Error: %v", err)
 		os.Exit(1)
 	}
