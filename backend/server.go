@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	apiv1 "github.com/sh-miyoshi/doraku/pkg/hobbyapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
@@ -26,6 +27,13 @@ func main() {
 	// If you run doraku-server as debug mode, uncommentout following line
 	//logger.InitLogger(true)
 
+	const filePath = "database/hobby.csv"
+
+	if err := hobbydb.GetInst().Initialize(filePath); err != nil {
+		logger.Error("Failed to initialize DB: %v", err)
+		os.Exit(1)
+	}
+
 	r := mux.NewRouter()
 
 	basePath := "/api/v1"
@@ -34,16 +42,11 @@ func main() {
 	r.HandleFunc(basePath+"/hobby/recommended", apiv1.GetRecommendedHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/details/{id}", apiv1.GetHobbyDetailsHandler).Methods("GET")
 
-	const filePath = "database/hobby.csv"
-
-	if err := hobbydb.GetInst().Initialize(filePath); err != nil {
-		logger.Error("Failed to initialize DB: %v", err)
-		os.Exit(1)
-	}
+	corsObj := handlers.AllowedOrigins([]string{"*"})
 
 	addr := fmt.Sprintf("%s:%d", bindAddr, port)
 	logger.Info("start server with %s", addr)
-	if err := http.ListenAndServe(addr, r); err != nil {
+	if err := http.ListenAndServe(addr, handlers.CORS(corsObj)(r)); err != nil {
 		logger.Error("http ListenAndServe Error: %v", err)
 		os.Exit(1)
 	}
