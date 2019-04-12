@@ -1,16 +1,29 @@
 TODO List
 
 frontend
-    ideasの作成
+    全体
+        ディレクトリの整理
+        reduxの導入
+        cssの準備
     webページの実装
+        top
+            list, recommendへのパス追加
+            todayへのデータ送信処理
+        today
+        recommend
+        recommend_result
+        list
+        details
 
 backend
     unit testの用意
     description, image and groupInfoのセット(HobbyDetailsHandler)
     logのファイル書き出しオプションの実装(logger)
     backend serverのオプションの実装
-    Dockerfileの準備
+    debug用Dockerfileの準備
+    Kubernetes yamlの準備
     user処理
+        JWTサーバなど
 
 mobile
     frontend完成後に用意
