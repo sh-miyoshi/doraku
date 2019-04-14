@@ -1,21 +1,42 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
 import Top from './top'
 import { Today } from './today'
+import { createBrowserHistory } from 'history'
+import { applyMiddleware, compose, createStore } from 'redux'
+import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
+import rootReducer from './reducer'
+import { Provider } from 'react-redux'
+
+const history = createBrowserHistory()
+const store = createStore(
+  rootReducer(history), // new root reducer with router state
+  {},
+  compose(
+    applyMiddleware(
+      routerMiddleware(history), // for dispatching history actions
+      // ... other middlewares ...
+    ),
+  ),
+)
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <header>
-            <h3><Link to="/">LOGO</Link></h3>
-          </header>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <BrowserRouter>
+            <div>
+              <header>
+                <h3><Link to="/">LOGO</Link></h3>
+              </header>
 
-          <Route exact path="/" component={Top} />
-          <Route path="/today" component={Today} />
-        </div>
-      </Router>
+              <Route exact path="/" component={Top} />
+              <Route path="/today" component={Today} />
+            </div>
+          </BrowserRouter>
+        </ConnectedRouter>
+      </Provider>
     );
   }
 }

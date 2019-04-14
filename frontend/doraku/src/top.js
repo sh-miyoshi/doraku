@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router"
 import { Button } from 'react-bootstrap'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { setHobby } from './actions'
 
 class Top extends Component {
   handleToTodayPage = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/hobby/today');
+      let response = await axios.get('http://localhost:8080/api/v1/hobby/today');
       console.log(response);
+      if (!response || response.status !== 200) {
+        return
+      }
+      // TODO(set response.data.id, name to store)
     } catch (error) {
       console.error(error)
     }
@@ -26,4 +31,15 @@ class Top extends Component {
   }
 }
 
-export default withRouter(Top)
+const mapStateToProps = state => ({
+  stores: state.stores
+})
+
+const mapDispatchToProps = {
+  setHobby
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Top)
