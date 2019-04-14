@@ -7,6 +7,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import rootReducer from './reducer'
 import { Provider } from 'react-redux'
+import Error from './error500'
 
 const history = createBrowserHistory()
 const store = createStore(
@@ -33,6 +34,7 @@ class App extends Component {
 
               <Route exact path="/" component={Top} />
               <Route path="/today" component={Today} />
+              <Route path="/error" component={Error} />
             </div>
           </BrowserRouter>
         </ConnectedRouter>

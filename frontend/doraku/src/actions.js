@@ -3,3 +3,8 @@ export const setHobby = (id, name) => ({
     id,
     name
 })
+
+export const setError = (error) => ({
+    type: 'SET_ERROR',
+    error
+})
