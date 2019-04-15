@@ -7,7 +7,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import rootReducer from './reducer'
 import { Provider } from 'react-redux'
-import Error from './error500'
+import Error from './error'
 
 const history = createBrowserHistory()
 const store = createStore(

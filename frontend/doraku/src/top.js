@@ -23,7 +23,6 @@ class Top extends Component {
     if (ok) {
       this.props.history.push('/today')
     } else {
-      console.log(this.props)
       this.props.history.push('/error')
     }
   }
