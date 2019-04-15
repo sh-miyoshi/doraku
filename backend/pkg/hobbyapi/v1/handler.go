@@ -84,8 +84,8 @@ func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Body == nil {
 		logger.Info("Request Body is nil")
-        http.Error(w, "This APi requests Body parameters", http.StatusBadRequest)
-        return
+		http.Error(w, "This APi requests Body parameters", http.StatusBadRequest)
+		return
 	}
 
 	var userInput SelectValue
