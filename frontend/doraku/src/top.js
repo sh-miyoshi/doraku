@@ -1,29 +1,20 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { setHobby, setError } from './actions'
+import { HobbyHandler } from './hobbyhandler'
 
 class Top extends Component {
   handleToTodayPage = async () => {
-    let ok = false
-    try {
-      let response = await axios.get('http://localhost:8080/api/v1/hobby/today');
-      console.log(response);
-      if (response && response.status === 200) {
-        ok = true
-        // TODO(set response.data.id, name to store)
-      } else {
-        this.props.setError(response)
-      }
-    } catch (error) {
-      console.error(error)
-      this.props.setError("failed to get hobby from a server")
-    }
-    if (ok) {
-      this.props.history.push('/today')
-    } else {
+    let handler = new HobbyHandler()
+    let res = await handler.getTodayHobby()
+    if (!res) {
+      let error = handler.getError()
+      this.props.setError(error)
       this.props.history.push('/error')
+    } else {
+      // TODO(set response.data.id, name to store)
+      this.props.history.push('/today')
     }
   }
 
