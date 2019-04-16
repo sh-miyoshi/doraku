@@ -11,8 +11,8 @@ const hobbyReducer = (state = initState, action) => {
   switch (action.type) {
     case 'SET_HOBBY':
       return Object.assign({}, state, {
-        selected_hobby_id: action.selected_hobby_id,
-        selected_hobby_name: action.selected_hobby_name,
+        selected_hobby_id: action.id,
+        selected_hobby_name: action.name,
       })
     case 'SET_ERROR':
       return Object.assign({}, state, {

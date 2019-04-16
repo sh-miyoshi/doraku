@@ -9,7 +9,10 @@ export class HobbyHandler {
 
   async getTodayHobby() {
     let res = await this._query(SERVER_URL + "/api/v1/hobby/today")
-    return res
+    if (res) {
+      return { id: res.data.id, name: res.data.name }
+    }
+    return null
   }
 
   getError() {

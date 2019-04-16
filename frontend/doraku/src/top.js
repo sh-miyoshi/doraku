@@ -13,7 +13,8 @@ class Top extends Component {
       this.props.setError(error)
       this.props.history.push('/error')
     } else {
-      // TODO(set response.data.id, name to store)
+      console.log(res)
+      this.props.setHobby(res.id, res.name)
       this.props.history.push('/today')
     }
   }

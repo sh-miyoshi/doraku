@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import Top from './top'
-import { Today } from './today'
+import Today from './today'
 import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
