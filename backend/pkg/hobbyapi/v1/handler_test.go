@@ -35,7 +35,9 @@ func TestGetTodayHobbyHandler(t *testing.T) {
 	}
 
 	// Initalize DB for API call
-	hobbydb.GetInst().Initialize("../../../database/hobby.csv")
+	hobbyFilePath := "../../../database/hobby.csv"
+	descFilePath := "../../../database/description.csv"
+	hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath)
 
 	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()

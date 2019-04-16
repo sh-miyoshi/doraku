@@ -13,7 +13,7 @@ import (
 
 // DBHandler is interface of dbHandler
 type DBHandler interface {
-	Initialize(filePath string) error
+	Initialize(hobbyFilePath, descFilePath string) error
 	GetAllHobby() []HobbyDB
 	GetHobbyByID(id int) (HobbyDB, error)
 	GetRecommendedHobby(input InputValue) (HobbyDB, error)
@@ -41,8 +41,8 @@ func b2i(v bool) int {
 	return 0
 }
 
-func (h *dbHandler) Initialize(filePath string) error {
-	fp, err := os.Open(filePath)
+func (h *dbHandler) Initialize(hobbyFilePath, descFilePath string) error {
+	fp, err := os.Open(hobbyFilePath)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (h *dbHandler) Initialize(filePath string) error {
 
 		// Caution: The order cannot be changed
 		if len(data) != 4 {
-			return fmt.Errorf("%s file is maybe broken. we expect 4 data, but got %d", filePath, len(data))
+			return fmt.Errorf("%s file is maybe broken. we expect 4 data, but got %d", hobbyFilePath, len(data))
 		}
 		tmp := HobbyDB{}
 		tmp.ID, err = strconv.Atoi(data[0])
@@ -76,6 +76,40 @@ func (h *dbHandler) Initialize(filePath string) error {
 		h.data = append(h.data, tmp)
 	}
 	logger.Debug("DB data: %v", h.data)
+
+	// Read Description
+	fpDesc, err := os.Open(descFilePath)
+	if err != nil {
+		return err
+	}
+	defer fpDesc.Close()
+
+	reader = csv.NewReader(fpDesc)
+	reader.Comment = '#'
+
+	for {
+		data, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return err
+		}
+
+		if len(data) != 2 {
+			return fmt.Errorf("%s file is maybe broken. we expect 2 data, but got %d", descFilePath, len(data))
+		}
+
+		id, err := strconv.Atoi(data[0])
+		if err != nil {
+			return err
+		}
+
+		if 0 <= id && id < len(h.data) {
+			h.data[id].Description = data[1]
+		} else {
+			return fmt.Errorf("id %d is larger than DB size %d", id, len(h.data))
+		}
+	}
 
 	logger.Info("Successfully initialize DB")
 	return nil

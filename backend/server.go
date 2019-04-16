@@ -31,9 +31,10 @@ func main() {
 	// If you run doraku-server as debug mode, uncommentout following line
 	//logger.InitLogger(true, "")
 
-	const filePath = "database/hobby.csv"
+	const hobbyFilePath = "database/hobby.csv"
+	const descFilePath = "database/description.csv"
 
-	if err := hobbydb.GetInst().Initialize(filePath); err != nil {
+	if err := hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath); err != nil {
 		logger.Error("Failed to initialize DB: %v", err)
 		os.Exit(1)
 	}
