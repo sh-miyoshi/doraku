@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const SERVER_URL = "http://localhost:8080"
 

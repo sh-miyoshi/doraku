@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { setHobby, setError } from './actions'
-import { HobbyHandler } from './hobbyhandler'
+import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { setHobby, setError } from './actions';
+import { HobbyHandler } from './hobbyhandler';
 
 class Top extends Component {
   handleToTodayPage = async () => {

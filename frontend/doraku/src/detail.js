@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 
-class Detail extends Component {
+export class Detail extends Component {
   render() {
     return (
       <div>
@@ -11,11 +10,3 @@ class Detail extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  hobby: state.hobby
-})
-
-export default connect(
-  mapStateToProps,
-)(Detail)

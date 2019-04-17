@@ -8,7 +8,7 @@ import rootReducer from './reducer';
 import Error from './error';
 import Top from './top';
 import Today from './today';
-import Detail from './detail';
+import { Detail } from './detail';
 
 const history = createBrowserHistory()
 const store = createStore(
