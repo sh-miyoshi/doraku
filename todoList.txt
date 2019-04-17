@@ -7,14 +7,15 @@ frontend
         Navigationの整理
     webページの実装
         top
-            list, recommendへのパス追加
-        today
-            データの表示
-            詳細ページへのリンク
+            recommendへのパス追加
         recommend
+            全部
         recommend_result
+            全部
         list
-        details
+            ページへのリンク
+        detail
+            内容
 
 backend
     unit testの用意
