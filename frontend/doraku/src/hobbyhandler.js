@@ -15,6 +15,14 @@ export class HobbyHandler {
     return null
   }
 
+  async getAllHobby() {
+    let res = await this._query(SERVER_URL + "/api/v1/hobby/all")
+    if (res) {
+      return res.data
+    }
+    return null
+  }
+
   getError() {
     return this.error
   }
