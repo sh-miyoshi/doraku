@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import './error.css';
+import './500.css';
 
-class Error extends Component {
+class Error500 extends Component {
   render() {
     return (
       <div className="main">
@@ -39,4 +39,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(Error)
+)(Error500)

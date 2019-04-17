@@ -12,8 +12,6 @@ frontend
             全部
         recommend_result
             全部
-        list
-            ページへのリンク
         detail
             内容
 
