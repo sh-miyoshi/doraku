@@ -8,7 +8,6 @@ frontend
     webページの実装
         top
             list, recommendへのパス追加
-            todayへのデータ送信処理
         today
             データの表示
             詳細ページへのリンク
@@ -19,7 +18,8 @@ frontend
 
 backend
     unit testの用意
-    description, image and groupInfoのセット(HobbyDetailsHandler)
+    image and groupInfoのセット(HobbyDetailsHandler)
+    database/imagesの用意 & 画像の準備(1.pngとか)
     debug用Dockerfileの準備
     Kubernetes yamlの準備
     user処理
