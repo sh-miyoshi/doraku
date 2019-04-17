@@ -20,16 +20,15 @@ func main() {
 	var port int
 	var bindAddr string
 	var logFile string
+	var debug bool
 
 	flag.IntVar(&port, "port", DefaultPort, "set port number for server")
 	flag.StringVar(&bindAddr, "bind", DefaultBindAddr, "set bind address for server")
-	flag.StringVar(&logFile, "logfile", "", "write log to file, output os.Stdout if do not set this")
+	flag.StringVar(&logFile, "logfile", "", "write log to file, output os.Stdout when do not set this")
+	flag.BoolVar(&debug, "debug", false, "if true, run server as debug mode")
 	flag.Parse()
 
-	logger.InitLogger(false, logFile)
-
-	// If you run doraku-server as debug mode, uncommentout following line
-	//logger.InitLogger(true, "")
+	logger.InitLogger(debug, logFile)
 
 	const hobbyFilePath = "database/hobby.csv"
 	const descFilePath = "database/description.csv"
