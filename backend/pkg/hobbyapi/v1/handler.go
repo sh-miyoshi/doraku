@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -150,13 +151,20 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := Hobby{
-		ID:     hobby.ID,
-		Name:   hobby.Name,
-		NameEN: hobby.NameEN,
+	desc := ""
+	// Set description if hobby.Description includes http(it mean http[s]://...)
+	if strings.Contains(hobby.Description, "http") {
+		desc = hobby.Description
 	}
 
-	// TODO: set description, image and groupInfo
+	res := Hobby{
+		ID:          hobby.ID,
+		Name:        hobby.Name,
+		NameEN:      hobby.NameEN,
+		Description: desc,
+	}
+
+	// TODO: set image and groupInfo
 
 	resRaw, err := json.Marshal(res)
 	if err != nil {
