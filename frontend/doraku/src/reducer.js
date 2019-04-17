@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 const initState = {
-  error: "",
+  errorMsg: "",
 }
 
-const hobbyReducer = (state = initState, action) => {
+const errorReducer = (state = initState, action) => {
   switch (action.type) {
-    case 'SET_ERROR':
+    case 'SET_INTERNAL_SERVER_ERROR':
       return Object.assign({}, state, {
-        error: action.error,
+        errorMsg: action.errorMsg,
       })
     default:
       return state
@@ -17,7 +17,7 @@ const hobbyReducer = (state = initState, action) => {
 }
 
 const rootReducer = (history) => combineReducers({
-  hobby: hobbyReducer,
+  error: errorReducer,
   router: connectRouter(history)
 })
 

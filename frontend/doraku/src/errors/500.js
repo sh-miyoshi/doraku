@@ -9,7 +9,7 @@ class Error500 extends Component {
       <div className="main">
         <h1>500</h1>
         <h2>Unexpected Error <b>:(</b></h2>
-        <h2>{this.props.hobby.error}</h2>
+        <h2>{this.props.error.errorMsg}</h2>
         <h2><Link to="/">もう一度試す</Link></h2>
         <div className="gears">
           <div className="gear one">
@@ -34,7 +34,7 @@ class Error500 extends Component {
 }
 
 const mapStateToProps = state => ({
-  hobby: state.hobby
+  error: state.error
 })
 
 export default connect(

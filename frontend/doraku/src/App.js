@@ -8,7 +8,7 @@ import rootReducer from './reducer';
 import Error500 from './errors/500';
 import { Top } from './top';
 import Today from './today';
-import { Detail } from './detail';
+import Detail from './detail';
 import List from './list';
 import { Error404 } from './errors/404'
 

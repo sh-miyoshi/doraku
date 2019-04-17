@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setError } from './actions';
+import { setInternalServerError } from './actions';
 import { HobbyHandler } from './hobbyhandler';
 
 class List extends Component {
@@ -16,7 +16,7 @@ class List extends Component {
     handler.getAllHobby().then(res => {
       if (!res) {
         let error = handler.getError()
-        this.props.setError(error)
+        this.props.setInternalServerError(error)
         this.props.history.push('/error')
       } else {
         this.setState({ hobbies: res })
@@ -43,11 +43,11 @@ class List extends Component {
 }
 
 const mapStateToProps = state => ({
-  hobby: state.hobby
+  error: state.error
 })
 
 const mapDispatchToProps = {
-  setError
+  setInternalServerError
 }
 
 export default connect(

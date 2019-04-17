@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+//import { HobbyHandler } from './hobbyhandler';
 
-export class Detail extends Component {
+class Detail extends Component {
   render() {
     return (
       <div>
@@ -10,3 +12,11 @@ export class Detail extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  error: state.error
+})
+
+export default connect(
+  mapStateToProps
+)(Detail)
