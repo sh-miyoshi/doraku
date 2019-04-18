@@ -23,6 +23,14 @@ export class HobbyHandler {
     return null
   }
 
+  async getHobbyDetail(id) {
+    let res = await this._query(SERVER_URL + "/api/v1/hobby/details/" + id)
+    if (res) {
+      return res.data
+    }
+    return null
+  }
+
   getError() {
     return this.error
   }
