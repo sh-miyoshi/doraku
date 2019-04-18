@@ -1,6 +1,7 @@
 package hobbyapi
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -62,22 +63,39 @@ func TestGetHobbyDetailsHandler(t *testing.T) {
 	descFilePath := "../../../database/description.csv"
 	hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath)
 
-	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
-	rr := httptest.NewRecorder()
+	const BasePath = "/api/v1/hobby/details"
 
-	// Test correct data
-	req, err := http.NewRequest("GET", "/api/v1/hobby/details/0", nil)
-	if err != nil {
-		t.Fatal(err)
+	tt := []struct {
+		routeVariable    string
+		expectStatusCode int
+	}{
+		{"0", http.StatusOK},
+		{"21", http.StatusOK},
+		{"22", http.StatusNotFound},
+		{"-1", http.StatusNotFound},
+		{"test", http.StatusNotFound},
+		{"", http.StatusNotFound},
 	}
 
-	// Need to create a router that we can pass the request through so that the vars will be added to the context
-	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/hobby/details/{id}", GetHobbyDetailsHandler)
-	router.ServeHTTP(rr, req)
+	for _, tc := range tt {
+		path := fmt.Sprintf("%s/%s", BasePath, tc.routeVariable)
+		req, err := http.NewRequest("GET", path, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		rr := httptest.NewRecorder()
+
+		// Need to create a router that we can pass the request through so that the vars will be added to the context
+		router := mux.NewRouter()
+		router.HandleFunc(BasePath+"/{id}", GetHobbyDetailsHandler)
+		router.ServeHTTP(rr, req)
+
+		// In this case, our MetricsHandler returns a non-200 response
+		// for a route variable it doesn't know about.
+		if rr.Code != tc.expectStatusCode {
+			t.Errorf("handler should have failed on routeVariable %s: got %v want %v",
+				tc.routeVariable, rr.Code, http.StatusOK)
+		}
 	}
 }
