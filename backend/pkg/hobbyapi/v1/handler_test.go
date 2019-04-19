@@ -95,6 +95,7 @@ func TestGetHobbyDetailsHandler(t *testing.T) {
 
 	const BasePath = "/api/v1/hobby/details"
 
+	// Test Cases
 	tt := []struct {
 		routeVariable    string
 		expectStatusCode int
