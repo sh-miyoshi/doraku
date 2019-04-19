@@ -1,6 +1,8 @@
 package hobbyapi
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -45,6 +47,34 @@ func TestGetTodayHobbyHandler(t *testing.T) {
 	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(GetTodayHobbyHandler)
+
+	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
+	// directly and pass in our Request and ResponseRecorder.
+	handler.ServeHTTP(rr, req)
+
+	// Check the status code is what we expect.
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestGetRecommendedHobbyHandler(t *testing.T) {
+	// Initalize DB for API call
+	hobbyFilePath := "../../../database/hobby.csv"
+	descFilePath := "../../../database/description.csv"
+	hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath)
+
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetRecommendedHobbyHandler)
+
+	data := SelectValue{}
+	raw, _ := json.Marshal(data)
+	req, err := http.NewRequest("GET", "/api/v1/hobby/recommended", bytes.NewBuffer(raw))
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
 	// directly and pass in our Request and ResponseRecorder.
