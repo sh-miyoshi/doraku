@@ -32,7 +32,14 @@ class Detail extends Component {
     return (
       <div>
         <h2>詳細</h2>
-        <h2>ERROR: {this.state.error}</h2>
+        {
+          this.state.error &&
+          <h2>ERROR: {this.state.error}</h2>
+        }
+        {
+          this.state.hobby &&
+          <h2>{this.state.hobby.name}</h2>
+        }
       </div>
     )
   }
