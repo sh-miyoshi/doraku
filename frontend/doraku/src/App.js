@@ -10,6 +10,8 @@ import { Top } from './top';
 import Today from './today';
 import Detail from './detail';
 import List from './list';
+import Recommend from './recommend'
+import RecommendResult from './recommend_result'
 import { Error404 } from './errors/404'
 
 const history = createBrowserHistory()
@@ -41,6 +43,8 @@ class App extends Component {
                 <Route path="/error" component={Error500} />
                 <Route path="/detail/:id" component={Detail} />
                 <Route path="/list" component={List} />
+                <Route path="/recommend" component={Recommend} />
+                <Route path="/recommend_result" component={RecommendResult} />
                 <Route component={Error404} />
               </Switch>
             </div>

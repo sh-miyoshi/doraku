@@ -31,14 +31,22 @@ export class HobbyHandler {
     return null
   }
 
+  async getRecommendHobby(body) {
+    let res = await this._query(SERVER_URL + "/api/v1/hobby/recommended", body)
+    if (res) {
+      return res.data
+    }
+    return null
+  }
+
   getError() {
     return this.error
   }
 
   // private methods
-  async _query(url) {
+  async _query(url, body = null) {
     try {
-      let response = await axios.get(url);
+      let response = await axios.get(url, { data: body });
       console.log(response);
       if (response && response.status === 200) {
         return response
