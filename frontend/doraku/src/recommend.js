@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
-import { setRecommendHobby } from './actions';
-// import { HobbyHandler } from './hobbyhandler';
+import { setRecommendHobby, setInternalServerError } from './actions';
+import { HobbyHandler } from './hobbyhandler';
 
 class Recommend extends Component {
   state = {
@@ -39,9 +39,26 @@ class Recommend extends Component {
     )
   }
 
-  _handleRecommend = () => {
+  _handleRecommend = async () => {
     console.log("select: " + this.state.selectValues)// for debug
-    this.props.history.push('/recommend_result')
+
+    let params = {}// todo
+    let handler = new HobbyHandler()
+    let res = await handler.getRecommendHobby(params)
+
+    if (!res) {
+      let error = handler.getError()
+      this.props.setInternalServerError(error)
+      this.props.history.push('/error')
+    } else {
+      console.log(res)
+      // todo
+      // this.setState({
+      //   hobby_id: res.id,
+      //   hobby_name: res.name
+      // })
+      this.props.history.push('/recommend_result')
+    }
   }
 
   _change = (e) => {
@@ -58,10 +75,12 @@ class Recommend extends Component {
 }
 
 const mapStateToProps = state => ({
+  error: state.error
 })
 
 const mapDispatchToProps = {
-  setRecommendHobby
+  setRecommendHobby,
+  setInternalServerError
 }
 
 export default connect(

@@ -31,8 +31,8 @@ export class HobbyHandler {
     return null
   }
 
-  async getRecommendHobby(body) {
-    let res = await this._query(SERVER_URL + "/api/v1/hobby/recommended", body)
+  async getRecommendHobby(params) {
+    let res = await this._query(SERVER_URL + "/api/v1/hobby/recommended", params)
     if (res) {
       return res.data
     }
@@ -44,9 +44,10 @@ export class HobbyHandler {
   }
 
   // private methods
-  async _query(url, body = null) {
+  async _query(url, params = null) {
     try {
-      let response = await axios.get(url, { data: body });
+      console.log(params)
+      let response = await axios.get(url, { params: params });
       console.log(response);
       if (response && response.status === 200) {
         return response
