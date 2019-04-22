@@ -81,6 +81,8 @@ func TestGetRecommendedHobbyHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
+
+	// TODO(test all input pattern)
 }
 
 func TestGetHobbyDetailsHandler(t *testing.T) {

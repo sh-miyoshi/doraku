@@ -145,7 +145,7 @@ func (h *dbHandler) GetRecommendedHobby(input InputValue) (HobbyDB, error) {
 		return HobbyDB{}, fmt.Errorf("No recomended hobby")
 	}
 
-	return candidates[rand.Intn(len(candidates)-1)], nil
+	return candidates[rand.Intn(len(candidates))], nil
 }
 
 func (h *dbHandler) GetHobbyNum() int {

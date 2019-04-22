@@ -81,10 +81,10 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendedHobbyHandler method")
 
-	// TODO(handle query params)
-	outdoor := true
-	alone := true
-	active := true
+	// if query == yes then, set var = true
+	outdoor := (r.FormValue("outdoor") == "yes")
+	alone := (r.FormValue("alone") == "yes")
+	active := (r.FormValue("active") == "yes")
 
 	// GetRecommended Hobby
 	input := hobbydb.InputValue{
