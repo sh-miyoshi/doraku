@@ -1,8 +1,6 @@
 package hobbyapi
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -69,9 +67,7 @@ func TestGetRecommendedHobbyHandler(t *testing.T) {
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(GetRecommendedHobbyHandler)
 
-	data := SelectValue{}
-	raw, _ := json.Marshal(data)
-	req, err := http.NewRequest("GET", "/api/v1/hobby/recommended", bytes.NewBuffer(raw))
+	req, err := http.NewRequest("GET", "/api/v1/hobby/recommended", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

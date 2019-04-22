@@ -1,17 +1,6 @@
 package hobbyapi
 
 //----------------------------
-// Request Data
-//----------------------------
-
-// SelectValue strruct defines user input value for recommendation
-type SelectValue struct {
-	Outdoor bool `json:"outdoor"`
-	Alone   bool `json:"alone"`
-	Active  bool `json:"active"`
-}
-
-//----------------------------
 // Response Data
 //----------------------------
 

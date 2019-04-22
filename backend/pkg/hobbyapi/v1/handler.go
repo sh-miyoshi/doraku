@@ -2,8 +2,6 @@ package hobbyapi
 
 import (
 	"encoding/json"
-	"io"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -83,29 +81,16 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendedHobbyHandler method")
 
-	if r.Body == nil {
-		logger.Info("Request Body is nil")
-		http.Error(w, "This APi requests Body parameters", http.StatusBadRequest)
-		return
-	}
-
-	var userInput SelectValue
-	if err := json.NewDecoder(r.Body).Decode(&userInput); err != nil {
-		logger.Info("Failed to decode user request Body: %v", err)
-		http.Error(w, "Request Body maybe broken", http.StatusBadRequest)
-		return
-	}
-	defer func() {
-		// Drain and close the body to let the Transport reuse the connection
-		io.Copy(ioutil.Discard, r.Body)
-		r.Body.Close()
-	}()
+	// TODO(handle query params)
+	outdoor := true
+	alone := true
+	active := true
 
 	// GetRecommended Hobby
 	input := hobbydb.InputValue{
-		Outdoor: userInput.Outdoor,
-		Alone:   userInput.Alone,
-		Active:  userInput.Active,
+		Outdoor: outdoor,
+		Alone:   alone,
+		Active:  active,
 	}
 	hobby, err := hobbydb.GetInst().GetRecommendedHobby(input)
 	if err != nil {

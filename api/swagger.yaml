@@ -50,17 +50,15 @@ paths:
       summary: get recommended hobby
       description: get recommended hobby
       parameters:
-        - name: selects
-          in: body
-          required: true
-          schema:
-            properties:
-              outdoor:
-                type: boolean
-              alone:
-                type: boolean
-              active:
-                type: boolean
+        - name: outdoor
+          in: query
+          type: string
+        - name: alone
+          in: query
+          type: string
+        - name: active
+          in: query
+          type: string
       responses:
         '200':
           description: ok
