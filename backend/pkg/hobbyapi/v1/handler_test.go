@@ -1,6 +1,7 @@
 package hobbyapi
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -63,6 +64,8 @@ func TestGetRecommendedHobbyHandler(t *testing.T) {
 	descFilePath := "../../../database/description.csv"
 	hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath)
 
+	// TODO(test all input pattern)
+
 	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(GetRecommendedHobbyHandler)
@@ -82,7 +85,21 @@ func TestGetRecommendedHobbyHandler(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	// TODO(test all input pattern)
+	var res HobbyKey
+	if err := json.NewDecoder(rr.Body).Decode(&res); err != nil {
+		t.Fatal(err)
+	}
+	// Test groupNo in result
+	url := fmt.Sprintf("/api/v1/hobby/detail/%d", res.ID)
+	req, _ = http.NewRequest("GET", url, nil)
+	handler.ServeHTTP(rr, req)
+	var dres Hobby
+	if err := json.NewDecoder(rr.Body).Decode(&dres); err != nil {
+		t.Fatal(err)
+	}
+	fmt.Printf("%v", dres)
+
+	// TODO check dres.GroupInfo
 }
 
 func TestGetHobbyDetailsHandler(t *testing.T) {
