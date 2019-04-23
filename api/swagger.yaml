@@ -100,5 +100,7 @@ definitions:
         type: string
       image:
         type: string
+      groupNo:
+        type: integer
       groupInfo:
         type: string

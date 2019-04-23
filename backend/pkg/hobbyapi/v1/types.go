@@ -11,6 +11,7 @@ type Hobby struct {
 	NameEN      string `json:"nameEN"`
 	Description string `json:"description"`
 	Image       string `json:"image"`
+	GroupNo     int    `json:"groupNo"`
 	GroupInfo   string `json:"groupInfo"`
 }
 
