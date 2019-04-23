@@ -42,7 +42,12 @@ class Recommend extends Component {
   _handleRecommend = async () => {
     console.log("select: " + this.state.selectValues)// for debug
 
-    let params = {}// todo
+    // set query params
+    let params = {
+      outdoor: this.state.selectValues[0],
+      alone: this.state.selectValues[1],
+      active: this.state.selectValues[2],
+    }
     let handler = new HobbyHandler()
     let res = await handler.getRecommendHobby(params)
 
