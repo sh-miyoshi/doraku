@@ -20,10 +20,10 @@ class Today extends Component {
         this.props.setInternalServerError(error)
         this.props.history.push('/error')
       } else {
-        console.log(res)
+        console.log(res.data)
         this.setState({
-          hobby_id: res.id,
-          hobby_name: res.name
+          hobby_id: res.data.id,
+          hobby_name: res.data.name
         })
       }
     })

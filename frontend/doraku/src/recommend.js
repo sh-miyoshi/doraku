@@ -56,12 +56,8 @@ class Recommend extends Component {
       this.props.setInternalServerError(error)
       this.props.history.push('/error')
     } else {
-      console.log(res)
-      // todo
-      // this.setState({
-      //   hobby_id: res.id,
-      //   hobby_name: res.name
-      // })
+      console.log(res.data)
+      this.props.setRecommendHobby(res.data.id, res.data.name)
       this.props.history.push('/recommend_result')
     }
   }

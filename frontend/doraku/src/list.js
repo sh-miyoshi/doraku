@@ -19,7 +19,7 @@ class List extends Component {
         this.props.setInternalServerError(error)
         this.props.history.push('/error')
       } else {
-        this.setState({ hobbies: res })
+        this.setState({ hobbies: res.data })
       }
     })
   }

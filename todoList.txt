@@ -6,9 +6,6 @@ frontend
         cssの準備
         Navigationの整理
     webページの実装
-        recommend
-            選択肢の追加
-            storeへの登録
         recommend_result
             storeに登録された値の表示
             detailへのパス

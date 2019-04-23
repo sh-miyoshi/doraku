@@ -8,35 +8,19 @@ export class HobbyHandler {
   }
 
   async getTodayHobby() {
-    let res = await this._query(SERVER_URL + "/api/v1/hobby/today")
-    if (res) {
-      return { id: res.data.id, name: res.data.name }
-    }
-    return null
+    return await this._query(SERVER_URL + "/api/v1/hobby/today")
   }
 
   async getAllHobby() {
-    let res = await this._query(SERVER_URL + "/api/v1/hobby/all")
-    if (res) {
-      return res.data
-    }
-    return null
+    return await this._query(SERVER_URL + "/api/v1/hobby/all")
   }
 
   async getHobbyDetail(id) {
-    let res = await this._query(SERVER_URL + "/api/v1/hobby/details/" + id)
-    if (res) {
-      return res.data
-    }
-    return null
+    return await this._query(SERVER_URL + "/api/v1/hobby/details/" + id)
   }
 
   async getRecommendHobby(params) {
-    let res = await this._query(SERVER_URL + "/api/v1/hobby/recommended", params)
-    if (res) {
-      return res.data
-    }
-    return null
+    return await this._query(SERVER_URL + "/api/v1/hobby/recommended", params)
   }
 
   getError() {

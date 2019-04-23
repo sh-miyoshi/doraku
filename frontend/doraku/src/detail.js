@@ -20,9 +20,9 @@ class Detail extends Component {
           error: error
         })
       } else {
-        console.log(res)
+        console.log(res.data)
         this.setState({
-          hobby: res
+          hobby: res.data
         })
       }
     })
