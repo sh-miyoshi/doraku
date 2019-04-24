@@ -45,6 +45,7 @@ func main() {
 	r.HandleFunc(basePath+"/hobby/today", apiv1.GetTodayHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/recommended", apiv1.GetRecommendedHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/details/{id}", apiv1.GetHobbyDetailsHandler).Methods("GET")
+	r.HandleFunc(basePath+"/hobby/image/{id}", apiv1.GetImageHandler).Methods("GET")
 
 	corsObj := handlers.AllowedOrigins([]string{"*"})
 

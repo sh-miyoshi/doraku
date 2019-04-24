@@ -98,8 +98,6 @@ definitions:
         type: string
       description:
         type: string
-      image:
-        type: string
       groupNo:
         type: integer
       groupInfo:

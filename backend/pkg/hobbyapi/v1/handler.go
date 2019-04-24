@@ -2,7 +2,9 @@ package hobbyapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -149,8 +151,7 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		Description: desc,
 	}
 
-	// TODO: set image and groupInfo
-	// use http.ServeFile(w, r, "test.txt")
+	// TODO: set groupInfo
 
 	resRaw, err := json.Marshal(res)
 	if err != nil {
@@ -163,4 +164,30 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(resRaw)
 	logger.Info("Successfully finished GetHobbyDetailsHandler")
+}
+
+// GetImageHandler return the image binary of hobby
+func GetImageHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		logger.Info("Failed to get image %v", err)
+		http.Error(w, "No such hobby", http.StatusNotFound)
+		return
+	}
+
+	logger.Info("call GetImageHandler method by id: %d", id)
+
+	filename := fmt.Sprintf("database/images/%d.png", id)
+
+	// Check file exists
+	_, err = os.Stat(filename)
+	if err != nil {
+		logger.Info("Failed to get image file by id(%d) %v", id, err)
+		http.Error(w, "No such hobby", http.StatusNotFound)
+		return
+	}
+	http.ServeFile(w, r, filename)
+
+	logger.Info("Successfully finished GetImageHandler")
 }
