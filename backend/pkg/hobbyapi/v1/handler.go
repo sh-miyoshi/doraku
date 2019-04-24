@@ -150,6 +150,7 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: set image and groupInfo
+	// use http.ServeFile(w, r, "test.txt")
 
 	resRaw, err := json.Marshal(res)
 	if err != nil {
