@@ -40,8 +40,13 @@ class Detail extends Component {
           this.state.hobby &&
           <h2>{this.state.hobby.name}</h2>
         }
+        <img src={this._getImagePath(this.props.match.params.id)} alt="hobby" height="150" weight="150" />
       </div>
     )
+  }
+
+  _getImagePath = (id) => {
+    return "http://localhost:8080/api/v1/hobby/image/" + id
   }
 }
 
