@@ -70,19 +70,22 @@ func TestGetRecommendedHobby(t *testing.T) {
 	tt := []struct {
 		input         InputValue
 		expectPass    bool
-		expectGroupNo int
+		expectGroupNo int64
 	}{
 		{InputValue{}, true, 0},
 	}
 
 	for _, tc := range tt {
-		_, err := GetInst().GetRecommendedHobby(tc.input)
+		hobby, err := GetInst().GetRecommendedHobby(tc.input)
 		if tc.expectPass {
 			if err != nil {
 				t.Errorf("handler should pass, but got error %v", err)
-				break
+				continue
 			}
-			// TODO check groupNo
+			// Check GroupNo
+			if hobby.GroupNo != tc.expectGroupNo {
+				t.Errorf("expect groupNo: %d, but got %d", tc.expectGroupNo, hobby.GroupNo)
+			}
 		}
 		if !tc.expectPass && err == nil {
 			t.Errorf("handler should not pass")
