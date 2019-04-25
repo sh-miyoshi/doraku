@@ -28,6 +28,8 @@ func TestInitialize(t *testing.T) {
 	if err == nil {
 		t.Errorf("We expect something error, but returned nil")
 	}
+
+	// TODO(broken file)
 }
 
 func TestGetHobbyByID(t *testing.T) {
@@ -54,6 +56,36 @@ func TestGetHobbyByID(t *testing.T) {
 		}
 		if !tc.expectPass && err == nil {
 			t.Errorf("handler should not pass with id %d, but error is nil", tc.id)
+		}
+	}
+}
+
+func TestGetRecommendedHobby(t *testing.T) {
+	// Initalize DB
+	hobbyFilePath := "../../database/hobby.csv"
+	descFilePath := "../../database/description.csv"
+	GetInst().Initialize(hobbyFilePath, descFilePath)
+
+	// Test Cases
+	tt := []struct {
+		input         InputValue
+		expectPass    bool
+		expectGroupNo int
+	}{
+		{InputValue{}, true, 0},
+	}
+
+	for _, tc := range tt {
+		_, err := GetInst().GetRecommendedHobby(tc.input)
+		if tc.expectPass {
+			if err != nil {
+				t.Errorf("handler should pass, but got error %v", err)
+				break
+			}
+			// TODO check groupNo
+		}
+		if !tc.expectPass && err == nil {
+			t.Errorf("handler should not pass")
 		}
 	}
 }
