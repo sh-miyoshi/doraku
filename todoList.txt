@@ -13,8 +13,8 @@ frontend
             内容
 
 backend
-    unit testの用意
-        test recommended handler
+    unit testの追加
+	環境変数でserverに値をセットできるようにする
     groupInfoのセット(HobbyDetailsHandler)
     debug用Dockerfileの準備
     Kubernetes yamlの準備
