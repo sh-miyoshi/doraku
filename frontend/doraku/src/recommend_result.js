@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { setInternalServerError } from './actions';
-// import { HobbyHandler } from './hobbyhandler';
 
 class RecommendResult extends Component {
   render() {
@@ -11,7 +9,7 @@ class RecommendResult extends Component {
         <h2>今あなたにオススメの趣味はこれ！</h2>
         <h1>
           <Link to={this._getPath()}>
-            hobby
+            {this.props.recommend.hobby_name}
           </Link>
         </h1>
       </div>
@@ -19,20 +17,14 @@ class RecommendResult extends Component {
   }
 
   _getPath = () => {
-    let id = "1"
-    return "/detail/" + id
+    return "/detail/" + this.props.recommend.hobby_id
   }
 }
 
 const mapStateToProps = state => ({
-  error: state.error
+  recommend: state.recommend
 })
-
-// const mapDispatchToProps = {
-//   setInternalServerError
-// }
 
 export default connect(
   mapStateToProps,
-  //  mapDispatchToProps
 )(RecommendResult)
