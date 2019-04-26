@@ -73,6 +73,14 @@ func TestGetRecommendedHobby(t *testing.T) {
 		expectGroupNo int64
 	}{
 		{InputValue{}, true, 0},
+		{InputValue{Outdoor: false, Alone: false, Active: true}, true, 1},
+		{InputValue{Outdoor: false, Alone: true, Active: false}, true, 2},
+		{InputValue{Outdoor: false, Alone: true, Active: true}, true, 3},
+		{InputValue{Outdoor: true, Alone: false, Active: false}, true, 4},
+		{InputValue{Outdoor: true, Alone: false, Active: true}, true, 5},
+		{InputValue{Outdoor: true, Alone: true, Active: false}, true, 6},
+		{InputValue{Outdoor: true, Alone: true, Active: true}, true, 7},
+		// Failed test when candidates is nothing
 	}
 
 	for _, tc := range tt {
