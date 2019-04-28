@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HobbyHandler } from './hobbyhandler';
+import Iframe from 'react-iframe';
 
 class Detail extends Component {
   state = {
@@ -41,6 +42,17 @@ class Detail extends Component {
           <h2>{this.state.hobby.name}</h2>
         }
         <img src={this._getImagePath(this.props.match.params.id)} alt="hobby" height="150" weight="150" />
+        {
+          this.state.hobby && this.state.hobby.description ?
+            <Iframe url={this.state.hobby.description}
+              width="450px"
+              height="450px"
+              id="myId"
+              className="myClassname"
+              display="initial"
+              position="relative" />
+            : <h2>説明文はありません</h2>
+        }
       </div>
     )
   }
