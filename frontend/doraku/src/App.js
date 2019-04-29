@@ -10,9 +10,10 @@ import { Top } from './top';
 import Today from './today';
 import Detail from './detail';
 import List from './list';
-import Recommend from './recommend'
-import RecommendResult from './recommend_result'
-import { Error404 } from './errors/404'
+import Recommend from './recommend';
+import RecommendResult from './recommend_result';
+import { Error404 } from './errors/404';
+import './App.css';
 
 const history = createBrowserHistory()
 const store = createStore(
