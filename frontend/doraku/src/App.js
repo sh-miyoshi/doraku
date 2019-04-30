@@ -14,6 +14,7 @@ import Recommend from './recommend';
 import RecommendResult from './recommend_result';
 import { Error404 } from './errors/404';
 import './App.css';
+import logo from './images/logo.png';
 
 const history = createBrowserHistory()
 const store = createStore(
@@ -35,7 +36,9 @@ class App extends Component {
           <BrowserRouter>
             <div>
               <header>
-                <h3><Link to="/">LOGO</Link></h3>
+                <Link to="/">
+                  <img src={logo} alt="Doraku" width={150} />
+                </Link>
               </header>
 
               <Switch>
