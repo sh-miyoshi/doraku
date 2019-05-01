@@ -2,12 +2,9 @@ TODO List
 
 frontend
     全体
+        faviconのアップデート
         ディレクトリの整理
         cssの準備
-        Navigationの整理
-    webページの実装
-        detail
-            内容
 
 backend
     unit testの追加
