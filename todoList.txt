@@ -4,7 +4,20 @@ frontend
     全体
         faviconのアップデート
         ディレクトリの整理
-        cssの準備
+    css
+        top
+            Main LOGO
+        recommend
+            タイトル、文章
+            List
+        recommend_result
+            タイトル
+            趣味の文字
+        today
+            タイトル
+            趣味の文字
+        detail
+            全体
 
 backend
     unit testの追加
@@ -18,9 +31,14 @@ backend
 mobile
     frontend完成後に用意
 
+その他
+    サーバの準備
+        バックエンド用
+        フロントエンド用
+
 仕様
     趣味の検索サイト
         趣味診断: 質問から最適な趣味を検索
-        トレンド(今日の)趣味: ユーザのアクセス状況からランダムで選択
+        今日の趣味: ユーザのアクセス状況からランダムで選択
         マイ趣味: 登録された趣味の表示(要ログイン)
         趣味一覧: 全体の表示
