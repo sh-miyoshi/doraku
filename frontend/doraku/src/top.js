@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import './top.css';
+import top_logo from './images/top_logo.png';
 
 export class Top extends Component {
   render() {
     return (
       <div>
-        <h1>LOGO</h1>
+        <img src={top_logo} alt="logo" width={400} />
         <p>さぁ、新しい人生を切り開こう！</p>
         <p>Dorakuは皆様の日常に新しい変化を付け加えるため、あなたにあった趣味を提案します</p>
         <p>日々の生活に新しい変化を求めているなら、ぜひこのサイトで新しい趣味を探してみてください！</p>

@@ -5,8 +5,6 @@ frontend
         faviconのアップデート
         ディレクトリの整理
     css
-        top
-            Main LOGO
         recommend
             タイトル、文章
             List
@@ -16,6 +14,8 @@ frontend
         today
             タイトル
             趣味の文字
+        list
+            List
         detail
             全体
 
