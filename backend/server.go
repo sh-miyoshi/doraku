@@ -40,6 +40,11 @@ func main() {
 
 	r := mux.NewRouter()
 
+	// Health Check
+	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request){
+		w.Write([]byte("ok"))
+	}).Methods("GET")
+
 	basePath := "/api/v1"
 	r.HandleFunc(basePath+"/hobby/all", apiv1.GetAllHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/today", apiv1.GetTodayHobbyHandler).Methods("GET")
