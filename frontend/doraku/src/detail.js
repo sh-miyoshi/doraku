@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HobbyHandler } from './hobbyhandler';
 import Iframe from 'react-iframe';
+import { BACKEND_SERVER_URL } from './env.secret';
 
 class Detail extends Component {
   state = {
@@ -58,7 +59,7 @@ class Detail extends Component {
   }
 
   _getImagePath = (id) => {
-    return "http://localhost:8080/api/v1/hobby/image/" + id
+    return BACKEND_SERVER_URL + "/api/v1/hobby/image/" + id
   }
 }
 

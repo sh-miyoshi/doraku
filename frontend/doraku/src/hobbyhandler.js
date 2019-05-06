@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const SERVER_URL = "http://localhost:8080"
+import { BACKEND_SERVER_URL } from './env.secret';
 
 export class HobbyHandler {
   constructor() {
@@ -8,19 +7,19 @@ export class HobbyHandler {
   }
 
   async getTodayHobby() {
-    return await this._query(SERVER_URL + "/api/v1/hobby/today")
+    return await this._query(BACKEND_SERVER_URL + "/api/v1/hobby/today")
   }
 
   async getAllHobby() {
-    return await this._query(SERVER_URL + "/api/v1/hobby/all")
+    return await this._query(BACKEND_SERVER_URL + "/api/v1/hobby/all")
   }
 
   async getHobbyDetail(id) {
-    return await this._query(SERVER_URL + "/api/v1/hobby/details/" + id)
+    return await this._query(BACKEND_SERVER_URL + "/api/v1/hobby/details/" + id)
   }
 
   async getRecommendHobby(params) {
-    return await this._query(SERVER_URL + "/api/v1/hobby/recommended", params)
+    return await this._query(BACKEND_SERVER_URL + "/api/v1/hobby/recommended", params)
   }
 
   getError() {
