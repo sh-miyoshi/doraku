@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setInternalServerError } from './actions';
 import { HobbyHandler } from './hobbyhandler';
+import './today.css';
 
 class Today extends Component {
   state = {
@@ -32,12 +33,18 @@ class Today extends Component {
   render() {
     return (
       <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <h2>今日の趣味はこれ！</h2>
-        <h1>
-          <Link to={this._getPath()}>
+        <Link to={this._getPath()} className="hobby_name">
+          <h1>
             {this.state.hobby_name}
-          </Link>
-        </h1>
+          </h1>
+        </Link>
+        <Link to="/">戻る</Link>
       </div>
     )
   }
