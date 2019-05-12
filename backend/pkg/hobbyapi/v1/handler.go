@@ -27,6 +27,7 @@ func GetAllHobbyHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		res = append(res, tmp)
 	}
+	logger.Debug("Hobby Data: %v", res)
 
 	resRaw, err := json.Marshal(res)
 	if err != nil {
@@ -46,6 +47,8 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetTodayHobbyHandler method")
 
 	_, month, day := time.Now().Date()
+	logger.Debug("Month: %d, Day: %d", month, day)
+
 	num := hobbydb.GetInst().GetHobbyNum()
 	if num == 0 {
 		logger.Error("Please Initalize DB before call API")
@@ -53,6 +56,7 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	todayInt := (int(month)*12 + day) % num
+	logger.Debug("Today number: %d", todayInt)
 
 	hobby, err := hobbydb.GetInst().GetHobbyByID(todayInt)
 	if err != nil {
@@ -82,6 +86,10 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 // GetRecommendedHobbyHandler return a hobby determined by input value
 func GetRecommendedHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendedHobbyHandler method")
+
+	logger.Debug("query value outdoor: %s", r.FormValue("outdoor"))
+	logger.Debug("query value alone: %s", r.FormValue("alone"))
+	logger.Debug("query value active: %s", r.FormValue("active"))
 
 	// if query == yes then, set var = true
 	outdoor := (r.FormValue("outdoor") == "yes")
