@@ -4,6 +4,7 @@ frontend
     全体
         faviconのアップデート
         ディレクトリの整理
+        フォントを変更
     css
         recommend
             タイトル、文章
@@ -11,11 +12,6 @@ frontend
         recommend_result
             タイトル
             趣味の文字
-        today
-            タイトル
-            趣味の文字
-        list
-            List
         detail
             全体
 
