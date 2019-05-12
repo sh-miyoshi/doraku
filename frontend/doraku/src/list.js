@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setInternalServerError } from './actions';
 import { HobbyHandler } from './hobbyhandler';
+import './list.css';
+
+const COLUMN_NUM = 2
 
 class List extends Component {
   state = {
-    hobbies: []
+    hobbies: null
   };
 
   constructor(props) {
@@ -19,7 +22,13 @@ class List extends Component {
         this.props.setInternalServerError(error)
         this.props.history.push('/error')
       } else {
-        this.setState({ hobbies: res.data })
+        let t = []
+        for (let i = 0; i < COLUMN_NUM; i++)
+          t[i] = []
+        for (let i = 0; i < res.data.length; i++) {
+          t[i % COLUMN_NUM].push(res.data[i])
+        }
+        this.setState({ hobbies: t })
       }
     })
   }
@@ -27,12 +36,23 @@ class List extends Component {
   render() {
     return (
       <div>
+        <br />
+        <br />
+        <br />
+        <br />
         <h2>趣味一覧</h2>
-        <ul>
-          {this.state.hobbies.map(item =>
-            <li key={item.id}><Link to={this._getPath(item.id)}>{item.name}</Link></li>
+        <div className="itembox">
+          {this.state.hobbies && this.state.hobbies.map(list =>
+            <div className="component">
+              {list.map(item =>
+                <ul>
+                  <li><Link to={this._getPath(item.id)}>{item.name}</Link></li>
+                </ul>
+              )}
+            </div>
           )}
-        </ul>
+          <div className="footer"></div>
+        </div>
       </div>
     )
   }
