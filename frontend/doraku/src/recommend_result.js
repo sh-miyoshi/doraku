@@ -6,12 +6,18 @@ class RecommendResult extends Component {
   render() {
     return (
       <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <h2>今あなたにオススメの趣味はこれ！</h2>
-        <h1>
-          <Link to={this._getPath()}>
+        <Link to={this._getPath()} className="hobby_link">
+          <h1 className="hobby_name">
             {this.props.recommend.hobby_name}
-          </Link>
-        </h1>
+          </h1>
+        </Link>
+        <Link to="/">戻る</Link>
       </div>
     )
   }
