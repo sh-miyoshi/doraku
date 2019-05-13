@@ -8,10 +8,6 @@ frontend
     css
         recommend
             タイトル、文章
-            List
-        recommend_result
-            タイトル
-            趣味の文字
         detail
             全体
 
@@ -29,7 +25,6 @@ mobile
 
 その他
     サーバの準備
-        バックエンド用
         フロントエンド用
 
 仕様
