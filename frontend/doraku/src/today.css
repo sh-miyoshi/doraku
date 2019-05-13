@@ -1,4 +1,4 @@
-h1 {
+.hobby_name {
   background: #f5deb3;
   box-shadow: 0px 0px 0px 5px #f5deb3;
   border: dashed 1px #cd853f;
@@ -10,6 +10,6 @@ h1 {
   margin-right: auto;
 }
 
-.hobby_name {
+.hobby_link {
   text-decoration: none;
 }

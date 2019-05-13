@@ -1,4 +1,4 @@
-button {
+.top_button {
   border: 0px;
 	width: 250px;
 	height: 75px;
@@ -7,7 +7,7 @@ button {
 	font-size: 30px;
 }
 
-button:hover {
+.top_button:hover {
   cursor: pointer;
   opacity: 0.7;
 }
