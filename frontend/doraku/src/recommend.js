@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { setRecommendHobby, setInternalServerError } from './actions';
 import { HobbyHandler } from './hobbyhandler';
+import "./recommend.css";
 
 class Recommend extends Component {
   state = {
@@ -35,6 +36,7 @@ class Recommend extends Component {
               Q2: 気分的には？
               <Form.Check label="一人な気分" type="radio" name="2" value="yes" defaultChecked={true} onChange={this._change} />
               <Form.Check label="みんなで集まりたい気分" type="radio" name="2" value="no" onChange={this._change} />
+              <Button onClick={this._back}>前の質問へ</Button>
               <Button onClick={this._next}>次の質問へ</Button>
             </div>
           }
@@ -45,9 +47,8 @@ class Recommend extends Component {
               Q3: どんな感じがタイプ？
               <Form.Check label="激しい感じで" type="radio" name="3" value="yes" defaultChecked={true} onChange={this._change} />
               <Form.Check label="落ち着いた感じで" type="radio" name="3" value="no" onChange={this._change} />
-              <Button onClick={this._handleRecommend}>
-                診断
-              </Button>
+              <Button onClick={this._back}>前の質問へ</Button>
+              <Button className="enter_button" onClick={this._handleRecommend}>診断</Button>
             </div>
           }
         </Form>
