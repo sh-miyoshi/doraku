@@ -23,34 +23,69 @@ class Recommend extends Component {
           {
             this.state.nowQuestion === 0 &&
             <div>
-              Q1: どっち派？
-              <Form.Check label="アウトドア派" type="radio" name="1" value="yes" defaultChecked={true} onChange={this._change} />
-              <Form.Check label="インドア派" type="radio" name="1" value="no" onChange={this._change} />
-              <Button onClick={this._next}>次の質問へ</Button>
+              <h2>Q1: どっち派？</h2>
+              <table className="select" cellPadding="10">
+                <tbody>
+                  <tr>
+                    <td>
+                      <Form.Check label="アウトドア派" type="radio" name="1" value="yes" defaultChecked={this._getChecked(0, "yes")} onChange={this._change} />
+                    </td>
+                    <td>
+                      <Form.Check label="インドア派" type="radio" name="1" value="no" defaultChecked={this._getChecked(0, "no")} onChange={this._change} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button className="disabled_button" disabled onClick={this._back}>前の質問へ</Button>
+              <Button className="move_button" onClick={this._next}>次の質問へ</Button>
             </div>
           }
 
           {
             this.state.nowQuestion === 1 &&
             <div>
-              Q2: 気分的には？
-              <Form.Check label="一人な気分" type="radio" name="2" value="yes" defaultChecked={true} onChange={this._change} />
-              <Form.Check label="みんなで集まりたい気分" type="radio" name="2" value="no" onChange={this._change} />
-              <Button onClick={this._back}>前の質問へ</Button>
-              <Button onClick={this._next}>次の質問へ</Button>
+              <h2>Q2: 気分的には？</h2>
+              <table className="select" cellPadding="10">
+                <tbody>
+                  <tr>
+                    <td>
+                      <Form.Check label="一人な気分" type="radio" name="2" value="yes" defaultChecked={this._getChecked(1, "yes")} onChange={this._change} />
+                    </td>
+                    <td>
+                      <Form.Check label="みんなで集まりたい気分" type="radio" name="2" value="no" defaultChecked={this._getChecked(1, "no")} onChange={this._change} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button className="move_button" onClick={this._back}>前の質問へ</Button>
+              <Button className="move_button" onClick={this._next}>次の質問へ</Button>
             </div>
           }
 
           {
             this.state.nowQuestion === 2 &&
             <div>
-              Q3: どんな感じがタイプ？
-              <Form.Check label="激しい感じで" type="radio" name="3" value="yes" defaultChecked={true} onChange={this._change} />
-              <Form.Check label="落ち着いた感じで" type="radio" name="3" value="no" onChange={this._change} />
-              <Button onClick={this._back}>前の質問へ</Button>
+              <h2>Q3: どんな感じがタイプ？</h2>
+              <table className="select" cellPadding="10">
+                <tbody>
+                  <tr>
+                    <td>
+                      <Form.Check label="激しい感じで" type="radio" name="3" value="yes" defaultChecked={this._getChecked(2, "yes")} onChange={this._change} />
+                    </td>
+                    <td>
+                      <Form.Check label="落ち着いた感じで" type="radio" name="3" value="no" defaultChecked={this._getChecked(2, "no")} onChange={this._change} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button className="move_button" onClick={this._back}>前の質問へ</Button>
+              <Button className="disabled_button" disabled onClick={this._next}>次の質問へ</Button>
+              <br />
+              <br />
               <Button className="enter_button" onClick={this._handleRecommend}>診断</Button>
             </div>
           }
+
         </Form>
       </div>
     )
@@ -77,6 +112,10 @@ class Recommend extends Component {
       this.props.setRecommendHobby(res.data.id, res.data.name)
       this.props.history.push('/recommend_result')
     }
+  }
+
+  _getChecked = (index, value) => {
+    return this.state.selectValues[index] === value
   }
 
   _change = (e) => {
