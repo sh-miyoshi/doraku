@@ -10,6 +10,11 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
+// UserCreateRequest struct defines request data for user create
+type UserCreateRequest struct {
+	EMail string `json:"email"`
+}
+
 //----------------------------
 // Response Data
 //----------------------------
