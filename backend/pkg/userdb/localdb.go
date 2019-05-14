@@ -3,7 +3,6 @@ package userdb
 import (
 	"encoding/base64"
 	"encoding/csv"
-	"fmt"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"os"
 )
@@ -44,9 +43,11 @@ func (l *localDBHandler) Authenticate(id string, password string) error {
 			if hashed == line[1] {
 				return nil
 			}
-			return fmt.Errorf("id or password missing")
+			logger.Info("wrong password for id: %s", id)
+			return ErrAuthFailed
 		}
 	}
 
-	return fmt.Errorf("no such user")
+	logger.Info("no such id %s", id)
+	return ErrAuthFailed
 }
