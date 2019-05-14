@@ -6,8 +6,6 @@ frontend
         ディレクトリの整理
         フォントを変更
     css
-        recommend
-            タイトル、文章
         detail
             全体
 
