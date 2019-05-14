@@ -12,6 +12,7 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
+	"github.com/sh-miyoshi/doraku/pkg/userdb"
 )
 
 func main() {
@@ -35,7 +36,18 @@ func main() {
 	const descFilePath = "database/description.csv"
 
 	if err := hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath); err != nil {
-		logger.Error("Failed to initialize DB: %v", err)
+		logger.Error("Failed to initialize Hobby DB: %v", err)
+		os.Exit(1)
+	}
+
+	// TODO run db in local
+	if err := userdb.InitUserHandler(userdb.DBLocal); err != nil {
+		logger.Error("Failed to initialize User DB: %v", err)
+		os.Exit(1)
+	}
+
+	if err := userdb.GetInst().Initialize(""); err != nil {
+		logger.Error("Failed to initialize User DB: %v", err)
 		os.Exit(1)
 	}
 
