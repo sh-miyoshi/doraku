@@ -12,9 +12,9 @@ const (
 	DBLocal
 )
 
-// userHandler is interface
 type userHandler interface {
-	Initialize(connectString string) error
+	ConnectDB(connectString string) error
+	// TODO Create, Delete, Authenticate
 }
 
 var instance userHandler
