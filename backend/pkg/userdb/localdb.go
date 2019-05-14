@@ -1,7 +1,9 @@
 package userdb
 
 import (
+	"encoding/base64"
 	"encoding/csv"
+	"fmt"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"os"
 )
@@ -38,10 +40,13 @@ func (l *localDBHandler) Authenticate(id string, password string) error {
 			break
 		}
 		if line[0] == id {
-			// TODO(create hashed_passwd, check it)
-			return nil
+			hashed := base64.StdEncoding.EncodeToString([]byte(password))
+			if hashed == line[1] {
+				return nil
+			}
+			return fmt.Errorf("id or password missing")
 		}
 	}
 
-	return nil
+	return fmt.Errorf("no such user")
 }
