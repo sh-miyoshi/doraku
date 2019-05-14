@@ -15,17 +15,17 @@ export class Top extends Component {
         <table cellPadding={5} align="center">
           <tr>
             <td>
-              <Button onClick={() => { this.props.history.push('/recommend') }}>
+              <Button className="top_button" onClick={() => { this.props.history.push('/recommend') }}>
                 趣味診断
               </Button>
             </td>
             <td>
-              <Button onClick={() => { this.props.history.push('/today') }}>
+              <Button className="top_button" onClick={() => { this.props.history.push('/today') }}>
                 今日の趣味
               </Button>
             </td>
             <td>
-              <Button onClick={() => { this.props.history.push('/list') }}>
+              <Button className="top_button" onClick={() => { this.props.history.push('/list') }}>
                 趣味一覧
               </Button>
             </td>

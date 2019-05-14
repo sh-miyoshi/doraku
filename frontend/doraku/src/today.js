@@ -39,8 +39,8 @@ class Today extends Component {
         <br />
         <br />
         <h2>今日の趣味はこれ！</h2>
-        <Link to={this._getPath()} className="hobby_name">
-          <h1>
+        <Link to={this._getPath()} className="hobby_link">
+          <h1 className="hobby_name">
             {this.state.hobby_name}
           </h1>
         </Link>
