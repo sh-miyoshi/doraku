@@ -46,7 +46,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := userdb.GetInst().ConnectDB(""); err != nil {
+	if err := userdb.GetInst().ConnectDB("database/local_debug_user.csv"); err != nil {
 		logger.Error("Failed to initialize User DB: %v", err)
 		os.Exit(1)
 	}
