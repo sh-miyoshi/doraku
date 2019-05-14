@@ -18,6 +18,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO access to userdb and check id and password
+	// TODO generate JWT token(https://github.com/dgrijalva/jwt-go)
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	//w.Write(resRaw)
