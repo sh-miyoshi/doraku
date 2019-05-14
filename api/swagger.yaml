@@ -85,6 +85,113 @@ paths:
             $ref: '#/definitions/Hobby'
         '404':
           description: No such hobby
+  /login:
+    post:
+      tags:
+        - user
+      summary: login to doraku
+      description: login to doraku
+      produces:
+        - application/json
+      parameters:
+        - name: info
+          schema:
+            $ref: '#/definitions/LoginRequest'
+          in: body
+          description: login info
+          required: true
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/LoginRespose'
+        '400':
+          description: failed to authorize
+  /logout:
+    delete:
+      tags:
+      - user
+      summary: logout from doraku
+      description: logout from doraku
+      produces:
+      - "application/json"
+      parameters:
+      - name: token
+        in: body
+        schema:
+          type: string
+        description: token for login user
+        required: true
+      responses:
+        204:
+          description: "successful operation"
+  /user/{username}:
+    post:
+      tags:
+      - user
+      summary: create user
+      description: create user
+      produces:
+      - application/json
+      parameters:
+      - name: username
+        in: path
+        description: user name you want to create
+        required: true
+        type: string
+      - name: info
+        in: body
+        description: user data
+        required: true
+        schema:
+          $ref: '#/definitions/UserCreateRequest'
+      responses:
+        201:
+          description: "successful operation"
+        400:
+          description: "Invalid parameters supplied"
+    get:
+      tags:
+      - user
+      summary: "Get user by user name"
+      description: "Get user by user name"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be fetched."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: Delete user
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "successful operation"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
 definitions:
   Hobby:
     type: object
@@ -101,4 +208,30 @@ definitions:
       groupNo:
         type: integer
       groupInfo:
+        type: string
+  LoginRequest:
+    type: object
+    properties:
+      id:
+        type: string
+      password:
+        type: string
+  LoginRespose:
+    type: object
+    properties:
+      token:
+        type: string
+  UserCreateRequest:
+    type: object
+    properties:
+      email:
+        type: string
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      email:
         type: string
