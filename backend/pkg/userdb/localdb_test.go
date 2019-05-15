@@ -30,17 +30,17 @@ func TestAuthenticate(t *testing.T) {
 	handler.ConnectDB(filePath)
 
 	// Test with correct value
-	if err := handler.Authenticate("test", "testtest"); err != nil {
+	if _, err := handler.Authenticate("test", "testtest"); err != nil {
 		t.Errorf("Failed to auth correct data: %v", err)
 	}
 
 	// Test with incorrect value
-	if err := handler.Authenticate("test", "wrong_passwd"); err == nil {
+	if _, err := handler.Authenticate("test", "wrong_passwd"); err == nil {
 		t.Errorf("Success to auth incorrect data: %v", err)
 	}
 
 	// Test with not exists user
-	if err := handler.Authenticate("dummy", "testtest"); err == nil {
+	if _, err := handler.Authenticate("dummy", "testtest"); err == nil {
 		t.Errorf("Success to auth incorrect data: %v", err)
 	}
 }

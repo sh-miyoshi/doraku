@@ -14,7 +14,7 @@ const (
 
 type userHandler interface {
 	ConnectDB(connectString string) error
-	Authenticate(id string, password string) error
+	Authenticate(id string, password string) (string, error)
 	// TODO Create, Delete, Authenticate
 }
 

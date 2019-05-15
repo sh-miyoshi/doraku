@@ -23,11 +23,11 @@ func (l *localDBHandler) ConnectDB(connectString string) error {
 	return nil
 }
 
-func (l *localDBHandler) Authenticate(id string, password string) error {
+func (l *localDBHandler) Authenticate(id string, password string) (string, error) {
 	file, err := os.Open(l.fileName)
 	if err != nil {
 		logger.Error("Failed to open DB file %s in Authenticate: %v", l.fileName, err)
-		return err
+		return "", err
 	}
 
 	reader := csv.NewReader(file)
@@ -41,13 +41,14 @@ func (l *localDBHandler) Authenticate(id string, password string) error {
 		if line[0] == id {
 			hashed := base64.StdEncoding.EncodeToString([]byte(password))
 			if hashed == line[1] {
-				return nil
+				// TODO generate JWT token
+				return "", nil
 			}
 			logger.Info("wrong password for id: %s", id)
-			return ErrAuthFailed
+			return "", ErrAuthFailed
 		}
 	}
 
 	logger.Info("no such id %s", id)
-	return ErrAuthFailed
+	return "", ErrAuthFailed
 }
