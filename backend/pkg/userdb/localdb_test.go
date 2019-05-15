@@ -30,6 +30,7 @@ func TestAuthenticate(t *testing.T) {
 	handler.ConnectDB(filePath)
 
 	// Test with correct value
+	// TODO check JWT token value
 	if _, err := handler.Authenticate("test", "testtest"); err != nil {
 		t.Errorf("Failed to auth correct data: %v", err)
 	}

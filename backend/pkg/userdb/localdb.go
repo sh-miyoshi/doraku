@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/csv"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
+	"github.com/sh-miyoshi/doraku/pkg/token"
 	"os"
 )
 
@@ -41,8 +42,7 @@ func (l *localDBHandler) Authenticate(id string, password string) (string, error
 		if line[0] == id {
 			hashed := base64.StdEncoding.EncodeToString([]byte(password))
 			if hashed == line[1] {
-				// TODO generate JWT token
-				return "", nil
+				return token.Generate() // Generate JWT Token
 			}
 			logger.Info("wrong password for id: %s", id)
 			return "", ErrAuthFailed
