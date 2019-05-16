@@ -1,8 +1,10 @@
 package userdb
 
 import (
+	"encoding/base64"
 	"encoding/csv"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
+	"github.com/sh-miyoshi/doraku/pkg/token"
 	"os"
 )
 
@@ -22,11 +24,11 @@ func (l *localDBHandler) ConnectDB(connectString string) error {
 	return nil
 }
 
-func (l *localDBHandler) Authenticate(id string, password string) error {
+func (l *localDBHandler) Authenticate(id string, password string) (string, error) {
 	file, err := os.Open(l.fileName)
 	if err != nil {
 		logger.Error("Failed to open DB file %s in Authenticate: %v", l.fileName, err)
-		return err
+		return "", err
 	}
 
 	reader := csv.NewReader(file)
@@ -38,10 +40,15 @@ func (l *localDBHandler) Authenticate(id string, password string) error {
 			break
 		}
 		if line[0] == id {
-			// TODO(create hashed_passwd, check it)
-			return nil
+			hashed := base64.StdEncoding.EncodeToString([]byte(password))
+			if hashed == line[1] {
+				return token.Generate() // Generate JWT Token
+			}
+			logger.Info("wrong password for id: %s", id)
+			return "", ErrAuthFailed
 		}
 	}
 
-	return nil
+	logger.Info("no such id %s", id)
+	return "", ErrAuthFailed
 }
