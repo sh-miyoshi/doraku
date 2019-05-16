@@ -75,7 +75,6 @@ func (h *dbHandler) Initialize(hobbyFilePath, descFilePath string) error {
 		}
 		h.data = append(h.data, tmp)
 	}
-	logger.Debug("DB data: %v", h.data)
 
 	// Read Description
 	fpDesc, err := os.Open(descFilePath)
@@ -95,8 +94,8 @@ func (h *dbHandler) Initialize(hobbyFilePath, descFilePath string) error {
 			return err
 		}
 
-		if len(data) != 2 {
-			return fmt.Errorf("%s file is maybe broken. we expect 2 data, but got %d", descFilePath, len(data))
+		if len(data) != 4 {
+			return fmt.Errorf("%s file is maybe broken. we expect 4 data, but got %d", descFilePath, len(data))
 		}
 
 		id, err := strconv.Atoi(data[0])
@@ -105,11 +104,14 @@ func (h *dbHandler) Initialize(hobbyFilePath, descFilePath string) error {
 		}
 
 		if 0 <= id && id < len(h.data) {
-			h.data[id].Description = data[1]
+			h.data[id].DescriptionURL = data[1]
+			h.data[id].DescriptionFrom = data[2]
+			h.data[id].Description = data[3]
 		} else {
 			return fmt.Errorf("id %d is larger than DB size %d", id, len(h.data))
 		}
 	}
+	logger.Debug("DB data: %v", h.data)
 
 	logger.Info("Successfully initialize DB")
 	return nil

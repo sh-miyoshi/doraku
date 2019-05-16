@@ -205,6 +205,10 @@ definitions:
         type: string
       description:
         type: string
+      descriptionFrom:
+        type: string
+      descriptionURL:
+        type: string
       groupNo:
         type: integer
       groupInfo:

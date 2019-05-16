@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -147,16 +146,26 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	desc := ""
-	// Set description if hobby.Description includes http(it mean http[s]://...)
-	if strings.Contains(hobby.Description, "http") {
+	descFrom := ""
+	descURL := ""
+
+	if hobby.Description != "unknown" {
 		desc = hobby.Description
+	}
+	if hobby.DescriptionFrom != "unknown" {
+		descFrom = hobby.DescriptionFrom
+	}
+	if hobby.DescriptionURL != "unknown" {
+		descURL = hobby.DescriptionURL
 	}
 
 	res := Hobby{
-		ID:          hobby.ID,
-		Name:        hobby.Name,
-		NameEN:      hobby.NameEN,
-		Description: desc,
+		ID:              hobby.ID,
+		Name:            hobby.Name,
+		NameEN:          hobby.NameEN,
+		Description:     desc,
+		DescriptionFrom: descFrom,
+		DescriptionURL:  descURL,
 	}
 
 	// TODO: set groupInfo
