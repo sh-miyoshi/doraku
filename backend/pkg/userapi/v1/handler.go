@@ -34,10 +34,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	logger.Debug("Generated token: %s", token)
 
-	// todo set response
+	res := LoginResponse{
+		Token: token,
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	//w.Write(resRaw)
+	w.Write(resRaw)
 	logger.Info("Successfully finished LoginHandler")
 }
