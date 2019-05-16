@@ -145,27 +145,13 @@ func GetHobbyDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	desc := ""
-	descFrom := ""
-	descURL := ""
-
-	if hobby.Description != "unknown" {
-		desc = hobby.Description
-	}
-	if hobby.DescriptionFrom != "unknown" {
-		descFrom = hobby.DescriptionFrom
-	}
-	if hobby.DescriptionURL != "unknown" {
-		descURL = hobby.DescriptionURL
-	}
-
 	res := Hobby{
 		ID:              hobby.ID,
 		Name:            hobby.Name,
 		NameEN:          hobby.NameEN,
-		Description:     desc,
-		DescriptionFrom: descFrom,
-		DescriptionURL:  descURL,
+		Description:     hobby.Description,
+		DescriptionFrom: hobby.DescriptionFrom,
+		DescriptionURL:  hobby.DescriptionURL,
 	}
 
 	// TODO: set groupInfo
