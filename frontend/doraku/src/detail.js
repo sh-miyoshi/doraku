@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HobbyHandler } from './hobbyhandler';
-import Iframe from 'react-iframe';
 import { BACKEND_SERVER_URL } from './env.secret';
 import './detail.css'
 
@@ -46,14 +45,16 @@ class Detail extends Component {
         <img src={this._getImagePath(this.props.match.params.id)} alt="hobby" height="150" weight="150" />
         {
           this.state.hobby && this.state.hobby.description ?
-            <Iframe url={this.state.hobby.description}
-              width="450px"
-              height="450px"
-              id="myId"
-              className="myClassname"
-              display="initial"
-              position="relative" />
-            : <h2>説明文はありません</h2>
+            <p>{this.state.hobby.description}</p>
+            : <h2>説明文は準備中です・・・</h2>
+        }
+        {
+          this.state.hobby && this.state.hobby.descriptionFrom &&
+          <p>from {this.state.hobby.descriptionFrom}</p>
+        }
+        {
+          this.state.hobby && this.state.hobby.descriptionURL &&
+          <p>詳細は<a href={this.state.hobby.descriptionURL}>こちら</a></p>
         }
       </div>
     )
