@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { HobbyHandler } from './hobbyhandler';
 import Iframe from 'react-iframe';
 import { BACKEND_SERVER_URL } from './env.secret';
+import './detail.css'
 
 class Detail extends Component {
   state = {
