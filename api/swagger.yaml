@@ -107,24 +107,6 @@ paths:
             $ref: '#/definitions/LoginRespose'
         '400':
           description: failed to authorize
-  /logout:
-    delete:
-      tags:
-      - user
-      summary: logout from doraku
-      description: logout from doraku
-      produces:
-      - "application/json"
-      parameters:
-      - name: token
-        in: body
-        schema:
-          type: string
-        description: token for login user
-        required: true
-      responses:
-        204:
-          description: "successful operation"
   /user/{username}:
     post:
       tags:
@@ -216,7 +198,7 @@ definitions:
   LoginRequest:
     type: object
     properties:
-      id:
+      name:
         type: string
       password:
         type: string
