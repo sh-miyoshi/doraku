@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
 )
@@ -53,5 +54,34 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // GetUserHandler validates user id and password, and return JWT token
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call UserHandler method")
+	logger.Info("call GetUserHandler method")
+
+	// TODO Check Header
+
+	vars := mux.Vars(r)
+	user, err := userdb.GetInst().GetUserByName(vars["username"])
+	if err != nil {
+		// TODO: check error
+		logger.Info("Failed to get user %v", err)
+		http.Error(w, "No such user", http.StatusBadRequest)
+		return
+	}
+
+	res := User{
+		ID:    user.ID,
+		Name:  user.Name,
+		EMail: user.EMail,
+	}
+
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal hobby %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write(resRaw)
+	logger.Info("Successfully finished GetUserHandler")
 }
