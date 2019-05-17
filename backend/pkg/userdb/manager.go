@@ -14,8 +14,9 @@ const (
 
 type userHandler interface {
 	ConnectDB(connectString string) error
-	Authenticate(id string, password string) (string, error)
-	// TODO Create, Delete, Authenticate
+	Authenticate(name string, password string) (string, error)
+	GetUserByName(name string) (UserData, error)
+	// TODO Create, Delete
 }
 
 var instance userHandler

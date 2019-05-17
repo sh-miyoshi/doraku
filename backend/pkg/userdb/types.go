@@ -7,3 +7,9 @@ import (
 var (
 	ErrAuthFailed = errors.New("Failed to authenticate")
 )
+
+type UserData struct {
+	ID    int
+	Name  string
+	EMail string
+}

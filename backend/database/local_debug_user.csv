@@ -1,2 +1,2 @@
-#id,password
-test,dGVzdHRlc3Q=
+#id,name,password,email
+0,test,dGVzdHRlc3Q=,test@example.com
