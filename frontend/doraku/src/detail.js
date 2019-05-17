@@ -33,28 +33,33 @@ class Detail extends Component {
   render() {
     return (
       <div>
-        <h2>詳細</h2>
+        <br />
+        <br />
+        <br />
+        <br />
         {
           this.state.error &&
-          <h2>ERROR: {this.state.error}</h2>
+          <h2 className="error" >ERROR: {this.state.error}</h2>
         }
         {
           this.state.hobby &&
           <h2>{this.state.hobby.name}</h2>
         }
         <img src={this._getImagePath(this.props.match.params.id)} alt="hobby" height="150" weight="150" />
-        {
-          this.state.hobby && this.state.hobby.description ?
-            <p>{this.state.hobby.description}</p>
-            : <h2>説明文は準備中です・・・</h2>
-        }
+        <div className="description_box">
+          {
+            this.state.hobby && this.state.hobby.description ?
+              <p>{this.state.hobby.description}</p>
+              : <p>説明文は準備中です・・・</p>
+          }
+        </div>
         {
           this.state.hobby && this.state.hobby.descriptionFrom &&
-          <p>from {this.state.hobby.descriptionFrom}</p>
+          <span className="where">from {this.state.hobby.descriptionFrom}</span>
         }
         {
           this.state.hobby && this.state.hobby.descriptionURL &&
-          <p>詳細は<a href={this.state.hobby.descriptionURL}>こちら</a></p>
+          <div className="descriptionURL">詳細は<a href={this.state.hobby.descriptionURL}>こちら</a></div>
         }
       </div>
     )
