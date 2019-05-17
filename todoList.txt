@@ -1,14 +1,8 @@
 TODO List
 
 frontend
-    全体
-        faviconのアップデート
-        ディレクトリの整理
-        フォントを変更
-    css
-        detail
-            全体
-
+    ディレクトリの整理
+    フォントを変更
 backend
     unit testの追加
 	環境変数でserverに値をセットできるようにする
@@ -23,6 +17,7 @@ mobile
 
 その他
     サーバの準備
+        バックエンド用
         フロントエンド用
 
 仕様
