@@ -6,7 +6,7 @@ package userapi
 
 // LoginRequest struct defines request data for user login
 type LoginRequest struct {
-	ID       string `json:"id"`
+	Name     string `json:"name"`
 	Password string `json:"password"`
 }
 

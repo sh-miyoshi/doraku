@@ -19,7 +19,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := userdb.GetInst().Authenticate(req.ID, req.Password)
+	token, err := userdb.GetInst().Authenticate(req.Name, req.Password)
 
 	if err != nil {
 		if err == userdb.ErrAuthFailed {
@@ -49,4 +49,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(resRaw)
 	logger.Info("Successfully finished LoginHandler")
+}
+
+// GetUserHandler validates user id and password, and return JWT token
+func GetUserHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call UserHandler method")
 }
