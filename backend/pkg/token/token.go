@@ -3,6 +3,7 @@ package token
 import (
 	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
+	"strings"
 	"time"
 )
 
@@ -38,4 +39,17 @@ func Validate(tokenString string) (jwt.StandardClaims, error) {
 	} else {
 		return jwt.StandardClaims{}, fmt.Errorf("Failed to validate token")
 	}
+}
+
+func ParseHTTPHeaderToken(tokenString string) (string, error) {
+	var splitToken []string
+	if strings.Contains(tokenString, "bearer") {
+		splitToken = strings.Split(tokenString, "bearer")
+	} else if strings.Contains(tokenString, "Bearer") {
+		splitToken = strings.Split(tokenString, "Bearer")
+	} else {
+		return "", fmt.Errorf("token format is missing")
+	}
+	reqToken := strings.TrimSpace(splitToken[0])
+	return reqToken, nil
 }

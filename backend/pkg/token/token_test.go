@@ -1,4 +1,4 @@
-package util
+package token
 
 import (
 	"testing"
@@ -18,7 +18,7 @@ func TestTokenParse(t *testing.T) {
 	}
 
 	for _, tc := range tt {
-		_, err := TokenParse(tc.token)
+		_, err := ParseHTTPHeaderToken(tc.token)
 		if tc.expectPass && err != nil {
 			t.Errorf("handler should pass with token %s, but got error %v", tc.token, err)
 		}

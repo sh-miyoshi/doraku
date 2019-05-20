@@ -8,7 +8,6 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
-	"github.com/sh-miyoshi/doraku/pkg/util"
 )
 
 // LoginHandler validates user id and password, and return JWT token
@@ -60,7 +59,7 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Validate Token in Header
 	reqTokenStr := r.Header.Get("Authorization")
-	tokenStr, err := util.TokenParse(reqTokenStr)
+	tokenStr, err := token.ParseHTTPHeaderToken(reqTokenStr)
 	if err != nil {
 		logger.Info("Failed to get JWT token %v", err)
 		http.Error(w, "Cannot find JWT Token in Header", http.StatusBadRequest)
