@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: doraku-server
+  namespace: default
+  labels:
+    app: doraku-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: doraku-server
+    spec:
+      containers:
+      - name: doraku-server
+        image: docker.io/smiyoshi/dorakuserver:latest
+#        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doraku-server
+  labels:
+    app: doraku-server
+  namespace: default
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer
+  selector:
+    app: doraku-server

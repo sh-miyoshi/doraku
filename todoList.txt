@@ -9,6 +9,9 @@ backend
     groupInfoのセット(HobbyDetailsHandler)
     debug用Dockerfileの準備
     Kubernetes yamlの準備
+        replica数
+        livenessprobe
+        imagetag
     user処理
         JWTサーバなど
 
