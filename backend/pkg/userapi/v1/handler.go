@@ -6,7 +6,9 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
+	"github.com/sh-miyoshi/doraku/pkg/token"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
+	"github.com/sh-miyoshi/doraku/pkg/util"
 )
 
 // LoginHandler validates user id and password, and return JWT token
@@ -56,7 +58,22 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetUserHandler method")
 
-	// TODO Check Header
+	// Validate Token in Header
+	reqTokenStr := r.Header.Get("Authorization")
+	tokenStr, err := util.TokenParse(reqTokenStr)
+	if err != nil {
+		logger.Info("Failed to get JWT token %v", err)
+		http.Error(w, "Cannot find JWT Token in Header", http.StatusBadRequest)
+		return
+	}
+	claims, err := token.Validate(tokenStr)
+	if err != nil {
+		logger.Info("Failed to auth token %v", err)
+		http.Error(w, "Failed to auth token", http.StatusBadRequest)
+		return
+	}
+	logger.Debug("claims in token: %v", claims)
+	// TODO validate claims(e.g. expired time, ...)
 
 	vars := mux.Vars(r)
 	user, err := userdb.GetInst().GetUserByName(vars["username"])
