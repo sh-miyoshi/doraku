@@ -4,27 +4,19 @@ import (
 	"testing"
 )
 
-// TODO Testing private method
-func TestValidate(t *testing.T) {
-	token, _ := Generate()
-	_, err := validate(token)
-	if err != nil {
-		t.Errorf("handler should pass with token %s, but got error %v", token, err)
-	}
-}
+func TestAuthenticate(t *testing.T) {
+	validToken, _ := Generate()
 
-// TODO Testing private method
-func TestTokenParse(t *testing.T) {
 	// Test Cases
 	tt := []struct {
 		token      string
 		expectPass bool
 	}{
-		{"Bearer aaaa", true},
-		{"bearer aaaa", true},
+		{"Bearer " + validToken, true},
+		{"bearer " + validToken, true},
 		{"", false},
-		{"aaaa", false},
-		{"bbbb aaaa", false},
+		{validToken, false},
+		{"bbbb " + validToken, false},
 	}
 
 	for _, tc := range tt {
