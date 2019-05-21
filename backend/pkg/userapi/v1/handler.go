@@ -58,21 +58,12 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetUserHandler method")
 
 	// Validate Token in Header
-	reqTokenStr := r.Header.Get("Authorization")
-	tokenStr, err := token.ParseHTTPHeaderToken(reqTokenStr)
-	if err != nil {
-		logger.Info("Failed to get JWT token %v", err)
-		http.Error(w, "Cannot find JWT Token in Header", http.StatusBadRequest)
-		return
-	}
-	claims, err := token.Validate(tokenStr)
-	if err != nil {
+	reqToken := r.Header.Get("Authorization")
+	if err := token.Authenticate(reqToken); err != nil {
 		logger.Info("Failed to auth token %v", err)
-		http.Error(w, "Failed to auth token", http.StatusBadRequest)
+		http.Error(w, "Failed to auth token", http.StatusUnauthorized)
 		return
 	}
-	logger.Debug("claims in token: %v", claims)
-	// TODO validate claims(e.g. expired time, ...)
 
 	vars := mux.Vars(r)
 	user, err := userdb.GetInst().GetUserByName(vars["username"])
