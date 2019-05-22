@@ -21,7 +21,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := userdb.GetInst().Authenticate(req.Name, req.Password)
+	userReq := userdb.UserRequest{
+		Name:     req.Name,
+		Password: req.Password,
+	}
+	token, err := userdb.GetInst().Authenticate(userReq)
 
 	if err != nil {
 		if err == userdb.ErrAuthFailed {
@@ -56,6 +60,17 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 // CreateUserHandler creates new user with name and password
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call CreateUserHandler method")
+
+	var req UserCreateRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		logger.Info("Failed to decode Create User params: %v", err)
+		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
+		return
+	}
+
+	// TODO check valid user param?
+	// TODO check exists user?
+	// TODO register to db
 
 	logger.Info("Successfully finished CreateUserHandler")
 }
