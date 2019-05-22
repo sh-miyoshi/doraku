@@ -53,6 +53,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("Successfully finished LoginHandler")
 }
 
+// CreateUserHandler creates new user with name and password
+func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call CreateUserHandler method")
+
+	logger.Info("Successfully finished CreateUserHandler")
+}
+
 // GetUserHandler validates user id and password, and return JWT token
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetUserHandler method")
@@ -75,9 +82,8 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := User{
-		ID:    user.ID,
-		Name:  user.Name,
-		EMail: user.EMail,
+		ID:   user.ID,
+		Name: user.Name,
 	}
 
 	resRaw, err := json.Marshal(res)

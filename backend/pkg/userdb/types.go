@@ -9,7 +9,6 @@ var (
 )
 
 type UserData struct {
-	ID    int
-	Name  string
-	EMail string
+	ID   int
+	Name string
 }

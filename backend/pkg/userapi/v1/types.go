@@ -12,7 +12,8 @@ type LoginRequest struct {
 
 // UserCreateRequest struct defines request data for user create
 type UserCreateRequest struct {
-	EMail string `json:"email"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
 }
 
 //----------------------------
@@ -26,7 +27,6 @@ type LoginResponse struct {
 
 // User struct defines info of user
 type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	EMail string `json:"email"`
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }

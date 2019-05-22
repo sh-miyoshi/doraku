@@ -74,9 +74,8 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 		if line[1] == name {
 			id, _ := strconv.Atoi(line[0])
 			res := UserData{
-				ID:    id,
-				Name:  name,
-				EMail: line[3],
+				ID:   id,
+				Name: name,
 			}
 			return res, nil
 		}
