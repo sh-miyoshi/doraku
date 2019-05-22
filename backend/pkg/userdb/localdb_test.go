@@ -29,19 +29,29 @@ func TestAuthenticate(t *testing.T) {
 	filePath := "../../database/local_debug_user.csv"
 	handler.ConnectDB(filePath)
 
-	// Test with correct value
-	// TODO check JWT token value
-	if _, err := handler.Authenticate("test", "testtest"); err != nil {
-		t.Errorf("Failed to auth correct data: %v", err)
+	// Test Cases
+	tt := []struct {
+		name       string
+		password   string
+		expectPass bool
+	}{
+		{"test", "testtest", true}, // correct value
+		{"test", "wrong_passwd", false},
+		{"dummy", "testtest", false},
 	}
 
-	// Test with incorrect value
-	if _, err := handler.Authenticate("test", "wrong_passwd"); err == nil {
-		t.Errorf("Success to auth incorrect data: %v", err)
-	}
-
-	// Test with not exists user
-	if _, err := handler.Authenticate("dummy", "testtest"); err == nil {
-		t.Errorf("Success to auth incorrect data: %v", err)
+	for _, tc := range tt {
+		req := UserRequest{
+			Name:     tc.name,
+			Password: tc.password,
+		}
+		_, err := handler.Authenticate(req)
+		if tc.expectPass && err != nil {
+			// TODO check JWT Token claims
+			t.Errorf("handler should pass with name %s and password %s, but got error %v", tc.name, tc.password, err)
+		}
+		if !tc.expectPass && err == nil {
+			t.Errorf("handler should not pass with name %s and password %s, but error is nil", tc.name, tc.password)
+		}
 	}
 }

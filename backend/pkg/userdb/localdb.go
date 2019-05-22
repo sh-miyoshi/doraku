@@ -43,24 +43,24 @@ func (l *localDBHandler) ConnectDB(connectString string) error {
 	return nil
 }
 
-func (l *localDBHandler) Authenticate(name string, password string) (string, error) {
+func (l *localDBHandler) Authenticate(req UserRequest) (string, error) {
 	data, err := csvReadAll(l.fileName)
 	if err != nil {
 		return "", err
 	}
 
 	for _, line := range data {
-		if line[1] == name {
-			hashed := base64.StdEncoding.EncodeToString([]byte(password))
+		if line[1] == req.Name {
+			hashed := base64.StdEncoding.EncodeToString([]byte(req.Password))
 			if hashed == line[2] {
 				return token.Generate() // Generate JWT Token
 			}
-			logger.Info("wrong password for user: %s", name)
+			logger.Info("wrong password for user: %s", req.Name)
 			return "", ErrAuthFailed
 		}
 	}
 
-	logger.Info("no such user %s", name)
+	logger.Info("no such user %s", req.Name)
 	return "", ErrAuthFailed
 }
 

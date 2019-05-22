@@ -12,3 +12,8 @@ type UserData struct {
 	ID   int
 	Name string
 }
+
+type UserRequest struct {
+	Name     string
+	Password string
+}
