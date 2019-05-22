@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	NameLengthMin     = 3
+	NameLengthMin     = 4
 	NameLengthMax     = 32
 	PasswordLengthMin = 8
 	PasswordLengthMax = 128
@@ -26,17 +26,17 @@ type UserRequest struct {
 }
 
 func (r *UserRequest) Validate() error {
-	if len(r.Name) <= NameLengthMin {
+	if len(r.Name) < NameLengthMin {
 		return errors.New("Name Length is too small")
 	}
-	if len(r.Name) >= NameLengthMax {
+	if len(r.Name) > NameLengthMax {
 		return errors.New("Name Length is too long")
 	}
 
-	if len(r.Password) <= PasswordLengthMin {
+	if len(r.Password) < PasswordLengthMin {
 		return errors.New("Password Length is too small")
 	}
-	if len(r.Password) >= PasswordLengthMax {
+	if len(r.Password) > PasswordLengthMax {
 		return errors.New("Password Length is too long")
 	}
 

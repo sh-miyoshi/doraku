@@ -25,6 +25,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Name:     req.Name,
 		Password: req.Password,
 	}
+
+	if err := userReq.Validate(); err != nil {
+		logger.Info("User Request iis not valid: %v", err)
+		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
+		return
+	}
+
 	token, err := userdb.GetInst().Authenticate(userReq)
 
 	if err != nil {
@@ -68,7 +75,17 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO check valid user param?
+	userReq := userdb.UserRequest{
+		Name:     req.Name,
+		Password: req.Password,
+	}
+
+	if err := userReq.Validate(); err != nil {
+		logger.Info("User Request iis not valid: %v", err)
+		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
+		return
+	}
+
 	// TODO check exists user?
 	// TODO register to db
 
