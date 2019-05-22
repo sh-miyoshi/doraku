@@ -210,7 +210,9 @@ definitions:
   UserCreateRequest:
     type: object
     properties:
-      email:
+      name:
+        type: string
+      password:
         type: string
   User:
     type: object
@@ -218,6 +220,4 @@ definitions:
       id:
         type: integer
       name:
-        type: string
-      email:
         type: string
