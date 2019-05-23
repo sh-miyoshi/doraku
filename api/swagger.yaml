@@ -107,7 +107,7 @@ paths:
             $ref: '#/definitions/LoginRespose'
         '400':
           description: failed to authorize
-  /user/{username}:
+  /user:
     post:
       tags:
       - user
@@ -116,11 +116,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: username
-        in: path
-        description: user name you want to create
-        required: true
-        type: string
       - name: info
         in: body
         description: user data
@@ -132,6 +127,7 @@ paths:
           description: "successful operation"
         400:
           description: "Invalid parameters supplied"
+  /user/{username}:
     get:
       tags:
       - user
