@@ -23,6 +23,7 @@ func csvReadAll(fileName string) ([][]string, error) {
 		logger.Error("Failed to open DB file %s in Authenticate: %v", fileName, err)
 		return [][]string{}, err
 	}
+	defer file.Close()
 
 	reader := csv.NewReader(file)
 	reader.Comment = '#'
@@ -82,5 +83,32 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 	}
 
 	logger.Info("no such user %s", name)
-	return UserData{}, fmt.Errorf("no such user %s", name)
+	lastUserID := len(data)
+	return UserData{ID: lastUserID}, ErrNoSuchUser
+}
+
+func (l *localDBHandler) Create(newUser UserRequest) error {
+	// User is already exists?
+	user, err := l.GetUserByName(newUser.Name)
+	if err == nil {
+		return ErrUserAlreadyExists
+	}
+	// err is unexpected error
+	if err != ErrNoSuchUser {
+		return err
+	}
+
+	// add new user
+	id := user.ID // Set New User ID
+
+	file, err := os.OpenFile(l.fileName, os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		logger.Error("Failed to open file %s for append new user", l.fileName)
+	}
+	defer file.Close()
+	hashedPassword := "test"
+	fmt.Fprintf(file, "%d,%s,%s", id, newUser.Name, hashedPassword)
+
+	logger.Info("User %s is successfully created", newUser.Name)
+	return nil
 }

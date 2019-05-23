@@ -16,6 +16,7 @@ type userHandler interface {
 	ConnectDB(connectString string) error
 	Authenticate(req UserRequest) (string, error)
 	GetUserByName(name string) (UserData, error)
+	Create(newUser UserRequest) error
 	// TODO Create, Delete
 }
 

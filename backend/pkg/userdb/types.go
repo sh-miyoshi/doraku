@@ -12,7 +12,9 @@ const (
 )
 
 var (
-	ErrAuthFailed = errors.New("Failed to authenticate")
+	ErrAuthFailed        = errors.New("Failed to authenticate")
+	ErrUserAlreadyExists = errors.New("User is already exists")
+	ErrNoSuchUser        = errors.New("No such user")
 )
 
 type UserData struct {
