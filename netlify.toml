@@ -1,0 +1,4 @@
+[build]
+  base    = "frontend/doraku"
+  command = "npm run build"
+  publish = "frontend/doraku/build"
