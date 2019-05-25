@@ -2,6 +2,8 @@ package userdb
 
 import (
 	"testing"
+	"io/ioutil"
+	"os"
 )
 
 func TestConnectDB(t *testing.T) {
@@ -54,4 +56,30 @@ func TestAuthenticate(t *testing.T) {
 			t.Errorf("handler should not pass with name %s and password %s, but error is nil", tc.name, tc.password)
 		}
 	}
+}
+
+func TestCreate(t *testing.T) {
+	handler := localDBHandler{}
+
+	tmpfile, err := ioutil.TempFile("","")
+	if err != nil {
+		t.Fatalf("Failed to create temp file: %v", err)
+	}
+	defer os.Remove(tmpfile.Name())
+	handler.ConnectDB(tmpfile.Name())
+
+	req := UserRequest{
+		Name: "test",
+		Password: "password",
+	}
+	if err := handler.Create(req); err != nil {
+		t.Errorf("handler should pass with %v but got error %v", req, err)
+	}
+
+	// Test Duplicate User
+	if err := handler.Create(req); err == nil {
+		t.Errorf("handler should not pass with same user name but error is nil")
+	}
+
+	// TODO add more test case
 }
