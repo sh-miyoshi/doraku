@@ -70,6 +70,7 @@ func main() {
 	// User API
 	r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
 	r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
+	r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
 
 	corsObj := handlers.AllowedOrigins([]string{"*"})
 

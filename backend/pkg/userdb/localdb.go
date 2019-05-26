@@ -106,7 +106,7 @@ func (l *localDBHandler) Create(newUser UserRequest) error {
 		logger.Error("Failed to open file %s for append new user", l.fileName)
 	}
 	defer file.Close()
-	hashedPassword := "test"
+	hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
 	fmt.Fprintf(file, "%d,%s,%s", id, newUser.Name, hashedPassword)
 
 	logger.Info("User %s is successfully created", newUser.Name)

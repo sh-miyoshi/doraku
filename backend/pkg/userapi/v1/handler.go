@@ -86,8 +86,15 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO check exists user?
-	// TODO register to db
+	if err := userdb.GetInst().Create(userReq); err != nil {
+		logger.Info("Failed to create new user %s: %v", userReq.Name, err)
+		if err == userdb.ErrUserAlreadyExists {
+			http.Error(w, "User is already exists", http.StatusConflict)
+		} else {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		}
+		return
+	}
 
 	logger.Info("Successfully finished CreateUserHandler")
 }
