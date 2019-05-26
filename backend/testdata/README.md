@@ -22,6 +22,6 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/v1/user/test
 3. Create New User
 
 ```bash
-TOKEN=`curl -s -X POST http://localhost:8080/api/v1/login -d "@login.json" | jq .token | tr -d '"'`
-curl -X POST -d "@create_user.json" -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/v1/user
+curl -X POST -d "@new_user.json" http://localhost:8080/api/v1/user
+curl -X POST -d "@new_user.json" http://localhost:8080/api/v1/login
 ```
