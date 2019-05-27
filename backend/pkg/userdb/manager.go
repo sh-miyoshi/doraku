@@ -5,14 +5,18 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 )
 
+// DBType is type of database
 type DBType int
 
 const (
+	// DBRemote use remote database
 	DBRemote DBType = iota
+	// DBLocal use local csv file for database
 	DBLocal
 )
 
-type userHandler interface {
+// UserHandler is an interface for handler of user
+type UserHandler interface {
 	ConnectDB(connectString string) error
 	Authenticate(req UserRequest) (string, error)
 	GetUserByName(name string) (UserData, error)
@@ -20,8 +24,9 @@ type userHandler interface {
 	Delete(userName string) error
 }
 
-var instance userHandler
+var instance UserHandler
 
+// InitUserHandler initialize handler for user
 func InitUserHandler(dbType DBType) error {
 	switch dbType {
 	case DBRemote:
@@ -35,6 +40,7 @@ func InitUserHandler(dbType DBType) error {
 	return fmt.Errorf("No such database type")
 }
 
-func GetInst() userHandler {
+// GetInst return a instance of handler
+func GetInst() UserHandler {
 	return instance
 }

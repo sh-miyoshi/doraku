@@ -11,7 +11,7 @@ import (
 )
 
 type localDBHandler struct {
-	userHandler
+	UserHandler
 
 	fileName string
 }

@@ -1,9 +1,9 @@
 package userdb
 
 import (
-	"testing"
 	"io/ioutil"
 	"os"
+	"testing"
 )
 
 func TestConnectDB(t *testing.T) {
@@ -61,7 +61,7 @@ func TestAuthenticate(t *testing.T) {
 func TestCreate(t *testing.T) {
 	handler := localDBHandler{}
 
-	tmpfile, err := ioutil.TempFile("","")
+	tmpfile, err := ioutil.TempFile("", "")
 	if err != nil {
 		t.Fatalf("Failed to create temp file: %v", err)
 	}
@@ -69,7 +69,7 @@ func TestCreate(t *testing.T) {
 	handler.ConnectDB(tmpfile.Name())
 
 	req := UserRequest{
-		Name: "test",
+		Name:     "test",
 		Password: "password",
 	}
 	if err := handler.Create(req); err != nil {

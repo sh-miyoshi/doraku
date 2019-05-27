@@ -5,28 +5,38 @@ import (
 )
 
 const (
-	NameLengthMin     = 4
-	NameLengthMax     = 32
+	// NameLengthMin is minimum length of name
+	NameLengthMin = 4
+	// NameLengthMax is maximum length of name
+	NameLengthMax = 32
+	// PasswordLengthMin is minimum length of password
 	PasswordLengthMin = 8
+	// PasswordLengthMax is maximum length of password
 	PasswordLengthMax = 128
 )
 
 var (
-	ErrAuthFailed        = errors.New("Failed to authenticate")
+	// ErrAuthFailed is an error for authentication failed
+	ErrAuthFailed = errors.New("Failed to authenticate")
+	// ErrUserAlreadyExists is an error for user is already
 	ErrUserAlreadyExists = errors.New("User is already exists")
-	ErrNoSuchUser        = errors.New("No such user")
+	// ErrNoSuchUser is an error for no such user
+	ErrNoSuchUser = errors.New("No such user")
 )
 
+// UserData is data for user
 type UserData struct {
 	ID   int
 	Name string
 }
 
+//UserRequest is a request param for user method
 type UserRequest struct {
 	Name     string
 	Password string
 }
 
+// Validate method validates UserRequest
 func (r *UserRequest) Validate() error {
 	if len(r.Name) < NameLengthMin {
 		return errors.New("Name Length is too small")
