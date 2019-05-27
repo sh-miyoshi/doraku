@@ -51,6 +51,10 @@ class App extends Component {
                 <Route path="/recommend_result" component={RecommendResult} />
                 <Route component={Error404} />
               </Switch>
+
+              <footer>
+                <a href="https://github.com/sh-miyoshi/doraku/issues/new">Contact Support</a>
+              </footer>
             </div>
           </BrowserRouter>
         </ConnectedRouter>
