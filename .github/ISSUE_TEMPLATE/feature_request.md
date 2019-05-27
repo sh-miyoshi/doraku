@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: 新機能の追加の提案(Suggest an idea for this project)
 title: ''
 labels: ''
 assignees: ''

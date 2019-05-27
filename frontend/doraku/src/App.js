@@ -53,7 +53,7 @@ class App extends Component {
               </Switch>
 
               <footer>
-                <a href="https://github.com/sh-miyoshi/doraku/issues/new">Contact Support</a>
+                <a href="https://github.com/sh-miyoshi/doraku/issues/new/choose">Contact Support</a>
               </footer>
             </div>
           </BrowserRouter>
