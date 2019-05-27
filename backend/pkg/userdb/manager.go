@@ -17,7 +17,7 @@ type userHandler interface {
 	Authenticate(req UserRequest) (string, error)
 	GetUserByName(name string) (UserData, error)
 	Create(newUser UserRequest) error
-	// TODO Create, Delete
+	Delete(userName string) error
 }
 
 var instance userHandler
