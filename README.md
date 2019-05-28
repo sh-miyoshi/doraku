@@ -1,3 +1,3 @@
 # [WIP] Doraku
 
-Application URL: [https://fervent-cori-37d3f6.netlify.com/](https://fervent-cori-37d3f6.netlify.com/)
+Application URL: [https://doraku.netlify.com](https://doraku.netlify.com)
