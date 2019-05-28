@@ -1,8 +1,9 @@
 TODO List
 
 全体
-	footerの追加(copyright, contact usとか)
 	広告の追加
+    Domain名の取得
+    Monitoring基盤の導入
 frontend
     ディレクトリの整理
     フォントを変更
@@ -15,6 +16,7 @@ backend
         replica数
         livenessprobe
         imagetag
+    remote DBの準備
     user処理
         JWTサーバなど
 
