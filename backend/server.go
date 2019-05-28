@@ -15,22 +15,30 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
 )
 
-func main() {
+type flagConfig struct {
+	Port      int
+	BindAddr  string
+	LogFile   string
+	ModeDebug bool
+}
+
+var config flagConfig
+
+func ParseCmdlineArgs() {
 	const DefaultPort = 8080
 	const DefaultBindAddr = "0.0.0.0"
 
-	var port int
-	var bindAddr string
-	var logFile string
-	var debug bool
-
-	flag.IntVar(&port, "port", DefaultPort, "set port number for server")
-	flag.StringVar(&bindAddr, "bind", DefaultBindAddr, "set bind address for server")
-	flag.StringVar(&logFile, "logfile", "", "write log to file, output os.Stdout when do not set this")
-	flag.BoolVar(&debug, "debug", false, "if true, run server as debug mode")
+	flag.IntVar(&config.Port, "port", DefaultPort, "set port number for server")
+	flag.StringVar(&config.BindAddr, "bind", DefaultBindAddr, "set bind address for server")
+	flag.StringVar(&config.LogFile, "logfile", "", "write log to file, output os.Stdout when do not set this")
+	flag.BoolVar(&config.ModeDebug, "debug", false, "if true, run server as debug mode")
 	flag.Parse()
+}
 
-	logger.InitLogger(debug, logFile)
+func main() {
+	ParseCmdlineArgs()
+
+	logger.InitLogger(config.ModeDebug, config.LogFile)
 
 	const hobbyFilePath = "database/hobby.csv"
 	const descFilePath = "database/description.csv"
@@ -74,7 +82,7 @@ func main() {
 
 	corsObj := handlers.AllowedOrigins([]string{"*"})
 
-	addr := fmt.Sprintf("%s:%d", bindAddr, port)
+	addr := fmt.Sprintf("%s:%d", config.BindAddr, config.Port)
 	logger.Info("start server with %s", addr)
 	if err := http.ListenAndServe(addr, handlers.CORS(corsObj)(r)); err != nil {
 		logger.Error("http ListenAndServe Error: %v", err)
