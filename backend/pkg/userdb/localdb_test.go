@@ -83,3 +83,30 @@ func TestCreate(t *testing.T) {
 
 	// TODO add more test case
 }
+
+func TestDelete(t *testing.T) {
+	handler := localDBHandler{}
+
+	tmpfile, err := ioutil.TempFile("", "")
+	if err != nil {
+		t.Fatalf("Failed to create temp file: %v", err)
+	}
+	defer os.Remove(tmpfile.Name())
+	handler.ConnectDB(tmpfile.Name())
+	req := UserRequest{
+		Name:     "test",
+		Password: "password",
+	}
+	// Create New User
+	handler.Create(req)
+
+	// Test Delete method
+	// Delete not exists user
+	if err := handler.Delete("user"); err == nil {
+		t.Errorf("handler should not pass with not exists user name but error is nil")
+	}
+
+	if err := handler.Delete(req.Name); err != nil {
+		t.Errorf("handler should pass with %s but got error %v", req.Name, err)
+	}
+}

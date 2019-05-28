@@ -128,13 +128,15 @@ func (l *localDBHandler) Delete(userName string) error {
 	}
 	defer file.Close()
 
+	writer := csv.NewWriter(file)
 	isDeleted := false
 	for _, line := range data {
 		if line[1] == userName {
 			// Delete Target
 			isDeleted = true
 		} else {
-			fmt.Fprintln(file, line)
+			writer.Write(line)
+			writer.Flush()
 		}
 	}
 	if !isDeleted {
