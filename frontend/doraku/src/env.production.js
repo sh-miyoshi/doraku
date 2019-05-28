@@ -1,1 +1,0 @@
-export const INSIDE_BACKEND_SERVER_URL = "https://doraku-241004.appspot.com"

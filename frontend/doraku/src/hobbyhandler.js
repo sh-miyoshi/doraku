@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_SERVER_URL } from './env.secret';
+import { BACKEND_SERVER_URL } from './global_constant';
 
 export class HobbyHandler {
   constructor() {
