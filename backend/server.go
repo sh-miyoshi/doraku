@@ -11,7 +11,7 @@ import (
 	hobbyapiv1 "github.com/sh-miyoshi/doraku/pkg/hobbyapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
-	userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
+	//userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
 )
 
@@ -24,7 +24,7 @@ type flagConfig struct {
 
 var config flagConfig
 
-func ParseCmdlineArgs() {
+func parseCmdlineArgs() {
 	const DefaultPort = 8080
 	const DefaultBindAddr = "0.0.0.0"
 
@@ -35,11 +35,7 @@ func ParseCmdlineArgs() {
 	flag.Parse()
 }
 
-func main() {
-	ParseCmdlineArgs()
-
-	logger.InitLogger(config.ModeDebug, config.LogFile)
-
+func initDataBase() {
 	const hobbyFilePath = "database/hobby.csv"
 	const descFilePath = "database/description.csv"
 
@@ -58,15 +54,10 @@ func main() {
 		logger.Error("Failed to initialize User DB: %v", err)
 		os.Exit(1)
 	}
+}
 
-	r := mux.NewRouter()
-
-	// Health Check
-	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("ok"))
-	}).Methods("GET")
-
-	basePath := "/api/v1"
+func setAPI(r *mux.Router) {
+	const basePath = "/api/v1"
 
 	// Hobby API
 	r.HandleFunc(basePath+"/hobby/all", hobbyapiv1.GetAllHobbyHandler).Methods("GET")
@@ -76,9 +67,26 @@ func main() {
 	r.HandleFunc(basePath+"/hobby/image/{id}", hobbyapiv1.GetImageHandler).Methods("GET")
 
 	// User API
-	r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
-	r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
-	r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
+	// TODO(user API is not completed yet)
+	// r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
+	// r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
+	// r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
+
+	// Health Check
+	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("ok"))
+	}).Methods("GET")
+}
+
+func main() {
+	parseCmdlineArgs()
+
+	logger.InitLogger(config.ModeDebug, config.LogFile)
+
+	initDataBase()
+
+	r := mux.NewRouter()
+	setAPI(r)
 
 	corsObj := handlers.AllowedOrigins([]string{"*"})
 
