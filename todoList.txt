@@ -2,11 +2,11 @@ TODO List
 
 全体
 	広告の追加
-    Domain名の取得
-    Monitoring基盤の導入
+    DBデータの追加
 frontend
     ディレクトリの整理
     フォントを変更
+    説明文(tooltip)の追加
 backend
     unit testの追加
 	環境変数でserverに値をセットできるようにする
@@ -18,7 +18,9 @@ backend
         imagetag
     remote DBの準備
     user処理
-        JWTサーバなど
+        create/delete
+        login/logout
+        get/update
 
 mobile
     frontend完成後に用意
