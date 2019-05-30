@@ -37,7 +37,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err == userdb.ErrAuthFailed {
 			logger.Info("Failed to login: %v", err)
-			http.Error(w, "Invalid ID or Password", http.StatusForbidden)
+			http.Error(w, "Invalid Name or Password", http.StatusForbidden)
 		} else {
 			logger.Error("Unexpected error is occured in login: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -121,7 +121,6 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := User{
-		ID:   user.ID,
 		Name: user.Name,
 	}
 

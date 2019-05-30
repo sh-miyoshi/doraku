@@ -27,6 +27,6 @@ type LoginResponse struct {
 
 // User struct defines info of user
 type User struct {
-	ID   int    `json:"id"`
 	Name string `json:"name"`
+	// TODO(myHobbyList, ...)
 }

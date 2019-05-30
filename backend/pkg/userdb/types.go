@@ -26,8 +26,8 @@ var (
 
 // UserData is data for user
 type UserData struct {
-	ID   int
 	Name string
+	// TODO(myHobbyList, ...)
 }
 
 //UserRequest is a request param for user method

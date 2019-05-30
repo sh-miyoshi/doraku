@@ -7,7 +7,6 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"os"
-	"strconv"
 )
 
 type localDBHandler struct {
@@ -51,9 +50,9 @@ func (l *localDBHandler) Authenticate(req UserRequest) (string, error) {
 	}
 
 	for _, line := range data {
-		if line[1] == req.Name {
+		if line[0] == req.Name {
 			hashed := base64.StdEncoding.EncodeToString([]byte(req.Password))
-			if hashed == line[2] {
+			if hashed == line[1] {
 				return token.Generate() // Generate JWT Token
 			}
 			logger.Info("wrong password for user: %s", req.Name)
@@ -72,10 +71,8 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 	}
 
 	for _, line := range data {
-		if line[1] == name {
-			id, _ := strconv.Atoi(line[0])
+		if line[0] == name {
 			res := UserData{
-				ID:   id,
 				Name: name,
 			}
 			return res, nil
@@ -83,13 +80,12 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 	}
 
 	logger.Info("no such user %s", name)
-	lastUserID := len(data)
-	return UserData{ID: lastUserID}, ErrNoSuchUser
+	return UserData{}, ErrNoSuchUser
 }
 
 func (l *localDBHandler) Create(newUser UserRequest) error {
 	// User is already exists?
-	user, err := l.GetUserByName(newUser.Name)
+	_, err := l.GetUserByName(newUser.Name)
 	if err == nil {
 		return ErrUserAlreadyExists
 	}
@@ -99,15 +95,13 @@ func (l *localDBHandler) Create(newUser UserRequest) error {
 	}
 
 	// add new user
-	id := user.ID // Set New User ID
-
 	file, err := os.OpenFile(l.fileName, os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		logger.Error("Failed to open file %s for append new user", l.fileName)
 	}
 	defer file.Close()
 	hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
-	fmt.Fprintf(file, "%d,%s,%s", id, newUser.Name, hashedPassword)
+	fmt.Fprintf(file, "%s,%s", newUser.Name, hashedPassword)
 
 	logger.Info("User %s is successfully created", newUser.Name)
 	return nil
@@ -131,7 +125,7 @@ func (l *localDBHandler) Delete(userName string) error {
 	writer := csv.NewWriter(file)
 	isDeleted := false
 	for _, line := range data {
-		if line[1] == userName {
+		if line[0] == userName {
 			// Delete Target
 			isDeleted = true
 		} else {
