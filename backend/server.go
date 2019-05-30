@@ -69,6 +69,7 @@ func setAPI(r *mux.Router) {
 	// User API
 	// TODO(user API is not completed yet, so if debug mode, user API can be called)
 	if config.ModeDebug {
+		logger.Debug("Activate user API")
 		r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
 		r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
