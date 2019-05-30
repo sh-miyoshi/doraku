@@ -136,3 +136,26 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(resRaw)
 	logger.Info("Successfully finished GetUserHandler")
 }
+
+// DeleteUserHandler delete a user
+func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call DeleteUserHandler method")
+
+	// Validate Token in Header
+	reqToken := r.Header.Get("Authorization")
+	if err := token.Authenticate(reqToken); err != nil {
+		logger.Info("Failed to auth token %v", err)
+		http.Error(w, "Failed to auth token", http.StatusUnauthorized)
+		return
+	}
+
+	vars := mux.Vars(r)
+	if err := userdb.GetInst().Delete(vars["username"]); err != nil {
+		logger.Info("Failed to delete user %v", err)
+		http.Error(w, "failed to delete user", http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+	logger.Info("Successfully finished DeleteUserHandler")
+}

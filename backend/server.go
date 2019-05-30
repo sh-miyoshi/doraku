@@ -11,7 +11,7 @@ import (
 	hobbyapiv1 "github.com/sh-miyoshi/doraku/pkg/hobbyapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
-	//userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
+	userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
 )
 
@@ -67,10 +67,13 @@ func setAPI(r *mux.Router) {
 	r.HandleFunc(basePath+"/hobby/image/{id}", hobbyapiv1.GetImageHandler).Methods("GET")
 
 	// User API
-	// TODO(user API is not completed yet)
-	// r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
-	// r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
-	// r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
+	// TODO(user API is not completed yet, so if debug mode, user API can be called)
+	if config.ModeDebug {
+		r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
+		r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user/{username}", userapiv1.DeleteUserHandler).Methods("DELETE")
+	}
 
 	// Health Check
 	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
