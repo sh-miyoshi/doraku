@@ -20,5 +20,12 @@ Application URL: [https://doraku.netlify.com](https://doraku.netlify.com)
     npm start
     ```
 
-3. Access to frontend
-    URL: [http://localhsot:3000](http://localhsot:3000)
+    Access to [http://localhsot:3000](http://localhsot:3000)
+
+## Author
+
+Shunsuke Miyoshi
+
+## LICENSE
+
+This software is released under the Apache 2.0 License, see [LICENSE](./LICENSE).
