@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
+	"io"
 	"os"
 )
 
@@ -108,31 +109,41 @@ func (l *localDBHandler) Create(newUser UserRequest) error {
 }
 
 func (l *localDBHandler) Delete(userName string) error {
-	// Read All Data
-	data, err := csvReadAll(l.fileName)
-	if err != nil {
-		return err
-	}
+	var data [][]string
 
-	// Write Data if data.Name != targetUser
-	file, err := os.OpenFile(l.fileName, os.O_WRONLY, 0644)
+	file, err := os.OpenFile(l.fileName, os.O_RDWR, 0644)
 	if err != nil {
-		logger.Error("Failed to open file %s for append new user", l.fileName)
+		logger.Error("Failed to open DB file %s in Authenticate: %v", l.fileName, err)
 		return err
 	}
 	defer file.Close()
 
-	writer := csv.NewWriter(file)
 	isDeleted := false
-	for _, line := range data {
+	reader := csv.NewReader(file)
+
+	for {
+		line, err := reader.Read()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			logger.Error("Failed to read data: %v", err)
+			return err
+		}
 		if line[0] == userName {
-			// Delete Target
 			isDeleted = true
 		} else {
-			writer.Write(line)
-			writer.Flush()
+			data = append(data, line)
 		}
 	}
+
+	// Remove All data at first
+	file.Truncate(0)
+	file.Seek(0, 0)
+
+	writer := csv.NewWriter(file)
+	writer.WriteAll(data)
+
 	if !isDeleted {
 		logger.Info("no such User %s", userName)
 		return ErrNoSuchUser
