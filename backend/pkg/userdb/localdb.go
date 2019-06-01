@@ -145,7 +145,7 @@ func (l *localDBHandler) Delete(userName string) error {
 	writer.WriteAll(data)
 
 	if !isDeleted {
-		logger.Info("no such User %s", userName)
+		logger.Info("no such user %s", userName)
 		return ErrNoSuchUser
 	}
 

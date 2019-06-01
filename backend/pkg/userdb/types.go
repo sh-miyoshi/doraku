@@ -2,6 +2,7 @@ package userdb
 
 import (
 	"errors"
+	"regexp"
 )
 
 const (
@@ -9,6 +10,9 @@ const (
 	NameLengthMin = 4
 	// NameLengthMax is maximum length of name
 	NameLengthMax = 32
+	// NameValidChar is regular expression of name (only permit a-z, A-Z, 0-9, ., -, _)
+	NameValidChar = `[^a-zA-Z0-9\.\-\_]`
+
 	// PasswordLengthMin is minimum length of password
 	PasswordLengthMin = 8
 	// PasswordLengthMax is maximum length of password
@@ -43,6 +47,9 @@ func (r *UserRequest) Validate() error {
 	}
 	if len(r.Name) > NameLengthMax {
 		return errors.New("Name Length is too long")
+	}
+	if regexp.MustCompile(NameValidChar).Match([]byte(r.Name)){
+		return errors.New("Name include unpermitted charactor")
 	}
 
 	if len(r.Password) < PasswordLengthMin {
