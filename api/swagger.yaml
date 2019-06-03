@@ -170,6 +170,53 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+  /user/{username}/myhobby/{hobbyid}:
+    post:
+      tags:
+      - "user"
+      summary: "Add myhobby to user"
+      description: Add myhobby to user
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "user name"
+        required: true
+        type: "string"
+      - name: "hobbyid"
+        in: "path"
+        description: "hobby id that adding to user"
+        required: true
+        type: "string"
+      responses:
+        201:
+          description: "successful operation"
+        400:
+          description: "Invalid path parameters are supplied"
+        404:
+          description: "User or Hobby not found"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete myhobby from user"
+      description: Delete myhobby from user
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "user name"
+        required: true
+        type: "string"
+      - name: "hobbyid"
+        in: "path"
+        description: "hobby id that deleting to user"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "successful operation"
+        400:
+          description: "Invalid path parameters are supplied"
+        404:
+          description: "User or Hobby not found"
 definitions:
   Hobby:
     type: object
