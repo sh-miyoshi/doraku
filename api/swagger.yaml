@@ -123,10 +123,32 @@ paths:
         schema:
           $ref: '#/definitions/UserCreateRequest'
       responses:
-        201:
-          description: "successful operation"
+        202:
+          description: "operation accepted"
+          schema:
+            $ref: '#/definitions/UserCreateResponse'
         400:
           description: "Invalid parameters supplied"
+  /validate:
+    post:
+      tags:
+      - user
+      summary: validate temporary token
+      description: validate temporary token
+      produces:
+      - application/json
+      parameters:
+      - name: info
+        in: body
+        description: token for validation
+        required: true
+        schema:
+          $ref: '#/definitions/UserValidateRequest'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad Request'
   /user/{username}:
     get:
       tags:
@@ -256,6 +278,16 @@ definitions:
       name:
         type: string
       password:
+        type: string
+  UserCreateResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserValidateRequest:
+    type: object
+    properties:
+      token:
         type: string
   User:
     type: object

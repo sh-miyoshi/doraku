@@ -6,7 +6,6 @@ TODO List
 frontend
     ディレクトリの整理
     フォントを変更
-    説明文(tooltip)の追加
 backend
     unit testの追加
 	環境変数でserverに値をセットできるようにする
