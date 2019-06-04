@@ -20,8 +20,12 @@ type UserHandler interface {
 	ConnectDB(connectString string) error
 	Authenticate(req UserRequest) (string, error)
 	GetUserByName(name string) (UserData, error)
-	Create(newUser UserRequest) error
+	CreateUserValidation(newUser UserRequest) error
+	// TODO ValidateNewUser
 	Delete(userName string) error
+
+	//AddMyHobby(userName string, hobbyID int) error
+	//DeleteMyHobby(userName string, hobbyID int) error
 }
 
 var instance UserHandler

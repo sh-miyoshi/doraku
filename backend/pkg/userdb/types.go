@@ -30,8 +30,9 @@ var (
 
 // UserData is data for user
 type UserData struct {
-	Name string
-	// TODO(myHobbyList, ...)
+	Name        string
+	MyHobbyList []int
+	// TODO(other data)
 }
 
 //UserRequest is a request param for user method
@@ -48,7 +49,7 @@ func (r *UserRequest) Validate() error {
 	if len(r.Name) > NameLengthMax {
 		return errors.New("Name Length is too long")
 	}
-	if regexp.MustCompile(NameValidChar).Match([]byte(r.Name)){
+	if regexp.MustCompile(NameValidChar).Match([]byte(r.Name)) {
 		return errors.New("Name include unpermitted charactor")
 	}
 

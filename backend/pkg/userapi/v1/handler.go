@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	//"github.com/lithammer/shortuuid"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
@@ -93,6 +94,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO generate token, write temp data, return response
+	//token := shortuuid.New()
 
 	logger.Info("Successfully finished CreateUserHandler")
 }

@@ -3,17 +3,23 @@ package userdb
 import (
 	"encoding/base64"
 	"encoding/csv"
-	"fmt"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"io"
 	"os"
+	"path/filepath"
+)
+
+const (
+	userDatabaseFile        = "user_data.csv"
+	temporaryCreateUserFile = "temp_user.csv"
 )
 
 type localDBHandler struct {
 	UserHandler
 
-	fileName string
+	userFileName string
+	tempFileName string
 }
 
 // This func read all csv data at once, so should not use in production
@@ -31,21 +37,26 @@ func csvReadAll(fileName string) ([][]string, error) {
 	return reader.ReadAll()
 }
 
+// ConnectDB check file exists(connectString is a directory of files)
 func (l *localDBHandler) ConnectDB(connectString string) error {
+	l.userFileName = filepath.Join(connectString, "/", userDatabaseFile)
+	l.tempFileName = filepath.Join(connectString, "/", temporaryCreateUserFile)
+
 	// Check DB file exists
-	_, err := os.Stat(connectString)
-	if err != nil {
+	if _, err := os.Stat(l.userFileName); err != nil {
+		return err
+	}
+	if _, err := os.Stat(l.tempFileName); err != nil {
 		return err
 	}
 
 	// TODO check file broken
 
-	l.fileName = connectString
 	return nil
 }
 
 func (l *localDBHandler) Authenticate(req UserRequest) (string, error) {
-	data, err := csvReadAll(l.fileName)
+	data, err := csvReadAll(l.userFileName)
 	if err != nil {
 		return "", err
 	}
@@ -66,7 +77,7 @@ func (l *localDBHandler) Authenticate(req UserRequest) (string, error) {
 }
 
 func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
-	data, err := csvReadAll(l.fileName)
+	data, err := csvReadAll(l.userFileName)
 	if err != nil {
 		return UserData{}, err
 	}
@@ -84,7 +95,7 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 	return UserData{}, ErrNoSuchUser
 }
 
-func (l *localDBHandler) Create(newUser UserRequest) error {
+func (l *localDBHandler) CreateUserValidation(newUser UserRequest) error {
 	// User is already exists?
 	_, err := l.GetUserByName(newUser.Name)
 	if err == nil {
@@ -95,14 +106,16 @@ func (l *localDBHandler) Create(newUser UserRequest) error {
 		return err
 	}
 
-	// add new user
-	file, err := os.OpenFile(l.fileName, os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
-		logger.Error("Failed to open file %s for append new user", l.fileName)
-	}
-	defer file.Close()
-	hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
-	fmt.Fprintf(file, "%s,%s", newUser.Name, hashedPassword)
+	// TODO(check temp file, if ok, add to tempfile)
+
+	//// add new user
+	//file, err := os.OpenFile(l.fileName, os.O_WRONLY|os.O_APPEND, 0644)
+	//if err != nil {
+	//	logger.Error("Failed to open file %s for append new user", l.fileName)
+	//}
+	//defer file.Close()
+	//hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
+	//fmt.Fprintf(file, "%s,%s", newUser.Name, hashedPassword)
 
 	logger.Info("User %s is successfully created", newUser.Name)
 	return nil
@@ -111,9 +124,9 @@ func (l *localDBHandler) Create(newUser UserRequest) error {
 func (l *localDBHandler) Delete(userName string) error {
 	var data [][]string
 
-	file, err := os.OpenFile(l.fileName, os.O_RDWR, 0644)
+	file, err := os.OpenFile(l.userFileName, os.O_RDWR, 0644)
 	if err != nil {
-		logger.Error("Failed to open DB file %s in Authenticate: %v", l.fileName, err)
+		logger.Error("Failed to open DB file %s in Authenticate: %v", l.userFileName, err)
 		return err
 	}
 	defer file.Close()
