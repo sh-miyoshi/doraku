@@ -10,6 +10,7 @@ import { Top } from './top';
 import Today from './today';
 import Detail from './detail';
 import List from './list';
+import About from './about';
 import Recommend from './recommend';
 import RecommendResult from './recommend_result';
 import { Error404 } from './errors/404';
@@ -49,10 +50,13 @@ class App extends Component {
                 <Route path="/list" component={List} />
                 <Route path="/recommend" component={Recommend} />
                 <Route path="/recommend_result" component={RecommendResult} />
+                <Route path="/about" component={About} />
                 <Route component={Error404} />
               </Switch>
 
               <footer>
+                <Link to="/about">Dorakuとは？</Link>
+                &emsp;&emsp;
                 <a href="https://github.com/sh-miyoshi/doraku/issues/new/choose">Contact Support</a>
               </footer>
             </div>
