@@ -1,11 +1,11 @@
 package userapi
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	//"github.com/lithammer/shortuuid"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
@@ -82,7 +82,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := userReq.Validate(); err != nil {
-		logger.Info("User Request iis not valid: %v", err)
+		logger.Info("User Request is not valid: %v", err)
 		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
 		return
 	}
@@ -93,8 +93,28 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO generate token, write temp data, return response
-	//token := shortuuid.New()
+	// TODO generate token with custom data{expiredAt, id and hashed_password}, return response
+	hashedPassword := base64.StdEncoding.EncodeToString([]byte(req.Password))
+	resToken, err := token.GenerateCreateUserToken(req.Name, hashedPassword)
+	if err != nil {
+		logger.Error("Failed to generate token %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	res := UserCreateResponse{
+		Token: resToken,
+	}
+	resRaw, err := json.Marshal(res)
+	if err != nil {
+		logger.Error("Failed to marshal response %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write(resRaw)
 
 	logger.Info("Successfully finished CreateUserHandler")
 }

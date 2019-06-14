@@ -3,23 +3,17 @@ package userdb
 import (
 	"encoding/base64"
 	"encoding/csv"
+	"fmt"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"io"
 	"os"
-	"path/filepath"
-)
-
-const (
-	userDatabaseFile        = "user_data.csv"
-	temporaryCreateUserFile = "temp_user.csv"
 )
 
 type localDBHandler struct {
 	UserHandler
 
 	userFileName string
-	tempFileName string
 }
 
 // This func read all csv data at once, so should not use in production
@@ -37,21 +31,17 @@ func csvReadAll(fileName string) ([][]string, error) {
 	return reader.ReadAll()
 }
 
-// ConnectDB check file exists(connectString is a directory of files)
+// ConnectDB check file exists(connectString is a file path of user data)
 func (l *localDBHandler) ConnectDB(connectString string) error {
-	l.userFileName = filepath.Join(connectString, "/", userDatabaseFile)
-	l.tempFileName = filepath.Join(connectString, "/", temporaryCreateUserFile)
 
 	// Check DB file exists
-	if _, err := os.Stat(l.userFileName); err != nil {
-		return err
-	}
-	if _, err := os.Stat(l.tempFileName); err != nil {
+	if _, err := os.Stat(connectString); err != nil {
 		return err
 	}
 
 	// TODO check file broken
 
+	l.userFileName = connectString
 	return nil
 }
 
@@ -91,11 +81,10 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 		}
 	}
 
-	logger.Info("no such user %s", name)
 	return UserData{}, ErrNoSuchUser
 }
 
-func (l *localDBHandler) CreateUserValidation(newUser UserRequest) error {
+func (l *localDBHandler) CreateUser(newUser UserRequest) error {
 	// User is already exists?
 	_, err := l.GetUserByName(newUser.Name)
 	if err == nil {
@@ -106,16 +95,14 @@ func (l *localDBHandler) CreateUserValidation(newUser UserRequest) error {
 		return err
 	}
 
-	// TODO(check temp file, if ok, add to tempfile)
-
-	//// add new user
-	//file, err := os.OpenFile(l.fileName, os.O_WRONLY|os.O_APPEND, 0644)
-	//if err != nil {
-	//	logger.Error("Failed to open file %s for append new user", l.fileName)
-	//}
-	//defer file.Close()
-	//hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
-	//fmt.Fprintf(file, "%s,%s", newUser.Name, hashedPassword)
+	// add new user
+	file, err := os.OpenFile(l.userFileName, os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		logger.Error("Failed to open file %s for append new user", l.userFileName)
+	}
+	defer file.Close()
+	hashedPassword := base64.StdEncoding.EncodeToString([]byte(newUser.Password))
+	fmt.Fprintf(file, "%s,%s", newUser.Name, hashedPassword)
 
 	logger.Info("User %s is successfully created", newUser.Name)
 	return nil

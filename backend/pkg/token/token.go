@@ -8,6 +8,13 @@ import (
 	"time"
 )
 
+type CreateUserClaims struct {
+	Name           string `json:"name"`
+	HashedPassword string `json:"hashedPassword"`
+
+	jwt.StandardClaims
+}
+
 // TODO(use secure key)
 const testSecretKey = "ghoajg34qyiwgv3y4tgvobyqgqigkhiuqegwehrewhv3qha1254"
 const dorakuIssuer = "doraku"
@@ -16,6 +23,21 @@ func Generate() (string, error) {
 	claims := &jwt.StandardClaims{
 		Issuer:    dorakuIssuer,
 		ExpiresAt: time.Now().Add(time.Hour * 2).Unix(), // Expired at 2 hours
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	return token.SignedString([]byte(testSecretKey))
+}
+
+func GenerateCreateUserToken(name string, hashedPassword string) (string, error) {
+	claims := &CreateUserClaims{
+		name,
+		hashedPassword,
+		jwt.StandardClaims{
+			Issuer:    dorakuIssuer,
+			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // Expired at 24 hours
+		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
