@@ -20,6 +20,7 @@ type flagConfig struct {
 	BindAddr  string
 	LogFile   string
 	ModeDebug bool
+	EnableAlphaAPI bool
 }
 
 var config flagConfig
@@ -32,6 +33,7 @@ func parseCmdlineArgs() {
 	flag.StringVar(&config.BindAddr, "bind", DefaultBindAddr, "set bind address for server")
 	flag.StringVar(&config.LogFile, "logfile", "", "write log to file, output os.Stdout when do not set this")
 	flag.BoolVar(&config.ModeDebug, "debug", false, "if true, run server as debug mode")
+	flag.BoolVar(&config.EnableAlphaAPI, "alpha", false, "if true, enable alpha api")
 	flag.Parse()
 }
 
@@ -67,12 +69,12 @@ func setAPI(r *mux.Router) {
 	r.HandleFunc(basePath+"/hobby/image/{id}", hobbyapiv1.GetImageHandler).Methods("GET")
 
 	// User API
-	// TODO(user API is not completed yet, so if debug mode, user API can be called)
-	if config.ModeDebug {
+	// TODO(user API is not completed yet, so if enable alpha api mode, user API can be called)
+	if config.EnableAlphaAPI {
 		logger.Debug("Activate user API")
 		r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
-		r.HandleFunc(basePath+"/user", userapiv1.CreateUserValidateHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user", userapiv1.CreateUserRequestHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.DeleteUserHandler).Methods("DELETE")
 	}
 

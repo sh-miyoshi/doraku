@@ -65,9 +65,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("Successfully finished LoginHandler")
 }
 
-// CreateUserValidateHandler creates new user with name and password
-func CreateUserValidateHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call CreateUserValidateHandler method")
+// CreateUserRequestHandler creates new user with name and password
+func CreateUserRequestHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call CreateUserRequestHandler method")
 
 	var req UserCreateRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -115,6 +115,24 @@ func CreateUserValidateHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(resRaw)
 
+	logger.Info("Successfully operation accepted")
+}
+
+// RegisterUserHandler registers user with validation of token
+func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call RegisterUserHandler method")
+
+	var req RegisterUserRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		logger.Info("Failed to decode Register User params: %v", err)
+		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
+		return
+	}
+
+	// TODO(validate token)
+	// TODO(userdb.CreateUser)
+
+	http.Error(w, "Not impremented yet", http.StatusInternalServerError)
 	logger.Info("Successfully operation accepted")
 }
 
