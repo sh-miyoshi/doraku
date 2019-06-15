@@ -65,9 +65,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("Successfully finished LoginHandler")
 }
 
-// CreateUserHandler creates new user with name and password
-func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call CreateUserHandler method")
+// CreateUserValidateHandler creates new user with name and password
+func CreateUserValidateHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call CreateUserValidateHandler method")
 
 	var req UserCreateRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -93,7 +93,6 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO generate token with custom data{expiredAt, id and hashed_password}, return response
 	hashedPassword := base64.StdEncoding.EncodeToString([]byte(req.Password))
 	resToken, err := token.GenerateCreateUserToken(req.Name, hashedPassword)
 	if err != nil {
@@ -113,10 +112,10 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusAccepted)
 	w.Write(resRaw)
 
-	logger.Info("Successfully finished CreateUserHandler")
+	logger.Info("Successfully operation accepted")
 }
 
 // GetUserHandler validates user id and password, and return JWT token

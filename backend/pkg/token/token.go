@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// CreateUserClaims is claim for create user
 type CreateUserClaims struct {
 	Name           string `json:"name"`
 	HashedPassword string `json:"hashedPassword"`
@@ -18,32 +19,6 @@ type CreateUserClaims struct {
 // TODO(use secure key)
 const testSecretKey = "ghoajg34qyiwgv3y4tgvobyqgqigkhiuqegwehrewhv3qha1254"
 const dorakuIssuer = "doraku"
-
-func Generate() (string, error) {
-	claims := &jwt.StandardClaims{
-		Issuer:    dorakuIssuer,
-		ExpiresAt: time.Now().Add(time.Hour * 2).Unix(), // Expired at 2 hours
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	return token.SignedString([]byte(testSecretKey))
-}
-
-func GenerateCreateUserToken(name string, hashedPassword string) (string, error) {
-	claims := &CreateUserClaims{
-		name,
-		hashedPassword,
-		jwt.StandardClaims{
-			Issuer:    dorakuIssuer,
-			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // Expired at 24 hours
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	return token.SignedString([]byte(testSecretKey))
-}
 
 func validate(tokenString string) (jwt.StandardClaims, error) {
 	claims := jwt.StandardClaims{}
@@ -63,9 +38,8 @@ func validate(tokenString string) (jwt.StandardClaims, error) {
 
 	if token.Valid {
 		return claims, nil
-	} else {
-		return jwt.StandardClaims{}, fmt.Errorf("Failed to validate token")
 	}
+	return jwt.StandardClaims{}, fmt.Errorf("Failed to validate token")
 }
 
 func parseHTTPHeaderToken(tokenString string) (string, error) {
@@ -81,6 +55,35 @@ func parseHTTPHeaderToken(tokenString string) (string, error) {
 	return reqToken, nil
 }
 
+// Generate returns jwt token for user
+func Generate() (string, error) {
+	claims := &jwt.StandardClaims{
+		Issuer:    dorakuIssuer,
+		ExpiresAt: time.Now().Add(time.Hour * 2).Unix(), // Expired at 2 hours
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	return token.SignedString([]byte(testSecretKey))
+}
+
+// GenerateCreateUserToken returns create user token
+func GenerateCreateUserToken(name string, hashedPassword string) (string, error) {
+	claims := &CreateUserClaims{
+		name,
+		hashedPassword,
+		jwt.StandardClaims{
+			Issuer:    dorakuIssuer,
+			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // Expired at 24 hours
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	return token.SignedString([]byte(testSecretKey))
+}
+
+// Authenticate validates token
 func Authenticate(reqToken string) error {
 	tokenStr, err := parseHTTPHeaderToken(reqToken)
 	if err != nil {

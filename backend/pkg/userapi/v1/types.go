@@ -16,6 +16,11 @@ type UserCreateRequest struct {
 	Password string `json:"password"`
 }
 
+// CreateValidateRequest struct defines request data for validation of user create
+type CreateValidateRequest struct {
+	Token string `json:"token"`
+}
+
 //----------------------------
 // Response Data
 //----------------------------

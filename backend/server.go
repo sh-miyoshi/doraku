@@ -72,7 +72,7 @@ func setAPI(r *mux.Router) {
 		logger.Debug("Activate user API")
 		r.HandleFunc(basePath+"/login", userapiv1.LoginHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
-		r.HandleFunc(basePath+"/user", userapiv1.CreateUserHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user", userapiv1.CreateUserValidateHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.DeleteUserHandler).Methods("DELETE")
 	}
 
