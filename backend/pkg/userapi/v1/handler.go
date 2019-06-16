@@ -129,7 +129,18 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO(validate token)
+	logger.Info("token: %s", req.Token)
+
+	// Validate token
+	if err := token.Authenticate(req.Token); err != nil {
+		// TODO(check error e.g. token expired or invalid token format)
+		logger.Info("Failed to validate token: %v", err)
+		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
+		return
+	}
+
+	//userReq := token.CreateUserClaims
+	//logger.Debug("claims: %v", userReq)
 	// TODO(userdb.CreateUser)
 
 	http.Error(w, "Not impremented yet", http.StatusInternalServerError)
@@ -141,7 +152,13 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetUserHandler method")
 
 	// Validate Token in Header
-	reqToken := r.Header.Get("Authorization")
+	headerToken := r.Header.Get("Authorization")
+	reqToken, err := token.ParseHTTPHeaderToken(headerToken)
+	if err != nil {
+		logger.Info("Failed to get token %v", err)
+		http.Error(w, "Failed to get token", http.StatusUnauthorized)
+		return
+	}
 	if err := token.Authenticate(reqToken); err != nil {
 		logger.Info("Failed to auth token %v", err)
 		http.Error(w, "Failed to auth token", http.StatusUnauthorized)
@@ -179,7 +196,14 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call DeleteUserHandler method")
 
 	// Validate Token in Header
-	reqToken := r.Header.Get("Authorization")
+	headerToken := r.Header.Get("Authorization")
+	reqToken, err := token.ParseHTTPHeaderToken(headerToken)
+	if err != nil {
+		logger.Info("Failed to get token %v", err)
+		http.Error(w, "Failed to get token", http.StatusUnauthorized)
+		return
+	}
+
 	if err := token.Authenticate(reqToken); err != nil {
 		logger.Info("Failed to auth token %v", err)
 		http.Error(w, "Failed to auth token", http.StatusUnauthorized)

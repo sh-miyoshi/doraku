@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestAuthenticate(t *testing.T) {
+func TestParseHTTPHeaderToken(t *testing.T) {
 	validToken, _ := Generate()
 
 	// Test Cases
@@ -20,7 +20,7 @@ func TestAuthenticate(t *testing.T) {
 	}
 
 	for _, tc := range tt {
-		_, err := parseHTTPHeaderToken(tc.token)
+		_, err := ParseHTTPHeaderToken(tc.token)
 		if tc.expectPass && err != nil {
 			t.Errorf("handler should pass with token %s, but got error %v", tc.token, err)
 		}

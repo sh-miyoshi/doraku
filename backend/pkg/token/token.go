@@ -42,7 +42,8 @@ func validate(tokenString string) (jwt.StandardClaims, error) {
 	return jwt.StandardClaims{}, fmt.Errorf("Failed to validate token")
 }
 
-func parseHTTPHeaderToken(tokenString string) (string, error) {
+// ParseHTTPHeaderToken return jwt token from http header
+func ParseHTTPHeaderToken(tokenString string) (string, error) {
 	var splitToken []string
 	if strings.Contains(tokenString, "bearer") {
 		splitToken = strings.Split(tokenString, "bearer")
@@ -85,14 +86,7 @@ func GenerateCreateUserToken(name string, hashedPassword string) (string, error)
 
 // Authenticate validates token
 func Authenticate(reqToken string) error {
-	tokenStr, err := parseHTTPHeaderToken(reqToken)
-	if err != nil {
-		logger.Info("Failed to get JWT token %v", err)
-		return err
-	}
-	logger.Debug("Token String: %s", tokenStr)
-
-	claims, err := validate(tokenStr)
+	claims, err := validate(reqToken)
 	if err != nil {
 		logger.Info("Failed to auth token %v", err)
 		return err

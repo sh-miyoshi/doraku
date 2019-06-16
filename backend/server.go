@@ -16,10 +16,10 @@ import (
 )
 
 type flagConfig struct {
-	Port      int
-	BindAddr  string
-	LogFile   string
-	ModeDebug bool
+	Port           int
+	BindAddr       string
+	LogFile        string
+	ModeDebug      bool
 	EnableAlphaAPI bool
 }
 
@@ -76,6 +76,7 @@ func setAPI(r *mux.Router) {
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.GetUserHandler).Methods("GET")
 		r.HandleFunc(basePath+"/user", userapiv1.CreateUserRequestHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.DeleteUserHandler).Methods("DELETE")
+		r.HandleFunc(basePath+"/validate", userapiv1.RegisterUserHandler).Methods("POST")
 	}
 
 	// Health Check

@@ -28,7 +28,7 @@ func TestAuthenticate(t *testing.T) {
 	handler := localDBHandler{}
 
 	// Initialize with correct file
-	filePath := "../../database/local"
+	filePath := "../../database/local/user_data.csv"
 	handler.ConnectDB(filePath)
 
 	// Test Cases
