@@ -143,7 +143,7 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Debug("User Request: %v", userReq)
 
 	registerData := userdb.UserRequest{
-		Name: userReq.Name,
+		Name:     userReq.Name,
 		Password: userReq.HashedPassword,
 	}
 	if err := registerData.Validate(); err != nil {
@@ -151,7 +151,7 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
 		return
 	}
-	if err :=userdb.GetInst().CreateUser(registerData); err != nil {
+	if err := userdb.GetInst().CreateUser(registerData); err != nil {
 		logger.Info("Failed to register data: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
