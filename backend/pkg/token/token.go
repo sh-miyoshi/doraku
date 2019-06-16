@@ -8,14 +8,6 @@ import (
 	"time"
 )
 
-// CreateUserClaims is claim for create user
-type CreateUserClaims struct {
-	Name           string `json:"name"`
-	HashedPassword string `json:"hashedPassword"`
-
-	jwt.StandardClaims
-}
-
 // TODO(use secure key)
 const testSecretKey = "ghoajg34qyiwgv3y4tgvobyqgqigkhiuqegwehrewhv3qha1254"
 const dorakuIssuer = "doraku"
