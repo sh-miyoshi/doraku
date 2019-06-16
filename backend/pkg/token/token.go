@@ -20,9 +20,8 @@ type CreateUserClaims struct {
 const testSecretKey = "ghoajg34qyiwgv3y4tgvobyqgqigkhiuqegwehrewhv3qha1254"
 const dorakuIssuer = "doraku"
 
-func validate(tokenString string) (jwt.StandardClaims, error) {
-	claims := jwt.StandardClaims{}
-	token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
+func validate(claims jwt.Claims, tokenString string) error {
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
@@ -31,15 +30,15 @@ func validate(tokenString string) (jwt.StandardClaims, error) {
 	})
 
 	if err != nil {
-		return jwt.StandardClaims{}, err
+		return err
 	}
 
 	logger.Debug("Claims: %v\n", claims)
 
 	if token.Valid {
-		return claims, nil
+		return nil
 	}
-	return jwt.StandardClaims{}, fmt.Errorf("Failed to validate token")
+	return fmt.Errorf("Failed to validate token")
 }
 
 // ParseHTTPHeaderToken return jwt token from http header
@@ -86,7 +85,8 @@ func GenerateCreateUserToken(name string, hashedPassword string) (string, error)
 
 // Authenticate validates token
 func Authenticate(reqToken string) error {
-	claims, err := validate(reqToken)
+	claims := jwt.StandardClaims{}
+	err := validate(&claims, reqToken)
 	if err != nil {
 		logger.Info("Failed to auth token %v", err)
 		return err
@@ -106,4 +106,11 @@ func Authenticate(reqToken string) error {
 	}
 
 	return nil
+}
+
+// GetUserInfo return user info from jwt token
+func GetUserInfo(token string) (CreateUserClaims, error) {
+	res := CreateUserClaims{}
+	err := validate(&res, token)
+	return res, err
 }

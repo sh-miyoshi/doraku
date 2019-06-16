@@ -139,8 +139,8 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//userReq := token.CreateUserClaims
-	//logger.Debug("claims: %v", userReq)
+	userReq, _ := token.GetUserInfo(req.Token)
+	logger.Debug("User Request: %v", userReq)
 	// TODO(userdb.CreateUser)
 
 	http.Error(w, "Not impremented yet", http.StatusInternalServerError)
