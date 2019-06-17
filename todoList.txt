@@ -5,14 +5,15 @@ TODO List
 
 ---------------
 全体
-	広告の追加
+    広告の追加
     Hobby DBデータの追加
 frontend
     ディレクトリの整理
     フォントを変更
 backend
+    CI Pipelineの整備
     unit testの追加
-	環境変数でserverに値をセットできるようにする
+    環境変数でserverに値をセットできるようにする
     groupInfoのセット(HobbyDetailsHandler)
     debug用Dockerfileの準備
     Kubernetes yamlの準備
