@@ -14,23 +14,25 @@ export class Top extends Component {
         <p>日々の生活に新しい変化を求めているなら、ぜひこのサイトで新しい趣味を探してみてください！</p>
         <br />
         <table cellPadding={5} align="center">
-          <tr>
-            <td>
-              <Button className="top_button" data-tip="いくつかの質問からあなたにあった趣味を提案いたします" onClick={() => { this.props.history.push('/recommend') }}>
-                趣味診断
+          <tbody>
+            <tr>
+              <td>
+                <Button className="top_button" data-tip="いくつかの質問からあなたにあった趣味を提案いたします" onClick={() => { this.props.history.push('/recommend') }}>
+                  趣味診断
               </Button>
-            </td>
-            <td>
-              <Button className="top_button" data-tip="今人気の趣味を紹介します" onClick={() => { this.props.history.push('/today') }}>
-                今日の趣味
+              </td>
+              <td>
+                <Button className="top_button" data-tip="今人気の趣味を紹介します" onClick={() => { this.props.history.push('/today') }}>
+                  今日の趣味
               </Button>
-            </td>
-            <td>
-              <Button className="top_button" data-tip="Dorakuで管理している趣味の一覧を表示します" onClick={() => { this.props.history.push('/list') }}>
-                趣味一覧
+              </td>
+              <td>
+                <Button className="top_button" data-tip="Dorakuで管理している趣味の一覧を表示します" onClick={() => { this.props.history.push('/list') }}>
+                  趣味一覧
               </Button>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <ReactTooltip effect="solid" place="bottom" />
       </div>
