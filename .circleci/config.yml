@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: mercari/appengine-go:1.11
 
-    working_directory: /workspace
+    working_directory: /go/src/github.com/sh-miyoshi/doraku
     steps:
       - checkout
 
