@@ -12,14 +12,15 @@ jobs:
           name: check environment
           command: go version
       - run:
-          name: change directory to backend
-          command: cd backend
-      - run:
           name: go get
-          command: go get -u
+          command: |
+            cd backend
+            GO111MODULE=on go get -u
       - run:
           name: run unit test
-          command: go test -v ./...
+          command: |
+            cd backend
+            GO111MODULE=on go test -v ./...
       - run:
           name: deploy to GAE
           command: |
@@ -27,5 +28,6 @@ jobs:
               echo $DEV_SERVICE_ACCOUNT_KEY > /tmp/secret.json
               gcloud auth activate-service-account $DEV_SERVICE_ACCOUNT_CLIENT_EMAIL --key-file /tmp/secret.json
               gcloud services enable appengine.googleapis.com
+              cd backend
               gcloud app deploy --project=dorkau-241004 --quiet
             fi
