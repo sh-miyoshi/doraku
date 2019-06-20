@@ -45,7 +45,7 @@ func TestGetHobbyByID(t *testing.T) {
 	}{
 		{0, true},
 		{21, true},
-		{22, false},
+		{100, false},
 		{-1, false},
 	}
 

@@ -116,8 +116,8 @@ func TestGetHobbyDetailsHandler(t *testing.T) {
 		expectStatusCode int
 	}{
 		{"0", http.StatusOK},
-		{"21", http.StatusOK},
-		{"22", http.StatusNotFound},
+		{"22", http.StatusOK},
+		{"100", http.StatusNotFound},
 		{"-1", http.StatusNotFound},
 		{"test", http.StatusNotFound},
 		{"", http.StatusNotFound},
