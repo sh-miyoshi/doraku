@@ -15,12 +15,12 @@ jobs:
           name: go get
           command: |
             cd backend
-            go get -u
+            GO111MODULE=on go get -u
       - run:
           name: run unit test
           command: |
             cd backend
-            go test -v ./...
+            GO111MODULE=on go test -v ./...
       - run:
           name: deploy to GAE
           command: |
