@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: mercari/appengine-go
+
+    working_directory: /workspace
+    steps:
+      - checkout
+
+      - run:
+          name: change directory to backend
+          command: cd backend
+      - run:
+          name: run unit test
+          command: go test -v ./...
+      - run:
+          name: deploy to GAE
+          command: |
+            if [ "x$DEV_SERVICE_ACCOUNT_CLIENT_EMAIL" != "x" ]; then
+              echo $DEV_SERVICE_ACCOUNT_KEY > /tmp/secret.json
+              gcloud auth activate-service-account $DEV_SERVICE_ACCOUNT_CLIENT_EMAIL --key-file /tmp/secret.json
+              gcloud services enable appengine.googleapis.com
+              gcloud app deploy --project=dorkau-241004 --quiet
+            fi
