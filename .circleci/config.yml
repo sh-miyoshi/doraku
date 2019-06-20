@@ -2,12 +2,15 @@ version: 2
 jobs:
   build:
     docker:
-      - image: mercari/appengine-go
+      - image: mercari/appengine-go:1.11
 
     working_directory: /workspace
     steps:
       - checkout
 
+      - run:
+          name: check environment
+          command: go version
       - run:
           name: change directory to backend
           command: cd backend
