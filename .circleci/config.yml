@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  workflow:
     docker:
       - image: mercari/appengine-go
 
@@ -11,6 +11,9 @@ jobs:
       - run:
           name: change directory to backend
           command: cd backend
+      - run:
+          name: go get
+          command: go get -u
       - run:
           name: run unit test
           command: go test -v ./...
