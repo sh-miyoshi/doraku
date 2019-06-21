@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: mercari/appengine-go:1.11
+
+    working_directory: /go/src/github.com/sh-miyoshi/doraku
+    steps:
+      - checkout
+
+      - run:
+          name: check environment
+          command: go version
+      - run:
+          name: go get
+          command: |
+            cd backend
+            GO111MODULE=on go get -u
+      - run:
+          name: run unit test
+          command: |
+            cd backend
+            GO111MODULE=on go test -v ./...
+      - run:
+          name: deploy to GAE
+          command: |
+            if [ "x$DEV_SERVICE_ACCOUNT_CLIENT_EMAIL" != "x" ]; then
+              echo $DEV_SERVICE_ACCOUNT_KEY > /tmp/secret.json
+              gcloud config set project doraku-241004
+              gcloud auth activate-service-account $DEV_SERVICE_ACCOUNT_CLIENT_EMAIL --key-file /tmp/secret.json
+              gcloud services enable appengine.googleapis.com
+              cd backend
+              gcloud app deploy --quiet
+            fi
