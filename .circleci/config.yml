@@ -26,8 +26,9 @@ jobs:
           command: |
             if [ "x$DEV_SERVICE_ACCOUNT_CLIENT_EMAIL" != "x" ]; then
               echo $DEV_SERVICE_ACCOUNT_KEY > /tmp/secret.json
+              gcloud config set project dorkau-241004
               gcloud auth activate-service-account $DEV_SERVICE_ACCOUNT_CLIENT_EMAIL --key-file /tmp/secret.json
               gcloud services enable appengine.googleapis.com
               cd backend
-              gcloud app deploy --project=dorkau-241004 --quiet
+              gcloud app deploy --quiet
             fi
