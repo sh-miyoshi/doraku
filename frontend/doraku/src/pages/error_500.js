@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import './500.css';
+import './error_500.css';
 
 class Error500 extends Component {
   render() {

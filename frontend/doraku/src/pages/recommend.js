@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
-import { setRecommendHobby, setInternalServerError } from './actions';
-import { HobbyHandler } from './hobbyhandler';
+import { setRecommendHobby, setInternalServerError } from '../store/actions';
+import { HobbyHandler } from '../plugins/hobbyhandler';
 import "./recommend.css";
 
 class Recommend extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { HobbyHandler } from './hobbyhandler';
-import { BACKEND_SERVER_URL } from './global_constant';
+import { HobbyHandler } from '../plugins/hobbyhandler';
+import { BACKEND_SERVER_URL } from '../plugins/global_constant';
 import './detail.css'
 
 class Detail extends Component {

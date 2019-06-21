@@ -4,18 +4,18 @@ import { createBrowserHistory } from 'history';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
-import rootReducer from './reducer';
-import Error500 from './errors/500';
-import { Top } from './top';
-import Today from './today';
-import Detail from './detail';
-import List from './list';
-import About from './about';
-import Recommend from './recommend';
-import RecommendResult from './recommend_result';
-import { Error404 } from './errors/404';
+import rootReducer from './store/reducer';
+import Error500 from './pages/error_500';
+import { Top } from './pages/top';
+import Today from './pages/today';
+import Detail from './pages/detail';
+import List from './pages/list';
+import About from './pages/about';
+import Recommend from './pages/recommend';
+import RecommendResult from './pages/recommend_result';
+import { Error404 } from './pages/error_404';
 import './App.css';
-import logo from './images/logo.png';
+import logo from './assets/images/logo.png';
 
 const history = createBrowserHistory()
 const store = createStore(

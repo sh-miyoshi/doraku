@@ -2,7 +2,7 @@
   border: 0px;
     width: 250px;
     height: 75px;
-    background: url("images/button.png") left top no-repeat;
+    background: url("../assets/images/button.png") left top no-repeat;
     color: #0f0f0f;
     font-size: 30px;
 }

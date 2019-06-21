@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setInternalServerError } from './actions';
-import { HobbyHandler } from './hobbyhandler';
+import { setInternalServerError } from '../store/actions';
+import { HobbyHandler } from '../plugins/hobbyhandler';
 import './list.css';
 
 const COLUMN_NUM = 2

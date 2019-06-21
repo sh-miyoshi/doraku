@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import './top.css';
-import top_logo from './images/top_logo.png';
+import top_logo from '../assets/images/top_logo.png';
 import ReactTooltip from 'react-tooltip'
 
 export class Top extends Component {
