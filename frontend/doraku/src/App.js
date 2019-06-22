@@ -55,6 +55,8 @@ class App extends Component {
               </Switch>
 
               <footer>
+                <Link to="/">Topページへ</Link>
+                &emsp;&emsp;
                 <Link to="/about">Dorakuとは？</Link>
                 &emsp;&emsp;
                 <a href="https://github.com/sh-miyoshi/doraku/issues/new/choose">Contact Support</a>
