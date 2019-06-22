@@ -37,6 +37,7 @@ type UserCreateResponse struct {
 
 // User struct defines info of user
 type User struct {
-	Name string `json:"name"`
-	// TODO(myHobbyList, ...)
+	Name        string   `json:"name"`
+	MyHobbyList []string `json:"myhobbies"`
+	// TODO(place, ...)
 }

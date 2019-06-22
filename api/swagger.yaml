@@ -24,12 +24,7 @@ paths:
           schema:
             type: array
             items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
+              $ref: '#/definitions/HobbyKey'
   /hobby/today:
     get:
       tags:
@@ -42,7 +37,7 @@ paths:
         '200':
           description: ok
           schema:
-            type: string
+            $ref: '#/definitions/HobbyKey'
   /hobby/recommended:
     get:
       tags:
@@ -50,20 +45,22 @@ paths:
       summary: get recommended hobby
       description: get recommended hobby
       parameters:
-        - name: outdoor
-          in: query
-          type: string
-        - name: alone
-          in: query
-          type: string
-        - name: active
-          in: query
-          type: string
+        - name: info
+          in: body
+          schema:
+            type: object
+            properties:
+              outdoor:
+                type: string
+              alone:
+                type: string
+              active:
+                type: string
       responses:
         '200':
           description: ok
           schema:
-            type: string
+            $ref: '#/definitions/HobbyKey'
   '/hobby/details/{id}':
     get:
       tags:
@@ -96,7 +93,12 @@ paths:
       parameters:
         - name: info
           schema:
-            $ref: '#/definitions/LoginRequest'
+            type: object
+            properties:
+              name:
+                type: string
+              password:
+                type: string
           in: body
           description: login info
           required: true
@@ -104,7 +106,10 @@ paths:
         '200':
           description: ok
           schema:
-            $ref: '#/definitions/LoginRespose'
+            type: object
+            properties:
+              token:
+                type: string
         '400':
           description: failed to authorize
   /user:
@@ -121,12 +126,20 @@ paths:
         description: user data
         required: true
         schema:
-          $ref: '#/definitions/UserCreateRequest'
+          type: object
+          properties:
+            name:
+              type: string
+            password:
+              type: string
       responses:
         202:
           description: "operation accepted"
           schema:
-            $ref: '#/definitions/UserCreateResponse'
+            type: object
+            properties:
+              token:
+                type: string
         400:
           description: "Invalid parameters supplied"
   /validate:
@@ -143,7 +156,10 @@ paths:
         description: token for validation
         required: true
         schema:
-          $ref: '#/definitions/UserValidateRequest'
+          type: object
+          properties:
+            token:
+              type: string
       responses:
         201:
           description: 'successful operation'
@@ -245,7 +261,6 @@ definitions:
     properties:
       id:
         type: integer
-        format: int64
       name:
         type: string
       nameEN:
@@ -260,37 +275,19 @@ definitions:
         type: integer
       groupInfo:
         type: string
-  LoginRequest:
+  HobbyKey:
     type: object
     properties:
+      id:
+        type: integer
       name:
-        type: string
-      password:
-        type: string
-  LoginRespose:
-    type: object
-    properties:
-      token:
-        type: string
-  UserCreateRequest:
-    type: object
-    properties:
-      name:
-        type: string
-      password:
-        type: string
-  UserCreateResponse:
-    type: object
-    properties:
-      token:
-        type: string
-  UserValidateRequest:
-    type: object
-    properties:
-      token:
         type: string
   User:
     type: object
     properties:
       name:
         type: string
+      myhobbies:
+        type: array
+        items:
+          type: string
