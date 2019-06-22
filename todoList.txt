@@ -8,8 +8,8 @@ TODO List
     広告の追加
     Hobby DBデータの追加
 frontend
-    ディレクトリの整理
     フォントを変更
+    user処理
 backend
     CI Pipelineの整備
     unit testの追加
@@ -22,9 +22,9 @@ backend
         imagetag
     remote DBの準備
     user処理
-        create/delete
-        login/logout
-        get/update
 mobile
     frontend完成後に用意
 
+user処理追加でできるようになること
+    近くの趣味検索
+    マイ趣味(自分の趣味の登録機能、そこからのおすすめ)
