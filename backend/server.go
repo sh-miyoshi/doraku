@@ -77,6 +77,8 @@ func setAPI(r *mux.Router) {
 		r.HandleFunc(basePath+"/user", userapiv1.CreateUserRequestHandler).Methods("POST")
 		r.HandleFunc(basePath+"/user/{username}", userapiv1.DeleteUserHandler).Methods("DELETE")
 		r.HandleFunc(basePath+"/validate", userapiv1.RegisterUserHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user/{username}/myboddy/{hobbyid}", userapiv1.AddMyHobbyHandler).Methods("POST")
+		r.HandleFunc(basePath+"/user/{username}/myboddy/{hobbyid}", userapiv1.DeleteMyHobbyHandler).Methods("DELETE")
 	}
 
 	// Health Check

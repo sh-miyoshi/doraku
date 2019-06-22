@@ -233,3 +233,13 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 	logger.Info("Successfully finished DeleteUserHandler")
 }
+
+// AddMyHobbyHandler adds hobby to myHobbyList
+func AddMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "not implemented yet", http.StatusInternalServerError)
+}
+
+// DeleteMyHobbyHandler deletes hobby from myHobbyList
+func DeleteMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "not implemented yet", http.StatusInternalServerError)
+}
