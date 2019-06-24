@@ -194,10 +194,19 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 			isAdded = true
 			// add hobby data
 			strHobby := strconv.Itoa(hobbyID)
-			if len(line[2]) == 0 {
+			if len(line) <=2 || len(line[2]) == 0 {
 				line[2] = strHobby
 			} else {
-				line[2] += myHobbySeparator + strHobby
+				duplicated := false
+				for _, h := range strings.Split(line[2], myHobbySeparator) {
+					if h == strHobby {
+						duplicated = true
+						break
+					}
+				}
+				if !duplicated {
+					line[2] += myHobbySeparator + strHobby
+				}
 			}
 		}
 		data = append(data, line)
