@@ -22,8 +22,7 @@ type UserHandler interface {
 	GetUserByName(name string) (UserData, error)
 	CreateUser(newUser UserRequest) error
 	Delete(userName string) error
-
-	//AddMyHobby(userName string, hobbyID int) error
+	AddMyHobby(userName string, hobbyID int) error
 	//DeleteMyHobby(userName string, hobbyID int) error
 }
 

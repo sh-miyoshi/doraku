@@ -236,6 +236,8 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 
 // AddMyHobbyHandler adds hobby to myHobbyList
 func AddMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("call AddMyHobbyHandler method")
+
 	http.Error(w, "not implemented yet", http.StatusInternalServerError)
 }
 

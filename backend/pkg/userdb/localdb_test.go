@@ -1,8 +1,8 @@
 package userdb
 
 import (
-	//"io/ioutil"
-	//"os"
+	"io/ioutil"
+	"os"
 	"testing"
 )
 
@@ -10,13 +10,13 @@ func TestConnectDB(t *testing.T) {
 	handler := localDBHandler{}
 
 	// Test correct file
-	filePath := "../../database/local"
+	filePath := "../../database/local/user_data.csv"
 	if err := handler.ConnectDB(filePath); err != nil {
 		t.Errorf("cannot read correct DB file. err: %v", err)
 	}
 
 	// Test not exist hobby file
-	filePath = "not_exist_dir"
+	filePath = "not_exist_file"
 	if err := handler.ConnectDB(filePath); err == nil {
 		t.Errorf("We expect something error, but returned nil")
 	}
@@ -58,32 +58,30 @@ func TestAuthenticate(t *testing.T) {
 	}
 }
 
-func TestCreate(t *testing.T) {
-	/*
-		handler := localDBHandler{}
+func TestCreateUser(t *testing.T) {
+	handler := localDBHandler{}
 
-		tmpfile, err := ioutil.TempFile("", "")
-		if err != nil {
-			t.Fatalf("Failed to create temp file: %v", err)
-		}
-		defer os.Remove(tmpfile.Name())
-		handler.ConnectDB(tmpfile.Name())
+	tmpfile, err := ioutil.TempFile("", "")
+	if err != nil {
+		t.Fatalf("Failed to create temp file: %v", err)
+	}
+	defer os.Remove(tmpfile.Name())
+	handler.ConnectDB(tmpfile.Name())
 
-		req := UserRequest{
-			Name:     "test",
-			Password: "password",
-		}
-		if err := handler.CreateUserValidation(req); err != nil {
-			t.Errorf("handler should pass with %v but got error %v", req, err)
-		}
+	req := UserRequest{
+		Name:     "test",
+		Password: "password",
+	}
+	if err := handler.CreateUser(req); err != nil {
+		t.Errorf("handler should pass with %v but got error %v", req, err)
+	}
 
-		// Test Duplicate User
-		if err := handler.CreateUserValidation(req); err == nil {
-			t.Errorf("handler should not pass with same user name but error is nil")
-		}
+	// Test Duplicate User
+	if err := handler.CreateUser(req); err == nil {
+		t.Errorf("handler should not pass with same user name but error is nil")
+	}
 
-		// TODO add more test case
-	*/
+	// TODO add more test case
 }
 
 func TestDelete(t *testing.T) {

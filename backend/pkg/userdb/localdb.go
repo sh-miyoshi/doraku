@@ -8,6 +8,12 @@ import (
 	"github.com/sh-miyoshi/doraku/pkg/token"
 	"io"
 	"os"
+	"strconv"
+	"strings"
+)
+
+const (
+	myHobbySeparator = ";"
 )
 
 type localDBHandler struct {
@@ -74,8 +80,18 @@ func (l *localDBHandler) GetUserByName(name string) (UserData, error) {
 
 	for _, line := range data {
 		if line[0] == name {
+			strHobbies := []string{}
+			if len(line) >= 3 {
+				strHobbies = strings.Split(line[2], myHobbySeparator)
+			}
+			var hobbies []int
+			for _, h := range strHobbies {
+				hobby, _ := strconv.Atoi(h)
+				hobbies = append(hobbies, hobby)
+			}
 			res := UserData{
-				Name: name,
+				Name:        name,
+				MyHobbyList: hobbies,
 			}
 			return res, nil
 		}
@@ -149,5 +165,55 @@ func (l *localDBHandler) Delete(userName string) error {
 	}
 
 	logger.Info("User %s is successfully delete", userName)
+	return nil
+}
+
+func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
+	var data [][]string
+
+	file, err := os.OpenFile(l.userFileName, os.O_RDWR, 0644)
+	if err != nil {
+		logger.Error("Failed to open DB file %s in Authenticate: %v", l.userFileName, err)
+		return err
+	}
+	defer file.Close()
+
+	isAdded := false
+	reader := csv.NewReader(file)
+
+	for {
+		line, err := reader.Read()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			logger.Error("Failed to read data: %v", err)
+			return err
+		}
+		if line[0] == userName {
+			isAdded = true
+			// add hobby data
+			strHobby := strconv.Itoa(hobbyID)
+			if len(line[2]) == 0 {
+				line[2] = strHobby
+			} else {
+				line[2] += myHobbySeparator + strHobby
+			}
+		}
+		data = append(data, line)
+	}
+
+	// Remove All data at first
+	file.Truncate(0)
+	file.Seek(0, 0)
+
+	writer := csv.NewWriter(file)
+	writer.WriteAll(data)
+
+	if !isAdded {
+		logger.Info("no such user %s", userName)
+		return ErrNoSuchUser
+	}
+
 	return nil
 }
