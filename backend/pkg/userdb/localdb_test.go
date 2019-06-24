@@ -85,8 +85,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	// TODO test was failed due to create method
-	/*handler := localDBHandler{}
+	handler := localDBHandler{}
 
 	tmpfile, err := ioutil.TempFile("", "")
 	if err != nil {
@@ -99,7 +98,7 @@ func TestDelete(t *testing.T) {
 		Password: "password",
 	}
 	// Create New User
-	handler.Create(req)
+	handler.CreateUser(req)
 
 	// Test Delete method
 	// Delete not exists user
@@ -107,7 +106,8 @@ func TestDelete(t *testing.T) {
 		t.Errorf("handler should not pass with not exists user name but error is nil")
 	}
 
+	// Delete correct user
 	if err := handler.Delete(req.Name); err != nil {
 		t.Errorf("handler should pass with %s but got error %v", req.Name, err)
-	}*/
+	}
 }
