@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
@@ -238,10 +239,43 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 func AddMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call AddMyHobbyHandler method")
 
-	http.Error(w, "not implemented yet", http.StatusInternalServerError)
+	// Validate Token in Header
+	headerToken := r.Header.Get("Authorization")
+	reqToken, err := token.ParseHTTPHeaderToken(headerToken)
+	if err != nil {
+		logger.Info("Failed to get token %v", err)
+		http.Error(w, "Failed to get token", http.StatusUnauthorized)
+		return
+	}
+
+	if err := token.Authenticate(reqToken); err != nil {
+		logger.Info("Failed to auth token %v", err)
+		http.Error(w, "Failed to auth token", http.StatusUnauthorized)
+		return
+	}
+
+	vars := mux.Vars(r)
+	username := vars["username"]
+	hobbyid, err := strconv.Atoi(vars["hobbyid"])
+	if err != nil {
+		logger.Info("Failed to parse hobby id to integer: %v", err)
+		http.Error(w, "Failed to get Hobby ID", http.StatusBadRequest)		
+		return
+	}
+
+	if err := userdb.GetInst().AddMyHobby(username, hobbyid); err != nil {
+		logger.Info("Failed to add myhobby: %v", err)
+		// TODO(switch error type)
+		http.Error(w, "Failed to add myhobby", http.StatusBadRequest)		
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	logger.Info("Successfully finished AddMyHobbyHandler")
 }
 
 // DeleteMyHobbyHandler deletes hobby from myHobbyList
 func DeleteMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO(not implemented)
 	http.Error(w, "not implemented yet", http.StatusInternalServerError)
 }
