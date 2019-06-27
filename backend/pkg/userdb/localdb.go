@@ -21,7 +21,7 @@ type localDBHandler struct {
 	UserHandler
 
 	userFileName string
-	mu sync.Mutex
+	mu           sync.Mutex
 }
 
 // This func read all csv data at once, so should not use in production
@@ -265,23 +265,22 @@ func (l *localDBHandler) DeleteMyHobby(userName string, hobbyID int) error {
 			if len(line) <= 2 || len(line[2]) == 0 {
 				logger.Info("hobby is not registered")
 				return ErrNoSuchHobby
-			} else {
-				strHobby := strconv.Itoa(hobbyID)
-				isDeleted := false
-				result := ""
-				for _, h := range strings.Split(line[2], myHobbySeparator) {
-					if h == strHobby {
-						isDeleted = true
-					} else {
-						result += myHobbySeparator + h
-					}
-				}
-				if !isDeleted {
-					return ErrNoSuchHobby
-				}
-				// remove first separator
-				line[2] = strings.TrimPrefix(result, myHobbySeparator)
 			}
+			strHobby := strconv.Itoa(hobbyID)
+			isDeleted := false
+			result := ""
+			for _, h := range strings.Split(line[2], myHobbySeparator) {
+				if h == strHobby {
+					isDeleted = true
+				} else {
+					result += myHobbySeparator + h
+				}
+			}
+			if !isDeleted {
+				return ErrNoSuchHobby
+			}
+			// remove first separator
+			line[2] = strings.TrimPrefix(result, myHobbySeparator)
 		}
 		data = append(data, line)
 	}
