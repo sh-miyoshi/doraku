@@ -259,14 +259,14 @@ func AddMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	hobbyid, err := strconv.Atoi(vars["hobbyid"])
 	if err != nil {
 		logger.Info("Failed to parse hobby id to integer: %v", err)
-		http.Error(w, "Failed to get Hobby ID", http.StatusBadRequest)		
+		http.Error(w, "Failed to get Hobby ID", http.StatusBadRequest)
 		return
 	}
 
 	if err := userdb.GetInst().AddMyHobby(username, hobbyid); err != nil {
 		logger.Info("Failed to add myhobby: %v", err)
 		// TODO(switch error type)
-		http.Error(w, "Failed to add myhobby", http.StatusBadRequest)		
+		http.Error(w, "Failed to add myhobby", http.StatusBadRequest)
 		return
 	}
 
@@ -296,14 +296,14 @@ func DeleteMyHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	hobbyid, err := strconv.Atoi(vars["hobbyid"])
 	if err != nil {
 		logger.Info("Failed to parse hobby id to integer: %v", err)
-		http.Error(w, "Failed to get Hobby ID", http.StatusBadRequest)		
+		http.Error(w, "Failed to get Hobby ID", http.StatusBadRequest)
 		return
 	}
 
 	if err := userdb.GetInst().DeleteMyHobby(username, hobbyid); err != nil {
 		logger.Info("Failed to delete myhobby: %v", err)
 		// TODO(switch error type)
-		http.Error(w, "Failed to delete myhobby", http.StatusBadRequest)		
+		http.Error(w, "Failed to delete myhobby", http.StatusBadRequest)
 		return
 	}
 

@@ -195,7 +195,7 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 			userExists = true
 			// add hobby data
 			strHobby := strconv.Itoa(hobbyID)
-			if len(line) <=2 || len(line[2]) == 0 {
+			if len(line) <= 2 || len(line[2]) == 0 {
 				line[2] = strHobby
 			} else {
 				for _, h := range strings.Split(line[2], myHobbySeparator) {
@@ -203,7 +203,7 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 						return ErrMyHobbyAlreadyExists
 					}
 				}
-					line[2] += myHobbySeparator + strHobby
+				line[2] += myHobbySeparator + strHobby
 			}
 		}
 		data = append(data, line)
@@ -249,17 +249,17 @@ func (l *localDBHandler) DeleteMyHobby(userName string, hobbyID int) error {
 		if line[0] == userName {
 			userExists = true
 			// TODO(delete hobby data)
-			if len(line) <=2 || len(line[2]) == 0 {
+			if len(line) <= 2 || len(line[2]) == 0 {
 				logger.Info("hobby is not registered")
 				return ErrNoSuchHobby
-			}else{
+			} else {
 				strHobby := strconv.Itoa(hobbyID)
 				isDeleted := false
 				result := ""
 				for _, h := range strings.Split(line[2], myHobbySeparator) {
 					if h == strHobby {
 						isDeleted = true
-					}else{
+					} else {
 						result += myHobbySeparator + h
 					}
 				}
