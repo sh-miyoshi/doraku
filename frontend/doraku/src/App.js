@@ -16,6 +16,8 @@ import RecommendResult from './pages/recommend_result';
 import { Error404 } from './pages/error_404';
 import './App.css';
 import logo from './assets/images/logo.png';
+import User from './components/user';
+import { DEVELOPMENT_MODE } from './plugins/global_constant';
 
 const history = createBrowserHistory()
 const store = createStore(
@@ -40,6 +42,7 @@ class App extends Component {
                 <Link to="/">
                   <img src={logo} alt="Doraku" width={150} />
                 </Link>
+                {DEVELOPMENT_MODE && <User />}
               </header>
 
               <Switch>
