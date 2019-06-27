@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 const (
@@ -20,7 +21,7 @@ type localDBHandler struct {
 	UserHandler
 
 	userFileName string
-	// TODO(Add mutex)
+	mu sync.Mutex
 }
 
 // This func read all csv data at once, so should not use in production
@@ -116,9 +117,13 @@ func (l *localDBHandler) CreateUser(newUser UserRequest) error {
 	file, err := os.OpenFile(l.userFileName, os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		logger.Error("Failed to open file %s for append new user", l.userFileName)
+		return err
 	}
 	defer file.Close()
+
+	l.mu.Lock()
 	fmt.Fprintf(file, "%s,%s", newUser.Name, newUser.Password)
+	l.mu.Unlock()
 
 	logger.Info("User %s is successfully created", newUser.Name)
 	return nil
@@ -153,12 +158,16 @@ func (l *localDBHandler) Delete(userName string) error {
 		}
 	}
 
+	l.mu.Lock()
+
 	// Remove All data at first
 	file.Truncate(0)
 	file.Seek(0, 0)
 
 	writer := csv.NewWriter(file)
 	writer.WriteAll(data)
+
+	l.mu.Unlock()
 
 	if !isDeleted {
 		logger.Info("no such user %s", userName)
@@ -209,12 +218,16 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 		data = append(data, line)
 	}
 
+	l.mu.Lock()
+
 	// Remove All data at first
 	file.Truncate(0)
 	file.Seek(0, 0)
 
 	writer := csv.NewWriter(file)
 	writer.WriteAll(data)
+
+	l.mu.Unlock()
 
 	if !userExists {
 		logger.Info("no such user %s", userName)
@@ -273,12 +286,16 @@ func (l *localDBHandler) DeleteMyHobby(userName string, hobbyID int) error {
 		data = append(data, line)
 	}
 
+	l.mu.Lock()
+
 	// Remove All data at first
 	file.Truncate(0)
 	file.Seek(0, 0)
 
 	writer := csv.NewWriter(file)
 	writer.WriteAll(data)
+
+	l.mu.Unlock()
 
 	if !userExists {
 		logger.Info("no such user %s", userName)
