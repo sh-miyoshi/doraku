@@ -22,10 +22,14 @@ const (
 var (
 	// ErrAuthFailed is an error for authentication failed
 	ErrAuthFailed = errors.New("Failed to authenticate")
-	// ErrUserAlreadyExists is an error for user is already
+	// ErrUserAlreadyExists is an error for user is already exists
 	ErrUserAlreadyExists = errors.New("User is already exists")
 	// ErrNoSuchUser is an error for no such user
 	ErrNoSuchUser = errors.New("No such user")
+	// ErrMyHobbyAlreadyExists is an error for myhobby is already exists
+	ErrMyHobbyAlreadyExists = errors.New("Hobby is already exists")
+	// ErrNoSuchHobby is an error for no such hobby
+	ErrNoSuchHobby = errors.New("No such hobby")
 )
 
 // UserData is data for user

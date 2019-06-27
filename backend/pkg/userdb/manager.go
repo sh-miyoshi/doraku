@@ -23,7 +23,7 @@ type UserHandler interface {
 	CreateUser(newUser UserRequest) error
 	Delete(userName string) error
 	AddMyHobby(userName string, hobbyID int) error
-	//DeleteMyHobby(userName string, hobbyID int) error
+	DeleteMyHobby(userName string, hobbyID int) error
 }
 
 var instance UserHandler

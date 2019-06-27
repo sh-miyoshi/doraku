@@ -20,6 +20,7 @@ type localDBHandler struct {
 	UserHandler
 
 	userFileName string
+	// TODO(Add mutex)
 }
 
 // This func read all csv data at once, so should not use in production
@@ -128,7 +129,7 @@ func (l *localDBHandler) Delete(userName string) error {
 
 	file, err := os.OpenFile(l.userFileName, os.O_RDWR, 0644)
 	if err != nil {
-		logger.Error("Failed to open DB file %s in Authenticate: %v", l.userFileName, err)
+		logger.Error("Failed to open DB file %s in Delete: %v", l.userFileName, err)
 		return err
 	}
 	defer file.Close()
@@ -173,12 +174,12 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 
 	file, err := os.OpenFile(l.userFileName, os.O_RDWR, 0644)
 	if err != nil {
-		logger.Error("Failed to open DB file %s in Authenticate: %v", l.userFileName, err)
+		logger.Error("Failed to open DB file %s in AddMyHobby: %v", l.userFileName, err)
 		return err
 	}
 	defer file.Close()
 
-	isAdded := false
+	userExists := false
 	reader := csv.NewReader(file)
 
 	for {
@@ -191,22 +192,18 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 			return err
 		}
 		if line[0] == userName {
-			isAdded = true
+			userExists = true
 			// add hobby data
 			strHobby := strconv.Itoa(hobbyID)
 			if len(line) <=2 || len(line[2]) == 0 {
 				line[2] = strHobby
 			} else {
-				duplicated := false
 				for _, h := range strings.Split(line[2], myHobbySeparator) {
 					if h == strHobby {
-						duplicated = true
-						break
+						return ErrMyHobbyAlreadyExists
 					}
 				}
-				if !duplicated {
 					line[2] += myHobbySeparator + strHobby
-				}
 			}
 		}
 		data = append(data, line)
@@ -219,7 +216,71 @@ func (l *localDBHandler) AddMyHobby(userName string, hobbyID int) error {
 	writer := csv.NewWriter(file)
 	writer.WriteAll(data)
 
-	if !isAdded {
+	if !userExists {
+		logger.Info("no such user %s", userName)
+		return ErrNoSuchUser
+	}
+
+	return nil
+}
+
+func (l *localDBHandler) DeleteMyHobby(userName string, hobbyID int) error {
+	var data [][]string
+
+	file, err := os.OpenFile(l.userFileName, os.O_RDWR, 0644)
+	if err != nil {
+		logger.Error("Failed to open DB file %s in Authenticate: %v", l.userFileName, err)
+		return err
+	}
+	defer file.Close()
+
+	userExists := false
+	reader := csv.NewReader(file)
+
+	for {
+		line, err := reader.Read()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			logger.Error("Failed to read data: %v", err)
+			return err
+		}
+		if line[0] == userName {
+			userExists = true
+			// TODO(delete hobby data)
+			if len(line) <=2 || len(line[2]) == 0 {
+				logger.Info("hobby is not registered")
+				return ErrNoSuchHobby
+			}else{
+				strHobby := strconv.Itoa(hobbyID)
+				isDeleted := false
+				result := ""
+				for _, h := range strings.Split(line[2], myHobbySeparator) {
+					if h == strHobby {
+						isDeleted = true
+					}else{
+						result += myHobbySeparator + h
+					}
+				}
+				if !isDeleted {
+					return ErrNoSuchHobby
+				}
+				// remove first separator
+				line[2] = strings.TrimPrefix(result, myHobbySeparator)
+			}
+		}
+		data = append(data, line)
+	}
+
+	// Remove All data at first
+	file.Truncate(0)
+	file.Seek(0, 0)
+
+	writer := csv.NewWriter(file)
+	writer.WriteAll(data)
+
+	if !userExists {
 		logger.Info("no such user %s", userName)
 		return ErrNoSuchUser
 	}
