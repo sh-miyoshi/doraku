@@ -14,6 +14,7 @@ import About from './pages/about';
 import Recommend from './pages/recommend';
 import RecommendResult from './pages/recommend_result';
 import { Error404 } from './pages/error_404';
+import Login from './pages/login';
 import './App.css';
 import logo from './assets/images/logo.png';
 import User from './components/user';
@@ -54,6 +55,7 @@ class App extends Component {
                 <Route path="/recommend" component={Recommend} />
                 <Route path="/recommend_result" component={RecommendResult} />
                 <Route path="/about" component={About} />
+                <Route path="/login" component={Login} />
                 <Route component={Error404} />
               </Switch>
 

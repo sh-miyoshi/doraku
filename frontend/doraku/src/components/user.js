@@ -7,7 +7,7 @@ class User extends Component {
     return (
       <div>
         <Link to="/">新規登録</Link>
-        <Link to="/">ログイン</Link>
+        <Link to="/login">ログイン</Link>
       </div>
     )
   }
