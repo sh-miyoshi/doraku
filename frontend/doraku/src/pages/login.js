@@ -6,9 +6,10 @@ import { Button, Form } from 'react-bootstrap';
 // import { HobbyHandler } from '../plugins/hobbyhandler';
 
 class Login extends Component {
-  // state = {
-  //   validated: false,
-  // }
+  state = {
+    name: '',
+    password: '',
+  }
 
   render() {
     return (
@@ -21,12 +22,26 @@ class Login extends Component {
         <Form onSubmit={this._handleLogin} action="/">
           <Form.Group controlId="formBasicName">
             <Form.Label>ユーザ名</Form.Label>
-            <Form.Control type="name" placeholder="user name" />
+            <Form.Control
+              type="name"
+              placeholder="user name"
+              value={this.state.name}
+              onChange={(e) => {
+                this.setState({ name: e.target.value })
+              }}
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>パスワード</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={(e) => {
+                this.setState({ password: e.target.value })
+              }}
+            />
           </Form.Group>
           <Button variant="primary" type="submit">ログイン</Button>
         </Form>
@@ -37,7 +52,7 @@ class Login extends Component {
   _handleLogin = (e) => {
     e.preventDefault();
 
-    console.log("login with ...")
+    console.log("login with " + this.state.name + " : " + this.state.password)
   }
 }
 
