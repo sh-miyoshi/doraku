@@ -42,13 +42,13 @@ class List extends Component {
         <br />
         <h2>趣味一覧</h2>
         <div className="itembox">
-          {this.state.hobbies && this.state.hobbies.map(list =>
-            <div className="component">
-              {list.map(item =>
-                <ul>
-                  <li><Link to={this._getPath(item.id)}>{item.name}</Link></li>
-                </ul>
-              )}
+          {this.state.hobbies && this.state.hobbies.map((list, index) =>
+            <div className="component" key={index}>
+              <ul>
+                {list.map(item =>
+                  <li key={item.id}><Link to={this._getPath(item.id)}>{item.name}</Link></li>
+                )}
+              </ul>
             </div>
           )}
           <div className="footer"></div>

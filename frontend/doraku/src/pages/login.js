@@ -14,7 +14,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="itembox">
+      <div className="loginbox">
         <br />
         <br />
         <br />
