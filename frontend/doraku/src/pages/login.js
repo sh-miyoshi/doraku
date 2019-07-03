@@ -9,6 +9,7 @@ class Login extends Component {
   state = {
     name: '',
     password: '',
+    errorMessage: '',
   }
 
   render() {
@@ -27,7 +28,9 @@ class Login extends Component {
               placeholder="user name"
               value={this.state.name}
               onChange={(e) => {
-                this.setState({ name: e.target.value })
+                this.setState({
+                  name: e.target.value
+                })
               }}
             />
           </Form.Group>
@@ -43,6 +46,7 @@ class Login extends Component {
               }}
             />
           </Form.Group>
+          <div className="error">{this.state.errorMessage}</div>
           <Button variant="primary" type="submit">ログイン</Button>
         </Form>
       </div>
@@ -50,9 +54,29 @@ class Login extends Component {
   }
 
   _handleLogin = (e) => {
-    e.preventDefault();
-
     console.log("login with " + this.state.name + " : " + this.state.password)
+
+    if (!this._validateName(this.state.name)) {
+      this.setState({
+        errorMessage: "正しいユーザ名を入力してください"
+      })
+      e.preventDefault()
+      return
+    }
+  }
+
+  _validateName = (name) => {
+    if (!name) {// If name is null or undefined
+      return false
+    }
+    const val = "" + name
+
+    const pattern = /[^a-zA-Z0-9.\-_]/
+    if (val.match(pattern)) {
+      return false
+    }
+
+    return (4 <= val.length && val.length < 32)
   }
 }
 
