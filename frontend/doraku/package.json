@@ -12,7 +12,7 @@
     "react-iframe": "^1.8.0",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.0.1",
     "react-tooltip": "^3.10.0",
     "redux": "^4.0.1"
   },
