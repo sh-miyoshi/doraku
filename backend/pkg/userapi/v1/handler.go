@@ -14,7 +14,7 @@ import (
 
 // LoginHandler validates user id and password, and return JWT token
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Info("call LoginHandler method with Body: %v", r.Body)
+	logger.Info("call LoginHandler method")
 
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -22,6 +22,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid Request Body", http.StatusBadRequest)
 		return
 	}
+
+	// logger.Debug("Input Value: %v", req)
 
 	userReq := userdb.UserRequest{
 		Name:     req.Name,

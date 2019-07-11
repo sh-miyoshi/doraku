@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import "./login.css";
 import { Button, Form } from 'react-bootstrap';
 // import { setInternalServerError } from '../store/actions';
-// import { HobbyHandler } from '../plugins/hobbyhandler';
+import { UserHandler } from '../plugins/userHandler';
 
 class Login extends Component {
   state = {
@@ -53,7 +53,7 @@ class Login extends Component {
     )
   }
 
-  _handleLogin = (e) => {
+  _handleLogin = async (e) => {
     console.log("login with " + this.state.name + " : " + this.state.password)
 
     if (!this._validateName(this.state.name)) {
@@ -63,6 +63,12 @@ class Login extends Component {
       e.preventDefault()
       return
     }
+
+    e.preventDefault()
+
+    const handler = new UserHandler()
+    const res = await handler.login(this.state.name, this.state.password)
+    console.log(res)
   }
 
   _validateName = (name) => {

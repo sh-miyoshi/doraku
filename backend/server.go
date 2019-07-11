@@ -97,11 +97,13 @@ func main() {
 	r := mux.NewRouter()
 	setAPI(r)
 
-	corsObj := handlers.AllowedOrigins([]string{"*"})
+	headersOk := handlers.AllowedHeaders([]string{"Content-Type"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "DELETE", "OPTIONS"})
 
 	addr := fmt.Sprintf("%s:%d", config.BindAddr, config.Port)
 	logger.Info("start server with %s", addr)
-	if err := http.ListenAndServe(addr, handlers.CORS(corsObj)(r)); err != nil {
+	if err := http.ListenAndServe(addr, handlers.CORS(headersOk, originsOk, methodsOk)(r)); err != nil {
 		logger.Error("http ListenAndServe Error: %v", err)
 		os.Exit(1)
 	}
