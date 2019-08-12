@@ -10,40 +10,12 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /hobby/all:
-    get:
-      tags:
-        - hobby
-      summary: get all hobby names
-      description: get list of all hobby name
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: ok
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/HobbyKey'
-  /hobby/today:
-    get:
-      tags:
-        - hobby
-      summary: get today's hobby
-      description: get today's hobby
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: ok
-          schema:
-            $ref: '#/definitions/HobbyKey'
   /hobby/recommended:
     get:
       tags:
         - hobby
-      summary: get recommended hobby
-      description: get recommended hobby
+      summary: get recommend hobby
+      description: get recommend hobby
       parameters:
         - name: info
           in: body
@@ -51,37 +23,27 @@ paths:
             type: object
             properties:
               outdoor:
-                type: string
+                type: bool
               alone:
-                type: string
+                type: bool
               active:
-                type: string
+                type: bool
       responses:
         '200':
           description: ok
           schema:
-            $ref: '#/definitions/HobbyKey'
-  '/hobby/details/{id}':
+            $ref: '#/definitions/HobbyInfo'
+  /hobby/today:
     get:
       tags:
         - hobby
-      summary: get details of the hobby
-      description: get details of the hobby
-      produces:
-        - application/json
-      parameters:
-        - name: id
-          type: integer
-          in: path
-          description: id of the hobby
-          required: true
+      summary: get today hobby
+      description: get today hobby
       responses:
         '200':
           description: ok
           schema:
-            $ref: '#/definitions/Hobby'
-        '404':
-          description: No such hobby
+            $ref: '#/definitions/HobbyInfo'
   /login:
     post:
       tags:
@@ -110,7 +72,7 @@ paths:
             properties:
               token:
                 type: string
-        '400':
+        '401':
           description: failed to authorize
   /user:
     post:
@@ -256,26 +218,7 @@ paths:
         404:
           description: "User or Hobby not found"
 definitions:
-  Hobby:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      nameEN:
-        type: string
-      description:
-        type: string
-      descriptionFrom:
-        type: string
-      descriptionURL:
-        type: string
-      groupNo:
-        type: integer
-      groupInfo:
-        type: string
-  HobbyKey:
+  HobbyInfo:
     type: object
     properties:
       id:
@@ -287,7 +230,9 @@ definitions:
     properties:
       name:
         type: string
+      password:
+        type: string
       myhobbies:
         type: array
         items:
-          type: string
+          type: integer
