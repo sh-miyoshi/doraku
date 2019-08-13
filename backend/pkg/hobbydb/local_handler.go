@@ -14,13 +14,6 @@ type localDBHandler struct {
 	data []HobbyDB
 }
 
-var inst = &localDBHandler{}
-
-// GetInst return instance of Database Handler
-func GetInst() DBHandler {
-	return inst
-}
-
 func b2i(v bool) int {
 	if v {
 		return 1
@@ -60,4 +53,12 @@ func (h *localDBHandler) GetRecommendHobby(input InputValue) (HobbyDB, error) {
 
 func (h *localDBHandler) GetHobbyNum() int {
 	return len(h.data)
+}
+
+func (h *localDBHandler) GetHobbyByID(id int) (HobbyDB, error) {
+	if id < 0 || id >= len(h.data) {
+		return HobbyDB{}, fmt.Errorf("no such hobby ID: %d", id)
+	}
+
+	return h.data[id], nil
 }

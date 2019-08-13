@@ -67,7 +67,7 @@ func GetRecommendHobbyHandler(w http.ResponseWriter, r *http.Request) {
 		Alone:   req.Alone,
 		Active:  req.Active,
 	}
-	hobby, err := hobbydb.GetInst().GetRecommendedHobby(input)
+	hobby, err := hobbydb.GetInst().GetRecommendHobby(input)
 	if err != nil {
 		logger.Error("Failed to get recommended hobby %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

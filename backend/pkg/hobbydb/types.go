@@ -13,10 +13,3 @@ type InputValue struct {
 	Alone   bool
 	Active  bool
 }
-
-// DBHandler is interface of dbHandler
-type DBHandler interface {
-	Initialize(connStr string) error
-	GetRecommedHobby(input InputValue) (HobbyDB, error)
-	GetHobbyNum() int
-}
