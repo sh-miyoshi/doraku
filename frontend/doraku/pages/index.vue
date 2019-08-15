@@ -1,68 +1,54 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        doraku
-      </h1>
-      <h2 class="subtitle">
-        doraku
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <img src="~/assets/top_logo.png" alt="logo" width="400" />
+    <p>さぁ、新しい人生を切り開こう！</p>
+    <p>
+      Dorakuは皆様の日常に新しい変化を付け加えるため、あなたにあった趣味を提案します
+    </p>
+    <p>
+      日々の生活に新しい変化を求めているなら、ぜひこのサイトで新しい趣味を探してみてください！
+    </p>
+    <br />
+    <table cellPadding="5" align="center">
+      <tbody>
+        <tr>
+          <td>
+            <Button class="button">
+              趣味診断
+            </Button>
+          </td>
+          <td>
+            <Button class="button">
+              今日の趣味
+            </Button>
+          </td>
+          <td>
+            <Button class="button">
+              趣味一覧
+            </Button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  }
-}
+export default {}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.button {
+  border: 0px;
+  width: 250px;
+  height: 75px;
+  background: url('~assets/button.png') left top no-repeat;
+  color: #0f0f0f;
+  font-size: 30px;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.button:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 </style>
