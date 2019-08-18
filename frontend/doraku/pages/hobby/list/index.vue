@@ -6,11 +6,12 @@
     <br />
     <h2>趣味一覧</h2>
     <div class="itembox">
-      <!-- for colums -->
       <div v-for="(hobbyList, index) in hobbies" :key="index" class="component">
         <ul>
           <li v-for="hobby in hobbyList" :key="hobby.id">
-            {{ hobby.name }}
+            <nuxt-link :to="`/hobby/list/details/${hobby.id}`">
+              {{ hobby.name }}
+            </nuxt-link>
           </li>
         </ul>
       </div>

@@ -23,7 +23,7 @@
             </Button>
           </td>
           <td>
-            <Button class="button" @click="$router.push('/list')">
+            <Button class="button" @click="$router.push('/hobby/list')">
               趣味一覧
             </Button>
           </td>

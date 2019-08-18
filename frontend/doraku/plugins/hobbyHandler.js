@@ -30,6 +30,13 @@ class HobbyHandler {
   GetAllHobby = function() {
     return this.hobbyList
   }
+
+  GetHobbyByID = function(id) {
+    if (id >= 0 && id < this.hobbyList.length) {
+      return this.hobbyList[id]
+    }
+    return {}
+  }
 }
 
 export default ({ app }, inject) => {
