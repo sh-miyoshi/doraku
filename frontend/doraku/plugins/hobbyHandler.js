@@ -1,3 +1,7 @@
+import querystring from 'querystring'
+import axios from 'axios'
+import { BACKEND_SERVER_URL } from './globalConstant'
+
 class HobbyHandler {
   hobbyList = [
     { id: 0, name: 'アクアリウム' },
@@ -36,6 +40,35 @@ class HobbyHandler {
       return this.hobbyList[id]
     }
     return {}
+  }
+
+  GetRecommendHobby = async function(outdoor, alone, active) {
+    console.log(
+      'GetRecommendHobby called with outdoor: %s, alone: %s, active: %s',
+      outdoor,
+      alone,
+      active
+    )
+    const query = {
+      outdoor,
+      alone,
+      active
+    }
+    const params = querystring.stringify(query)
+    const url = BACKEND_SERVER_URL + '/hobby/recommend'
+
+    try {
+      const response = await axios.get(url, { params })
+      console.log('Response: %o', response)
+      if (response && response.status === 200) {
+        return { data: response, error: null }
+      } else {
+        return { data: null, error: response }
+      }
+    } catch (error) {
+      console.error(error)
+      return { data: null, error }
+    }
   }
 }
 

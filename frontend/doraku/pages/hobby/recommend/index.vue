@@ -64,7 +64,7 @@
       <button class="disabled_button" disabled>次の質問へ</button>
       <br />
       <br />
-      <button class="enter_button">診断</button>
+      <button class="enter_button" @click="recommend">診断</button>
     </section>
   </div>
 </template>
@@ -91,6 +91,16 @@ export default {
       if (this.nowQuestion < 2) {
         this.nowQuestion++
       }
+    },
+
+    async recommend() {
+      const res = await this.$hobby.GetRecommendHobby(
+        this.outdoor,
+        this.alone,
+        this.active
+      )
+      console.log(res)
+      alert('not implemented yet')
     }
   }
 }
