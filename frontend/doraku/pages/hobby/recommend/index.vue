@@ -4,58 +4,58 @@
     <br />
     <br />
     <h1>質問</h1>
-    <div v-if="nowQuestion == 0">
+    <section v-if="nowQuestion == 0">
       <h2>Q1: どっち派？</h2>
       <table class="select" cellPadding="10">
         <tbody>
           <tr>
             <td>
-              <input v-model="outdoor" type="radio" name="q1" value="true" />
-              アウトドア派
+              <input id="q1t" v-model="outdoor" type="radio" value="true" />
+              <label for="q1t">アウトドア派</label>
             </td>
             <td>
-              <input v-model="outdoor" type="radio" name="q1" value="false" />
-              インドア派
+              <input id="q1f" v-model="outdoor" type="radio" value="false" />
+              <label for="q1f">インドア派</label>
             </td>
           </tr>
         </tbody>
       </table>
       <button class="disabled_button" disabled>前の質問へ</button>
       <button class="move_button" @click="next()">次の質問へ</button>
-    </div>
+    </section>
 
-    <div v-if="nowQuestion == 1">
+    <section v-if="nowQuestion == 1">
       <h2>Q2: 気分的には？</h2>
       <table class="select" cellPadding="10">
         <tbody>
           <tr>
             <td>
-              <input v-model="alone" type="radio" name="q2" value="true" />
-              一人な気分
+              <input id="q2t" v-model="alone" type="radio" value="true" />
+              <label for="q2t">一人な気分</label>
             </td>
             <td>
-              <input v-model="alone" type="radio" name="q2" value="false" />
-              みんなで集まりたい気分
+              <input id="q2f" v-model="alone" type="radio" value="false" />
+              <label for="q2f">みんなで集まりたい気分</label>
             </td>
           </tr>
         </tbody>
       </table>
       <button class="move_button" @click="back()">前の質問へ</button>
       <button class="move_button" @click="next()">次の質問へ</button>
-    </div>
+    </section>
 
-    <div v-if="nowQuestion == 2">
+    <section v-if="nowQuestion == 2">
       <h2>Q3: どんな感じがタイプ？</h2>
       <table class="select" cellPadding="10">
         <tbody>
           <tr>
             <td>
-              <input v-model="active" type="radio" name="q3" value="true" />
-              激しい感じで
+              <input id="q3t" v-model="active" type="radio" value="true" />
+              <label for="q3t">激しい感じで</label>
             </td>
             <td>
-              <input v-model="active" type="radio" name="q3" value="false" />
-              落ち着いた感じで
+              <input id="q3f" v-model="active" type="radio" value="false" />
+              <label for="q3f">落ち着いた感じで</label>
             </td>
           </tr>
         </tbody>
@@ -65,7 +65,7 @@
       <br />
       <br />
       <button class="enter_button">診断</button>
-    </div>
+    </section>
   </div>
 </template>
 
