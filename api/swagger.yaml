@@ -17,17 +17,18 @@ paths:
       summary: get recommend hobby
       description: get recommend hobby
       parameters:
-        - name: info
-          in: body
+        - name: outdoor
+          in: query
           schema:
-            type: object
-            properties:
-              outdoor:
-                type: bool
-              alone:
-                type: bool
-              active:
-                type: bool
+            type: bool
+        - name: alone
+          in: query
+          schema:
+            type: bool
+        - name: active
+          in: query
+          schema:
+            type: bool
       responses:
         '200':
           description: ok
