@@ -10,7 +10,7 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /hobby/recommended:
+  /hobby/recommend:
     get:
       tags:
         - hobby
