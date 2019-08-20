@@ -13,7 +13,7 @@
       <tbody>
         <tr>
           <td>
-            <Button class="button">
+            <Button class="button" @click="$router.push('/hobby/recommend')">
               趣味診断
             </Button>
           </td>

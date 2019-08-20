@@ -9,7 +9,7 @@
       <div v-for="(hobbyList, index) in hobbies" :key="index" class="component">
         <ul>
           <li v-for="hobby in hobbyList" :key="hobby.id">
-            <nuxt-link :to="`/hobby/list/details/${hobby.id}`">
+            <nuxt-link :to="`/hobby/details/${hobby.id}`">
               {{ hobby.name }}
             </nuxt-link>
           </li>
