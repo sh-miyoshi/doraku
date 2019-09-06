@@ -5,6 +5,9 @@ jobs:
       - image: mercari/appengine-go:1.11
 
     working_directory: /go/src/github.com/sh-miyoshi/doraku
+    branches:
+      only:
+        - master
     steps:
       - checkout
 
