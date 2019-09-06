@@ -22,7 +22,7 @@ export default {
   },
 
   created() {
-    const HOBBY_ID = 0
+    const HOBBY_ID = 1
 
     // set hobby data
     const hobby = this.$hobby.GetHobbyByID(HOBBY_ID)
