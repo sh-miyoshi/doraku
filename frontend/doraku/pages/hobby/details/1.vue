@@ -7,8 +7,17 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        バンド (band)
+        とは、演奏者の集団である。音楽バンドの略。厳密に決まってはいないが、バンドという語はメンバーの半分以上が楽器を担当するものに限定して使われることが多く、満たない場合は「音楽グループ」「音楽ユニット」などと呼称される。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a href="https://dic.nicovideo.jp/a/%E3%83%90%E3%83%B3%E3%83%89"
+        >ニコニコ大百科</a
+      >
+    </span>
   </div>
 </template>
 
