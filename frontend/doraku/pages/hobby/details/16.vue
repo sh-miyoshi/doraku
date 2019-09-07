@@ -7,8 +7,15 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        ラジコンとは、ラジオ コントロール (Radio Control)
+        の略称であり、無線により遠隔操作する装置および方式で、RCと記述される場合もあります。模型の自動車、飛行機やヘリコプターなどホビー用が有名ですが、工業や農業など様々な分野で活用されています。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a href="http://www.sanwa-denshi.co.jp/rc/support/beginner.html">sanwa</a>
+    </span>
   </div>
 </template>
 
