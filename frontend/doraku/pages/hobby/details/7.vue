@@ -7,8 +7,18 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        テレビゲームは、テレビで遊ぶコンピュータゲーム。現在では家庭用ゲーム機のゲームを指すことが多いようだ。現在ではプレイステーション4,
+        ニンテンドーSWITCHなどが販売されている。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a
+        href="https://dic.pixiv.net/a/%E3%83%86%E3%83%AC%E3%83%93%E3%82%B2%E3%83%BC%E3%83%A0"
+        >ピクシブ百科事典</a
+      >
+    </span>
   </div>
 </template>
 
