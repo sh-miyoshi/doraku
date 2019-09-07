@@ -19,16 +19,13 @@ paths:
       parameters:
         - name: outdoor
           in: query
-          schema:
-            type: bool
+          type: string
         - name: alone
           in: query
-          schema:
-            type: bool
+          type: string
         - name: active
           in: query
-          schema:
-            type: bool
+          type: string
       responses:
         '200':
           description: ok
