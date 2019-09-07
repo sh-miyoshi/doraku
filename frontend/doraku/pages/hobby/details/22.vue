@@ -7,8 +7,18 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        ケイビングは、趣味またはスポーツとして洞窟に入る探検活動である。洞窟探検のアウトドアスポーツとしての面を強調した言葉である。日本では、1930年頃から始まった。
+        水中下の洞窟を探検する洞窟潜水では、上記とは異なった特殊な装備や技術、知識が要求される。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a
+        href="https://ja.wikipedia.org/wiki/%E3%82%B1%E3%82%A4%E3%83%93%E3%83%B3%E3%82%B0"
+        >wikipedia</a
+      >
+    </span>
   </div>
 </template>
 
