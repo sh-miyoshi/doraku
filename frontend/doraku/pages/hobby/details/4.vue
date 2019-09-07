@@ -7,8 +7,14 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        刺繍とは手芸の一種。広くは糸，紐，リボンなどを，布および皮や編み地などの表面に，針を用いて刺したり留めたりして構成する造形，またはその作品。技法は，アプリケ，ドロンワーク，カットワークのほか，ビーズや真珠，スパングルなどを留めつける方法もある。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a href="https://kotobank.jp/word/%E5%88%BA%E7%B9%8D-73282">kotobank</a>
+    </span>
   </div>
 </template>
 
