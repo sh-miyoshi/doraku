@@ -7,8 +7,16 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        日本の室内ゲームの一つ。将棋の原型は古代インドのチャトゥランガ
+        (4人制古代将棋)
+        にみられ，シルクロードを通って各地に伝えられ，その土地で改良されてきた。ヨーロッパに渡ってはチェスとなり，中国においては象棋となった。日本へは中国を経て伝来したとみられる。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a href="https://kotobank.jp/word/%E5%B0%86%E6%A3%8B-78976">kotobank</a>
+    </span>
   </div>
 </template>
 
