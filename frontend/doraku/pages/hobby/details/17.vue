@@ -7,8 +7,14 @@
     <h2>{{ hobbyName }}</h2>
     <img :src="image" alt="hobby" height="150" weight="150" />
     <div class="detail">
-      <p>説明文は準備中です・・・</p>
+      <p>
+        ロードバイクは、オンロード（舗装路）を高速で、また長距離を長時間走るための自転車です。タイムを競うレースや長距離走行を目的とされているので、重量も走行感も「軽さ」が特徴です。ロングライドやヒルクライム、仲間とレースに参加、サイクリングやポタリング、自転車通勤…などなど、幅広い楽しみ方が出来ますよ。
+      </p>
     </div>
+    <span class="where">
+      from
+      <a href="http://www.bex-isoya.com/?page_id=3391">BEXISOYA</a>
+    </span>
   </div>
 </template>
 
