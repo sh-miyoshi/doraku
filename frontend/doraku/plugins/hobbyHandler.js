@@ -1,6 +1,5 @@
 import querystring from 'querystring'
 import axios from 'axios'
-import { BACKEND_SERVER_URL } from './globalConstant'
 
 class HobbyHandler {
   hobbyList = [
@@ -55,7 +54,7 @@ class HobbyHandler {
       active
     }
     const params = querystring.stringify(query)
-    const url = BACKEND_SERVER_URL + '/hobby/recommend'
+    const url = process.env.BACKEND_SERVER_URL + '/api/v1/hobby/recommend'
 
     try {
       const response = await axios.get(url, { params })
@@ -69,6 +68,10 @@ class HobbyHandler {
       console.error(error)
       return { data: null, error }
     }
+  }
+
+  GetTodayHobby = function() {
+    alert('not implemented yet')
   }
 }
 

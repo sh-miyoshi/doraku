@@ -68,5 +68,9 @@ export default {
         })
       }
     }
+  },
+
+  env: {
+    BACKEND_SERVER_URL: process.env.BACKEND_SERVER_URL || 'http://localhost:8080'
   }
 }
