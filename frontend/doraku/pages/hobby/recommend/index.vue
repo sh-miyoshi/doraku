@@ -99,8 +99,27 @@ export default {
         this.alone,
         this.active
       )
-      console.log(res)
-      alert('not implemented yet')
+      console.log(res) // for debug
+
+      if (res.error) {
+        console.log('Failed to get recommend hobby: %o', res.error)
+        this.$router.app.error({
+          statusCode: 500,
+          message: 'Internal Server Error'
+        })
+        return
+      }
+
+      const id = res.data.id
+      const name = res.data.name
+
+      this.$router.push({
+        path: '/hobby/recommend/result',
+        query: {
+          id,
+          name
+        }
+      })
     }
   }
 }
