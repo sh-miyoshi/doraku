@@ -18,7 +18,7 @@
             </Button>
           </td>
           <td>
-            <Button class="button">
+            <Button class="button" @click="$router.push('/hobby/today')">
               今日の趣味
             </Button>
           </td>

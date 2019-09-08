@@ -70,8 +70,22 @@ class HobbyHandler {
     }
   }
 
-  GetTodayHobby = function() {
-    alert('not implemented yet')
+  GetTodayHobby = async function() {
+    console.log('GetTodayHobby called')
+    const url = process.env.BACKEND_SERVER_URL + '/api/v1/hobby/today'
+
+    try {
+      const response = await axios.get(url)
+      console.log('Response: %o', response)
+      if (response && response.status === 200) {
+        return { data: response.data, error: null }
+      } else {
+        return { data: null, error: response }
+      }
+    } catch (error) {
+      console.error(error)
+      return { data: null, error }
+    }
   }
 }
 
