@@ -10,7 +10,7 @@
 
     <footer>
       <nuxt-link to="/">Topページへ</nuxt-link>&emsp;&emsp;
-      <nuxt-link to="/about">Dorakuとは？</nuxt-link>&emsp;&emsp;
+      <nuxt-link to="/about" no-prefetch>Dorakuとは？</nuxt-link>&emsp;&emsp;
       <a href="https://github.com/sh-miyoshi/doraku/issues/new/choose"
         >Contact Support</a
       >
