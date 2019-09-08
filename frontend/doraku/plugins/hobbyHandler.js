@@ -60,7 +60,7 @@ class HobbyHandler {
       const response = await axios.get(url, { params })
       console.log('Response: %o', response)
       if (response && response.status === 200) {
-        return { data: response, error: null }
+        return { data: response.data, error: null }
       } else {
         return { data: null, error: response }
       }
