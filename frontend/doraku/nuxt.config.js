@@ -27,7 +27,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/hobbyHandler.js'],
+  plugins: ['~/plugins/hobbyHandler.js', '~/plugins/tooltip.js'],
   /*
    ** Nuxt.js dev-modules
    */
