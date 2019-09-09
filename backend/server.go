@@ -38,13 +38,7 @@ func parseCmdlineArgs() {
 }
 
 func initDataBase() {
-	const hobbyFilePath = "database/hobby.csv"
-	const descFilePath = "database/description.csv"
-
-	if err := hobbydb.GetInst().Initialize(hobbyFilePath, descFilePath); err != nil {
-		logger.Error("Failed to initialize Hobby DB: %v", err)
-		os.Exit(1)
-	}
+	hobbydb.GetInst().Initialize("")
 
 	// TODO run db in local
 	if err := userdb.InitUserHandler(userdb.DBLocal); err != nil {
@@ -62,11 +56,8 @@ func setAPI(r *mux.Router) {
 	const basePath = "/api/v1"
 
 	// Hobby API
-	r.HandleFunc(basePath+"/hobby/all", hobbyapiv1.GetAllHobbyHandler).Methods("GET")
 	r.HandleFunc(basePath+"/hobby/today", hobbyapiv1.GetTodayHobbyHandler).Methods("GET")
-	r.HandleFunc(basePath+"/hobby/recommended", hobbyapiv1.GetRecommendedHobbyHandler).Methods("GET")
-	r.HandleFunc(basePath+"/hobby/details/{id}", hobbyapiv1.GetHobbyDetailsHandler).Methods("GET")
-	r.HandleFunc(basePath+"/hobby/image/{id}", hobbyapiv1.GetImageHandler).Methods("GET")
+	r.HandleFunc(basePath+"/hobby/recommend", hobbyapiv1.GetRecommendHobbyHandler).Methods("GET")
 
 	// User API
 	// TODO(user API is not completed yet, so if enable alpha api mode, user API can be called)
