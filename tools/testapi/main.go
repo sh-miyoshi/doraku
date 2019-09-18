@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/sh-miyoshi/doraku/testapi/cmd"
 )
 
 func main() {
-	fmt.Println("start command line tool")
+	cmd.Execute()
 }
