@@ -6,18 +6,17 @@ This directory includes a command line tool for testing backend API.
 
 ## System Requirement
 
-golang(?)
+golang v1.11 ~
 
 ## Usage
 
 ```bash
 <command> login --name <user_name> --password <password>
 
-<command> add user --name <user_name>
-<command> add hobby --user <user_name> --hobby <hobby_id or hobby_name>
+<command> user add --name <user_name>
+<command> user delete --name <user_name>
+<command> user get --name <user_name>
 
-<command> delete user --name <user_name>
-<command> delte hobby --user <user_name> --hobby <hobby_id or hobby_name>
-
-<command> get user --name <user_name>
+<command> hobby add --user <user_name> --hobby <hobby_id or hobby_name>
+<command> hobby delete --user <user_name> --hobby <hobby_id or hobby_name>
 ```
