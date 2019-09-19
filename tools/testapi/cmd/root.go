@@ -7,16 +7,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var globalConfig = GlobalConfig{}
+
 func init() {
 }
 
 var rootCmd = &cobra.Command{
 	Use:   "testapi",
 	Short: "testapi is a command line tool for testing backend API",
-	Long:  "tsearch is a command line tool for testing backend API",
+	Long:  "testapi is a command line tool for testing backend API",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},
+}
+
+// InitConfig method initialize global config file
+func InitConfig() {
+	// TODO
 }
 
 // Execute method run root command
