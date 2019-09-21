@@ -23,7 +23,7 @@ var rootCmd = &cobra.Command{
 
 // InitConfig method initialize global config file
 func InitConfig() {
-	// TODO
+	globalConfig.BackendServerAddr = "http://localhost:8080"
 }
 
 // Execute method run root command

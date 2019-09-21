@@ -1,7 +1,10 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
+	"net/http"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -9,8 +12,9 @@ import (
 var userConfig = UserConfig{}
 
 func init() {
-	userCmd.Flags().StringVarP(&userConfig.Name, "name", "n", "", "a name of new user")
-	userCmd.MarkFlagRequired("name")
+	userAddCmd.Flags().StringVarP(&userConfig.Name, "name", "n", "", "a name of new user")
+	userAddCmd.MarkFlagRequired("name")
+	userAddCmd.Flags().StringVarP(&userConfig.Password, "password", "p", "", "a password of new user")
 
 	userCmd.AddCommand(userAddCmd)
 
@@ -32,6 +36,27 @@ var userAddCmd = &cobra.Command{
 	Short: "add new user",
 	Long:  `add new user`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("new user")
+		// TODO(Input Password)
+
+		url := globalConfig.BackendServerAddr + "/api/v1"
+		body := fmt.Sprintf(`{"name": "%s","password": "%s"}`, userConfig.Name, userConfig.Password)
+		res, err := http.Post(url+"/user", "application/json", bytes.NewBufferString(body))
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to request server: %v\n", err)
+			return
+		}
+
+		switch res.StatusCode {
+		case 202:
+			fmt.Println("Success to get validate code")
+		case 400:
+			fmt.Fprintf(os.Stderr, "Failed with Missing Request: Name[%s], Password[%s]\n", userConfig.Name, userConfig.Password)
+			return
+		default:
+			fmt.Fprintf(os.Stderr, "Unexpected Response form Server: %s", res.Status)
+			return
+		}
+
+		// TODO(validate user)
 	},
 }

@@ -7,5 +7,6 @@ type GlobalConfig struct {
 
 // UserConfig ...
 type UserConfig struct {
-	Name string
+	Name     string
+	Password string
 }
