@@ -27,7 +27,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/hobbyHandler.js', '~/plugins/tooltip.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -54,6 +54,24 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+          options: {
+            fix: true
+          }
+        })
+      }
+    }
+  },
+
+  env: {
+    BACKEND_SERVER_URL:
+      process.env.BACKEND_SERVER_URL || 'http://localhost:8080'
   }
 }

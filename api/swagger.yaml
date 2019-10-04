@@ -10,24 +10,22 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /hobby/recommended:
+  /hobby/recommend:
     get:
       tags:
         - hobby
       summary: get recommend hobby
       description: get recommend hobby
       parameters:
-        - name: info
-          in: body
-          schema:
-            type: object
-            properties:
-              outdoor:
-                type: bool
-              alone:
-                type: bool
-              active:
-                type: bool
+        - name: outdoor
+          in: query
+          type: string
+        - name: alone
+          in: query
+          type: string
+        - name: active
+          in: query
+          type: string
       responses:
         '200':
           description: ok

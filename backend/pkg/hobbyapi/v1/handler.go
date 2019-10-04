@@ -54,18 +54,15 @@ func GetTodayHobbyHandler(w http.ResponseWriter, r *http.Request) {
 func GetRecommendHobbyHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Info("call GetRecommendHobbyHandler method")
 
-	var req RecommendRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		logger.Info("Failed to decode request %v", err)
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
-	}
+	outdoor := (r.FormValue("outdoor") == "true")
+	alone := (r.FormValue("alone") == "true")
+	active := (r.FormValue("active") == "true")
 
 	// GetRecommended Hobby
 	input := hobbydb.InputValue{
-		Outdoor: req.Outdoor,
-		Alone:   req.Alone,
-		Active:  req.Active,
+		Outdoor: outdoor,
+		Alone:   alone,
+		Active:  active,
 	}
 	hobby, err := hobbydb.GetInst().GetRecommendHobby(input)
 	if err != nil {

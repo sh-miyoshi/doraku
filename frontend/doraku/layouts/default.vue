@@ -1,55 +1,47 @@
 <template>
   <div>
+    <header>
+      <nuxt-link to="/">
+        <img src="~/assets/logo.png" width="150" />
+      </nuxt-link>
+    </header>
+
     <nuxt />
+
+    <footer>
+      <nuxt-link to="/">Topページへ</nuxt-link>&emsp;&emsp;
+      <nuxt-link to="/about" no-prefetch>Dorakuとは？</nuxt-link>&emsp;&emsp;
+      <a href="https://github.com/sh-miyoshi/doraku/issues/new/choose"
+        >Contact Support</a
+      >
+    </footer>
   </div>
 </template>
 
 <style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+body {
+  background-image: url('~assets/background.png');
+  background-repeat: no-repeat;
+  background-color: #dee9a2;
+  background-size: cover;
+  text-align: center;
   margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+header {
+  text-align: left;
+  margin: 30px;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+footer {
+  margin: 30px;
+  font-size: 14px;
 }
 </style>

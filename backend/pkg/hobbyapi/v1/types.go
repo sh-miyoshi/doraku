@@ -1,17 +1,6 @@
 package hobbyapi
 
 //----------------------------
-// Request Data
-//----------------------------
-
-// RecommendRequest struct is request data for recommendation
-type RecommendRequest struct {
-	Outdoor bool `json:"outdoor"`
-	Alone   bool `json:"alone"`
-	Active  bool `json:"active"`
-}
-
-//----------------------------
 // Response Data
 //----------------------------
 

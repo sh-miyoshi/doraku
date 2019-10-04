@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	hobbyapiv1 "github.com/sh-miyoshi/doraku/pkg/hobbyapi/v1"
+	"github.com/sh-miyoshi/doraku/pkg/hobbydb"
 	"github.com/sh-miyoshi/doraku/pkg/logger"
 	userapiv1 "github.com/sh-miyoshi/doraku/pkg/userapi/v1"
 	"github.com/sh-miyoshi/doraku/pkg/userdb"
@@ -37,7 +38,7 @@ func parseCmdlineArgs() {
 }
 
 func initDataBase() {
-	const descFilePath = "database/description.csv"
+	hobbydb.GetInst().Initialize("")
 
 	// TODO run db in local
 	if err := userdb.InitUserHandler(userdb.DBLocal); err != nil {
